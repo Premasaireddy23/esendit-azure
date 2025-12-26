@@ -6,11 +6,11 @@ locals {
   acr_name = "acresendit${var.env}${var.name_suffix}"
   kv_name  = "kvesendit${var.env}${var.name_suffix}"
 
-  rg_core = "rg-esendit-${var.env}-core-wi"
-  rg_aks  = "rg-esendit-${var.env}-aks-wi"
-  rg_data = "rg-esendit-${var.env}-data-wi"
+  rg_core = "rg-esendit-${var.env}-core-ci"
+  rg_aks  = "rg-esendit-${var.env}-aks-ci"
+  rg_data = "rg-esendit-${var.env}-data-ci"
 
-  vnet_name = "vnet-esendit-${var.env}-wi"
+  vnet_name = "vnet-esendit-${var.env}-ci"
 }
 
 # --- Resource Groups (P1) ---
@@ -61,7 +61,7 @@ resource "azurerm_subnet" "private_endpoints" {
 
 # --- Private DNS zones (pre-req for later Private Endpoints; cheap to create now) ---
 resource "azurerm_private_dns_zone" "blob" {
-  name                = "privatelink.blob.core.windows.net"
+  name                = "privatelink.blob.core.cindows.net"
   resource_group_name = azurerm_resource_group.core.name
   tags                = var.tags
 }

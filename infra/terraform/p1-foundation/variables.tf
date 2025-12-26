@@ -11,7 +11,7 @@ variable "subscription_id_dev" {
 variable "location" {
   type        = string
   description = "Primary region for resources"
-  default     = "westindia"
+  default     = "centralindia"
 }
 
 # Must be lowercase + numbers, used to make ACR/KV names globally unique
