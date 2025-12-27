@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: esendit-backend
+  namespace: esendit
+spec:
+  selector:
+    app: esendit-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

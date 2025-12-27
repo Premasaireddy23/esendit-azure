@@ -1,0 +1,12 @@
+resources:
+  - namespace.yaml
+  - backend-configmap.yaml
+  - backend-deployment.yaml
+  - backend-svc.yaml
+  - frontend-configmap.yaml
+  - frontend-deployment.yaml
+  - frontend-svc.yaml
+  - delivery-worker.yaml
+  - transcode-worker.yaml
+  - backend-ingress-api.yaml
+  - frontend-ingress-api.yaml

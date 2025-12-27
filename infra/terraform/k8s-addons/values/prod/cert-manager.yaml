@@ -1,0 +1,13 @@
+crds:
+  enabled: true
+
+nodeSelector:
+  agentpool: core
+
+webhook:
+  nodeSelector:
+    agentpool: core
+
+cainjector:
+  nodeSelector:
+    agentpool: core

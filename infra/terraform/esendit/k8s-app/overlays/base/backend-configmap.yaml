@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: esendit-config
+  namespace: esendit
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  # keep empty for now if you want all origins during dev:
+  # CORS_ORIGINS: "https://your-dev-domain"

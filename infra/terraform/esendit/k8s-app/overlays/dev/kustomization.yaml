@@ -1,0 +1,9 @@
+resources:
+  - ../base
+images:
+  - name: backend-image
+    newName: acresenditdevesendit000.azurecr.io/esendit-backend
+    newTag: "121"
+  - name: worker-image
+    newName: acresenditdevesendit000.azurecr.io/esendit-backend
+    newTag: "121"

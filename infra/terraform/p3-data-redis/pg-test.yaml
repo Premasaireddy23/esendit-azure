@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pg-test
+  namespace: esendit
+spec:
+  restartPolicy: Never
+  containers:
+    - name: pg
+      image: postgres:16
+      command: ["bash","-lc"]
+      args:
+        - |
+          set -e
+          PGURL=$(cat /mnt/secrets-store/pg-connection-url)
+          echo "Testing Postgres connectivity..."
+          psql "$PGURL" -c "select now();"
+      volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "esendit-secrets"

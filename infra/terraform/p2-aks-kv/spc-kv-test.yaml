@@ -1,0 +1,18 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-test
+  namespace: platform
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: "79670f2b-ca8e-445a-b120-9831f9a252cc"
+    keyvaultName: "kvesenditdevesendit000"
+    tenantId: "7dda7dc2-fa0d-4242-a85d-16907f632abc"
+    objects: |
+      array:
+        - |
+          objectName: esendit-test-secret
+          objectType: secret

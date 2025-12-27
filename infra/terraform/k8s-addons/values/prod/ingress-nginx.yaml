@@ -1,0 +1,13 @@
+controller:
+  replicaCount: 2
+  nodeSelector:
+    agentpool: core
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        agentpool: core
+
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"

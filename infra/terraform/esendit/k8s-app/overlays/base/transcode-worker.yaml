@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esendit-transcode-worker
+  namespace: esendit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: esendit-transcode-worker
+  template:
+    metadata:
+      labels:
+        app: esendit-transcode-worker
+    spec:
+      volumes:
+        - name: kv-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: esendit-secrets
+
+      containers:
+        - name: worker
+          image: worker-image
+          imagePullPolicy: IfNotPresent
+
+          envFrom:
+            - configMapRef:
+                name: esendit-config
+
+          volumeMounts:
+            - name: kv-secrets
+              mountPath: /mnt/secrets-store
+              readOnly: true
+
+          command: ["sh", "-c"]
+          args:
+            - >
+              set -e;
+              export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)";
+              export DATABASE_URL="$PG_URL";
+              export REDIS_URL="$(cat /mnt/secrets-store/redis-connection-url)";
+              exec node dist/src/worker/transcode-worker.js
+
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi

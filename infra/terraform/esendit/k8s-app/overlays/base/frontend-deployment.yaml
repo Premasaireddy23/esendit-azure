@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esendit-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: esendit-frontend
+  template:
+    metadata:
+      labels:
+        app: esendit-frontend
+    spec:
+      containers:
+        - name: esendit-frontend
+          image: acresenditdevesendit000.azurecr.io/esendit-frontend:120
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: esendit-frontend-nginx

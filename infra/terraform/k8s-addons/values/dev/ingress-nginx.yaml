@@ -1,0 +1,14 @@
+controller:
+  replicaCount: 1
+  nodeSelector:
+    agentpool: core
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        agentpool: core
+
+
+  service:
+    type: LoadBalancer
+    annotations: {}
+    externalTrafficPolicy:  Local

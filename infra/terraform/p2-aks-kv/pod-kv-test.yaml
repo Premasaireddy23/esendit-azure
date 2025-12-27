@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kv-test-pod
+  namespace: platform
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh","-c","ls -l /mnt/secrets-store && echo '---' && cat /mnt/secrets-store/esendit-test-secret && sleep 3600"]
+      volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "kv-test"

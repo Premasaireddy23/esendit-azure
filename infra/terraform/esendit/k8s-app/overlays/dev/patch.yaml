@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esendit-backend
+  namespace: esendit
+spec:
+  template:
+    spec:
+      containers:
+        - name: backend
+          image: acresenditdevesendit000.azurecr.io/esendit/backend:dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esendit-worker
+  namespace: esendit
+spec:
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: acresenditdevesendit000.azurecr.io/esendit/worker:dev

@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-test
+  namespace: esendit
+spec:
+  restartPolicy: Never
+  containers:
+    - name: redis
+      image: redis:7
+      command: ["bash","-lc"]
+      args:
+        - |
+          set -e
+          REDISURL=$(cat /mnt/secrets-store/redis-connection-url)
+
+          echo "Testing Redis connectivity (TLS insecure)..."
+
+          HOSTPORT=$(echo "$REDISURL" | sed -E 's#^rediss://([^@]+@)?##' | cut -d/ -f1)
+          HOST=$(echo "$HOSTPORT" | cut -d: -f1)
+          PORT=$(echo "$HOSTPORT" | cut -d: -f2)
+          PASS=$(echo "$REDISURL" | sed -E 's#^rediss://:([^@]+)@.*#\1#')
+
+          redis-cli -h "$HOST" -p "$PORT" -a "$PASS" --tls --insecure ping
+      volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "esendit-secrets"
