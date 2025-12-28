@@ -1,0 +1,101 @@
+name: dev-deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Image tag (e.g. abc1234)"
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ACR_LOGIN_SERVER: acresenditdevesendit000.azurecr.io
+  AKS_RG: rg-esendit-dev-aks-ci
+  AKS_NAME: aks-esendit-dev-esendit000
+  NAMESPACE: esendit
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ env.AKS_RG }}
+          cluster-name: ${{ env.AKS_NAME }}
+
+      - name: Apply manifests if present
+        run: |
+          set -euo pipefail
+          if [ -d "azure/infra/terraform/esendit/k8s-app/overlays/dev" ]; then
+            kubectl -n $NAMESPACE apply -k azure/infra/terraform/esendit/k8s-app/overlays/dev
+          else
+            echo "No kustomize overlay found, skipping apply."
+          fi
+
+      - name: Run prisma migrate deploy
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag }}"
+          JOB="esendit-migrate-${TAG}"
+          kubectl -n $NAMESPACE delete job "$JOB" --ignore-not-found
+
+          cat <<EOF | kubectl -n $NAMESPACE apply -f -
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: ${JOB}
+          spec:
+            ttlSecondsAfterFinished: 900
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                containers:
+                - name: migrate
+                  image: ${ACR_LOGIN_SERVER}/esendit-backend:${TAG}
+                  envFrom:
+                  - secretRef:
+                      name: esendit-secrets
+                  command: ["sh","-c","npx prisma migrate deploy"]
+          EOF
+
+          kubectl -n $NAMESPACE wait --for=condition=complete job/$JOB --timeout=10m
+
+      - name: Update images + rollout
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag }}"
+
+          set_image () {
+            local deploy="$1"
+            local image="$2"
+            local cname
+            cname="$(kubectl -n $NAMESPACE get deploy "$deploy" -o jsonpath='{.spec.template.spec.containers[0].name}')"
+            kubectl -n $NAMESPACE set image "deploy/$deploy" "$cname=$image"
+            kubectl -n $NAMESPACE rollout status "deploy/$deploy" --timeout=10m
+          }
+
+          set_image "esendit-backend"          "${ACR_LOGIN_SERVER}/esendit-backend:${TAG}"
+          set_image "esendit-delivery-worker"  "${ACR_LOGIN_SERVER}/esendit-delivery-worker:${TAG}"
+          set_image "esendit-transcode-worker" "${ACR_LOGIN_SERVER}/esendit-transcode-worker:${TAG}"
+          set_image "esendit-frontend"         "${ACR_LOGIN_SERVER}/esendit-frontend:${TAG}"
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          IP="$(kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+          curl -fsS "http://$IP/api/health"
+          curl -fsS "http://$IP/" | head -n 5
