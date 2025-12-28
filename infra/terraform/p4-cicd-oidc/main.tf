@@ -42,6 +42,13 @@ resource "azurerm_role_assignment" "dev_aks_cluster_admin" {
   principal_id         = azuread_service_principal.gha_dev.object_id
 }
 
+# DEV: allow listing user credentials
+resource "azurerm_role_assignment" "dev_aks_cluster_user" {
+  scope                = data.azurerm_kubernetes_cluster.dev.id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
+  principal_id         = azuread_service_principal.gha_dev.object_id
+}
+
 ############################
 # PROD GitHub OIDC App/SP
 ############################
@@ -85,5 +92,13 @@ resource "azurerm_role_assignment" "prod_aks_cluster_admin" {
   provider             = azurerm.prod
   scope                = data.azurerm_kubernetes_cluster.prod.id
   role_definition_name = "Azure Kubernetes Service Cluster Admin Role"
+  principal_id         = azuread_service_principal.gha_prod.object_id
+}
+
+# PROD: allow listing user credentials
+resource "azurerm_role_assignment" "prod_aks_cluster_user" {
+  provider             = azurerm.prod
+  scope                = data.azurerm_kubernetes_cluster.prod.id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = azuread_service_principal.gha_prod.object_id
 }

@@ -37,6 +37,7 @@ jobs:
         with:
           resource-group: ${{ env.AKS_RG }}
           cluster-name: ${{ env.AKS_NAME }}
+          admin: true
 
       - name: Apply manifests if present
         run: |
