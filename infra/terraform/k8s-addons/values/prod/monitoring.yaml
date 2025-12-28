@@ -1,0 +1,29 @@
+grafana:
+  enabled: true
+  adminPassword: "ChangeMe-PROD"
+  ingress:
+    enabled: false
+  persistence:
+    enabled: true
+    size: 10Gi
+
+prometheus:
+  ingress:
+    enabled: false
+  prometheusSpec:
+    retention: 30d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: false

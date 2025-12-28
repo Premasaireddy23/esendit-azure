@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: esendit-backend
   namespace: esendit
+  labels:
+    monitor: esendit
 spec:
   selector:
     app: esendit-backend

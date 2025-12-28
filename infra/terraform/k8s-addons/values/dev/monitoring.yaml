@@ -1,0 +1,63 @@
+# values-monitoring-dev.yaml
+grafana:
+  enabled: true
+  adminPassword: "ChangeMe-DEV"   # you can remove and read from secret if you want
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - grafana.4.187.181.124.nip.io
+    paths:
+      - /
+  persistence:
+    enabled: true
+    size: 5Gi
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - prometheus.4.187.181.124.nip.io
+    paths:
+      - /
+  prometheusSpec:
+    retention: 15d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 20Gi
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - alertmanager.4.187.181.124.nip.io
+    paths:
+      - /
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: esendit-backend
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - esendit
+  selector:
+    matchLabels:
+      monitor: esendit
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
