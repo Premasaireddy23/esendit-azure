@@ -1,0 +1,96 @@
+name: dev-deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag suffix for job name (e.g. 20251229-1)"
+        required: true
+        default: "manual"
+      reset_db:
+        description: "Drop & recreate public schema"
+        required: true
+        type: choice
+        default: "false"
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ACR_LOGIN_SERVER: acresenditdevesendit000.azurecr.io
+  AKS_RG: rg-esendit-dev-aks-ci
+  AKS_NAME: aks-esendit-dev-esendit000
+  NAMESPACE: esendit
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ env.AKS_RG }}
+          cluster-name: ${{ env.AKS_NAME }}
+          admin: true
+        
+      - name: Reset DB (DROP public schema) - optional
+        if: ${{ inputs.reset_db == 'true' }}
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag }}"
+          JOB="esendit-dbreset-${TAG}"
+          NAMESPACE="${{ env.NAMESPACE }}"
+          echo "Resetting DB by dropping public schema using job: $JOB in namespace: $NAMESPACE"
+
+          kubectl -n "$NAMESPACE" delete job "$JOB" --ignore-not-found
+              
+          cat <<EOF | kubectl -n "$NAMESPACE" apply -f -
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: ${JOB}
+          spec:
+            ttlSecondsAfterFinished: 900
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                containers:
+                - name: dbreset
+                  image: postgres:16
+                  envFrom:
+                  - secretRef:
+                      name: esendit-secrets
+                  command:
+                    - sh
+                    - -lc
+                    - |
+                      set -euo pipefail
+                      if [ -z "\${DATABASE_URL:-}" ]; then
+                        echo "DATABASE_URL not set (expected in esendit-secrets)"
+                        exit 1
+                      fi
+                      psql "\$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+                      DROP SCHEMA IF EXISTS public CASCADE;
+                      CREATE SCHEMA public;
+                      GRANT ALL ON SCHEMA public TO postgres;
+                      GRANT ALL ON SCHEMA public TO public;
+                      SQL
+          EOF
+                    
+          kubectl -n "$NAMESPACE" wait --for=condition=complete "job/$JOB" --timeout=10m
+          kubectl -n "$NAMESPACE" logs "job/$JOB" --all-containers=true || true
+                    
