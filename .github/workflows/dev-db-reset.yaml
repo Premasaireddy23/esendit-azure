@@ -1,4 +1,4 @@
-name: dev-deploy
+name: dev-db-reset
 
 on:
   workflow_dispatch:
