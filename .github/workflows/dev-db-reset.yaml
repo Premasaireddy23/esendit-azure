@@ -79,11 +79,11 @@ jobs:
                     - -lc
                     - |
                       set -euo pipefail
-                      if [ -z "\${DATABASE_URL:-}" ]; then
-                        echo "DATABASE_URL not set (expected in esendit-secrets)"
+                      if [ -z "\${PG_URL:-}" ]; then
+                        echo "PG_URL not set (expected in esendit-secrets)"
                         exit 1
                       fi
-                      psql "\$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+                      psql "\$PG_URL" -v ON_ERROR_STOP=1 <<'SQL'
                       DROP SCHEMA IF EXISTS public CASCADE;
                       CREATE SCHEMA public;
                       GRANT ALL ON SCHEMA public TO postgres;
