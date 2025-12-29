@@ -46,35 +46,6 @@ jobs:
             echo "No kustomize overlay found, skipping apply."
           fi
 
-      - name: Run prisma migrate deploy
-        run: |
-          set -euo pipefail
-          TAG="${{ inputs.tag }}"
-          JOB="esendit-migrate-${TAG}"
-          kubectl -n $NAMESPACE delete job "$JOB" --ignore-not-found
-
-          cat <<EOF | kubectl -n $NAMESPACE apply -f -
-          apiVersion: batch/v1
-          kind: Job
-          metadata:
-            name: ${JOB}
-          spec:
-            ttlSecondsAfterFinished: 900
-            backoffLimit: 0
-            template:
-              spec:
-                restartPolicy: Never
-                containers:
-                - name: migrate
-                  image: ${ACR_LOGIN_SERVER}/esendit-backend:${TAG}
-                  envFrom:
-                  - secretRef:
-                      name: esendit-secrets
-                  command: ["sh","-c","npx prisma migrate deploy"]
-          EOF
-
-          kubectl -n $NAMESPACE wait --for=condition=complete job/$JOB --timeout=10m
-
       - name: Update images + rollout
         run: |
           set -euo pipefail
