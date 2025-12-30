@@ -76,6 +76,9 @@ jobs:
             ttlSecondsAfterFinished: 900
             backoffLimit: 3
             template:
+              metadata:
+                labels:
+                  azure.workload.identity/use: "true"
               spec:
                 restartPolicy: Never
                 serviceAccountName: esendit-backend-sa
