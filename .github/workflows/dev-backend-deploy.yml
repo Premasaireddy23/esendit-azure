@@ -78,6 +78,7 @@ jobs:
             template:
               spec:
                 restartPolicy: Never
+                serviceAccountName: esendit-backend-sa
                 volumes:
                   - name: kv-secrets
                     csi:
@@ -126,6 +127,7 @@ jobs:
             template:
               spec:
                 restartPolicy: Never
+                serviceAccountName: esendit-backend-sa
                 volumes:
                   - name: kv-secrets
                     csi:
