@@ -36,6 +36,8 @@ spec:
                 name: esendit-config
             - secretRef:
                 name: esendit-jwt
+            - secretRef:
+                name: esendit-bootstrap-secrets
 
           # ✅ Mount Key Vault secrets (CSI)
           volumeMounts:

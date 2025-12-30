@@ -4,8 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Image tag (e.g. abc1234)"
+        description: "Backend image tag in ACR (e.g. abc1234)"
         required: true
+      run_migrate:
+        description: "Run prisma migrate deploy (only when backend/prisma changed)"
+        type: boolean
+        required: true
+        default: false
+      run_bootstrap:
+        description: "Run bootstrap admin/roles/perms (rare; new env / permission changes)"
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   id-token: write
@@ -36,7 +46,7 @@ jobs:
           resource-group: ${{ env.AKS_RG }}
           cluster-name: ${{ env.AKS_NAME }}
           admin: true
-        
+
       - name: Apply manifests if present
         run: |
           set -euo pipefail
@@ -46,62 +56,130 @@ jobs:
             echo "No kustomize overlay found, skipping apply."
           fi
 
-      - name: Run prisma migrate deploy
+      - name: Prisma migrate deploy (optional)
+        if: ${{ inputs.run_migrate }}
         run: |
           set -euo pipefail
           TAG="${{ inputs.tag }}"
-          JOB="esendit-migrate-${TAG}"
-          kubectl -n $NAMESPACE delete job "$JOB" --ignore-not-found
+          SHORT="${TAG:0:12}"
+          JOB="esendit-migrate-${SHORT}"
 
-          cat <<EOF | kubectl -n $NAMESPACE apply -f -
+          kubectl -n "$NAMESPACE" delete job "$JOB" --ignore-not-found
+
+          cat <<EOF | kubectl -n "$NAMESPACE" apply -f -
           apiVersion: batch/v1
           kind: Job
           metadata:
-            name: ${JOB}
+            name: esendit-migrate-<TAGSHORT>
+            namespace: esendit
           spec:
             ttlSecondsAfterFinished: 900
-            backoffLimit: 0
+            backoffLimit: 3
             template:
               spec:
                 restartPolicy: Never
+                volumes:
+                  - name: kv-secrets
+                    csi:
+                      driver: secrets-store.csi.k8s.io
+                      readOnly: true
+                      volumeAttributes:
+                        secretProviderClass: esendit-secrets
                 containers:
-                - name: migrate
-                  image: ${ACR_LOGIN_SERVER}/esendit-backend:${TAG}
-                  envFrom:
-                  - secretRef:
-                      name: esendit-secrets
-                  command: ["sh","-c","npx prisma migrate deploy"]
+                  - name: migrate
+                    image: <ACR_LOGIN_SERVER>/esendit-backend:<TAG>
+                    volumeMounts:
+                      - name: kv-secrets
+                        mountPath: /mnt/secrets-store
+                        readOnly: true
+                    command: ["sh","-lc"]
+                    args:
+                      - |
+                        set -euo pipefail
+                        export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)"
+                        export DATABASE_URL="$PG_URL"
+                        echo "DB host:"; echo "$DATABASE_URL" | sed "s/:.*@/:***@/g"
+                        npx prisma migrate deploy
           EOF
 
-          kubectl -n $NAMESPACE wait --for=condition=complete job/$JOB --timeout=10m
+          kubectl -n "$NAMESPACE" wait --for=condition=complete "job/$JOB" --timeout=10m
 
-      - name: Update images + rollout
+      - name: Bootstrap admin/roles/perms (optional)
+        if: ${{ inputs.run_bootstrap }}
         run: |
           set -euo pipefail
           TAG="${{ inputs.tag }}"
-                        
+          SHORT="${TAG:0:12}"
+          JOB="esendit-bootstrap-${SHORT}"
+
+          kubectl -n "$NAMESPACE" delete job "$JOB" --ignore-not-found
+
+          cat <<EOF | kubectl -n "$NAMESPACE" apply -f -
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: esendit-bootstrap-<TAGSHORT>
+            namespace: esendit
+          spec:
+            ttlSecondsAfterFinished: 900
+            backoffLimit: 3
+            template:
+              spec:
+                restartPolicy: Never
+                volumes:
+                  - name: kv-secrets
+                    csi:
+                      driver: secrets-store.csi.k8s.io
+                      readOnly: true
+                      volumeAttributes:
+                        secretProviderClass: esendit-secrets
+                containers:
+                  - name: bootstrap
+                    image: <ACR_LOGIN_SERVER>/esendit-backend:<TAG>
+                    envFrom:
+                      - secretRef:
+                          name: esendit-bootstrap-secrets
+                    volumeMounts:
+                      - name: kv-secrets
+                        mountPath: /mnt/secrets-store
+                        readOnly: true
+                    command: ["sh","-lc"]
+                    args:
+                      - |
+                        set -euo pipefail
+                        export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)"
+                        export DATABASE_URL="$PG_URL"
+                        node dist/scripts/bootstrap.js
+          EOF
+
+          kubectl -n "$NAMESPACE" wait --for=condition=complete "job/$JOB" --timeout=10m
+
+      - name: Update backend image + rollout
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag }}"
+
           set_image () {
             local deploy="$1"
             local image="$2"
             local cname
-                        
             cname="$(kubectl -n "$NAMESPACE" get deploy "$deploy" -o jsonpath='{.spec.template.spec.containers[0].name}')"
-                        
+
             echo "Before ($deploy):"
             kubectl -n "$NAMESPACE" get deploy "$deploy" \
               -o jsonpath='{.spec.template.spec.containers[0].name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}'
             echo
-                        
+
             kubectl -n "$NAMESPACE" set image "deploy/$deploy" "$cname=$image"
-                        
+
             echo "After ($deploy):"
             kubectl -n "$NAMESPACE" get deploy "$deploy" \
               -o jsonpath='{.spec.template.spec.containers[0].name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}'
             echo
-                        
+
             kubectl -n "$NAMESPACE" rollout status "deploy/$deploy" --timeout=10m
           }
-                        
+
           set_image "esendit-backend" "${ACR_LOGIN_SERVER}/esendit-backend:${TAG}"
 
       - name: Smoke test
@@ -109,4 +187,3 @@ jobs:
           set -euo pipefail
           IP="$(kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
           curl -fsS "http://$IP/api/health"
-          curl -fsS "http://$IP/" | head -n 5
