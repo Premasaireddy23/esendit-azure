@@ -70,7 +70,7 @@ jobs:
           apiVersion: batch/v1
           kind: Job
           metadata:
-            name: esendit-migrate-<TAGSHORT>
+            name: esendit-migrate-9157e1d
             namespace: esendit
           spec:
             ttlSecondsAfterFinished: 900
@@ -88,7 +88,7 @@ jobs:
                         secretProviderClass: esendit-secrets
                 containers:
                   - name: migrate
-                    image: <ACR_LOGIN_SERVER>/esendit-backend:<TAG>
+                    image: acresenditdevesendit000.azurecr.io/esendit-backend:9157e1d
                     volumeMounts:
                       - name: kv-secrets
                         mountPath: /mnt/secrets-store
@@ -96,7 +96,7 @@ jobs:
                     command: ["sh","-lc"]
                     args:
                       - |
-                        set -euo pipefail
+                        set -eu
                         export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)"
                         export DATABASE_URL="$PG_URL"
                         echo "DB host:"; echo "$DATABASE_URL" | sed "s/:.*@/:***@/g"
@@ -148,7 +148,7 @@ jobs:
                     command: ["sh","-lc"]
                     args:
                       - |
-                        set -euo pipefail
+                        set -eu
                         export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)"
                         export DATABASE_URL="$PG_URL"
                         node dist/scripts/bootstrap.js
