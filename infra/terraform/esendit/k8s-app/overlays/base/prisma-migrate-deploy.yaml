@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: esendit-migrate-9157e1d
+  namespace: esendit
+spec:
+  ttlSecondsAfterFinished: 900
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: esendit-backend-sa
+      volumes:
+        - name: kv-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: esendit-secrets
+      containers:
+        - name: migrate
+          image: acresenditdevesendit000.azurecr.io/esendit-backend:9157e1d
+          volumeMounts:
+            - name: kv-secrets
+              mountPath: /mnt/secrets-store
+              readOnly: true
+          command: ["sh","-lc"]
+          args:
+            - |
+              set -eu
+              export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)"
+              export DATABASE_URL="$PG_URL"
+              echo "DB host:"; echo "$DATABASE_URL" | sed "s/:.*@/:***@/g"
+              npx prisma migrate deploy
