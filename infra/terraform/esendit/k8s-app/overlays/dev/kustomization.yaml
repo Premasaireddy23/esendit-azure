@@ -9,16 +9,16 @@ resources:
 images:
   - name: frontend-image
     newName: acresenditdevesendit000.azurecr.io/esendit-frontend
-    newTag: "12d3b38"
+    newTag: "61e0fdc"
   - name: backend-image
     newName: acresenditdevesendit000.azurecr.io/esendit-backend
     newTag: "905a4b7"
-  - name: transcode-worker-image
-    newName: acresenditdevesendit000.azurecr.io/esendit-transcode-worker
-    newTag: "12d3b38"
-  - name: delivery-worker-image
-    newName: acresenditdevesendit000.azurecr.io/esendit-delivery-worker
-    newTag: "12d3b38"
+  # - name: transcode-worker-image
+    # newName: acresenditdevesendit000.azurecr.io/esendit-transcode-worker
+    # newTag: "12d3b38"
+  # - name: delivery-worker-image
+    # newName: acresenditdevesendit000.azurecr.io/esendit-delivery-worker
+    # newTag: "12d3b38"
 
 patchesStrategicMerge:
   - patch.yaml
