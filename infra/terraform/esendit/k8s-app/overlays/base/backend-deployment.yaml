@@ -12,7 +12,9 @@ spec:
     metadata:
       labels:
         app: esendit-backend
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: esendit-backend-sa
       volumes:
         - name: kv-secrets
           csi:
@@ -32,12 +34,15 @@ spec:
           envFrom:
             - configMapRef:
                 name: esendit-config
+            - secretRef:
+                name: esendit-jwt
 
           # ✅ Mount Key Vault secrets (CSI)
           volumeMounts:
             - name: kv-secrets
               mountPath: /mnt/secrets-store
               readOnly: true
+
 
           # ✅ Export env vars from mounted secret files (no K8s Secret dependency)
           command: ["sh", "-c"]
@@ -47,7 +52,7 @@ spec:
               export PG_URL="$(cat /mnt/secrets-store/pg-connection-url)";
               export DATABASE_URL="$PG_URL";
               export REDIS_URL="$(cat /mnt/secrets-store/redis-connection-url)";
-              exec node dist/src/main.js
+              exec node /app/dist/main.js
 
           readinessProbe:
             httpGet:

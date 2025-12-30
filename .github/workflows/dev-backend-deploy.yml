@@ -79,18 +79,30 @@ jobs:
         run: |
           set -euo pipefail
           TAG="${{ inputs.tag }}"
-
+                        
           set_image () {
             local deploy="$1"
             local image="$2"
             local cname
-            cname="$(kubectl -n $NAMESPACE get deploy "$deploy" -o jsonpath='{.spec.template.spec.containers[0].name}')"
-            kubectl -n $NAMESPACE set image "deploy/$deploy" "$cname=$image"
-            kubectl -n $NAMESPACE rollout status "deploy/$deploy" --timeout=10m
+                        
+            cname="$(kubectl -n "$NAMESPACE" get deploy "$deploy" -o jsonpath='{.spec.template.spec.containers[0].name}')"
+                        
+            echo "Before ($deploy):"
+            kubectl -n "$NAMESPACE" get deploy "$deploy" \
+              -o jsonpath='{.spec.template.spec.containers[0].name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}'
+            echo
+                        
+            kubectl -n "$NAMESPACE" set image "deploy/$deploy" "$cname=$image"
+                        
+            echo "After ($deploy):"
+            kubectl -n "$NAMESPACE" get deploy "$deploy" \
+              -o jsonpath='{.spec.template.spec.containers[0].name}{" => "}{.spec.template.spec.containers[0].image}{"\n"}'
+            echo
+                        
+            kubectl -n "$NAMESPACE" rollout status "deploy/$deploy" --timeout=10m
           }
-
-          set_image "esendit-backend"          "${ACR_LOGIN_SERVER}/esendit-backend:${TAG}"
-
+                        
+          set_image "esendit-backend" "${ACR_LOGIN_SERVER}/esendit-backend:${TAG}"
 
       - name: Smoke test
         run: |

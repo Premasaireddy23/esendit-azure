@@ -13,6 +13,14 @@ grafana:
     enabled: true
     size: 5Gi
 
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      searchNamespace: ALL
+      annotations: {}   # avoids nil issues  
+
 prometheus:
   ingress:
     enabled: true

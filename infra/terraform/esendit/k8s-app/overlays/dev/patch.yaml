@@ -1,23 +1,33 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: esendit-backend
+  name: esendit-backend-sa
   namespace: esendit
-spec:
-  template:
-    spec:
-      containers:
-        - name: backend
-          image: acresenditdevesendit000.azurecr.io/esendit/backend:dev
+  annotations:
+    azure.workload.identity/client-id: "8a2ad791-2aa6-43de-905d-f3b8db7cf72d"
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: esendit-worker
+  name: esendit-transcode-sa
   namespace: esendit
-spec:
-  template:
-    spec:
-      containers:
-        - name: worker
-          image: acresenditdevesendit000.azurecr.io/esendit/worker:dev
+  annotations:
+    azure.workload.identity/client-id: "8a2ad791-2aa6-43de-905d-f3b8db7cf72d"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: esendit-delivery-sa
+  namespace: esendit
+  annotations:
+    azure.workload.identity/client-id: "8a2ad791-2aa6-43de-905d-f3b8db7cf72d"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: esendit-config
+  namespace: esendit
+data:
+  STORAGE_DRIVER: "azureblob"
+  AZURE_STORAGE_ACCOUNT: "stesenditdevfo26yg"
+  AZURE_STORAGE_CONTAINER: "esendit-media"

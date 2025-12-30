@@ -12,7 +12,9 @@ spec:
     metadata:
       labels:
         app: esendit-transcode-worker
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: esendit-transcode-sa
       volumes:
         - name: kv-secrets
           csi:
@@ -20,10 +22,9 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: esendit-secrets
-
       containers:
-        - name: worker
-          image: worker-image
+        - name: transcode-worker
+          image: transcode-worker-image
           imagePullPolicy: IfNotPresent
 
           envFrom:

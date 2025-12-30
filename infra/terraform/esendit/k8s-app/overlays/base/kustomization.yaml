@@ -1,3 +1,4 @@
+namespace: esendit
 resources:
   - namespace.yaml
   - backend-configmap.yaml
@@ -6,7 +7,9 @@ resources:
   - frontend-configmap.yaml
   - frontend-deployment.yaml
   - frontend-svc.yaml
-  - delivery-worker.yaml
-  - transcode-worker.yaml
+#  - delivery-worker.yaml 
+#  - transcode-worker.yaml
   - backend-ingress-api.yaml
   - frontend-ingress-api.yaml
+  - serviceaccounts.yaml
+  - esendit-jwt-secret.yaml

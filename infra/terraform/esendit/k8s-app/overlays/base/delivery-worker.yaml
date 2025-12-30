@@ -12,7 +12,9 @@ spec:
     metadata:
       labels:
         app: esendit-delivery-worker
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: esendit-delivery-sa
       volumes:
         - name: kv-secrets
           csi:
@@ -22,8 +24,8 @@ spec:
               secretProviderClass: esendit-secrets
 
       containers:
-        - name: worker
-          image: worker-image
+        - name: deliveryworker
+          image: delivery-worker-image
           imagePullPolicy: IfNotPresent
 
           envFrom:

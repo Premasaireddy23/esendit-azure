@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-esendit
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  esendit-dashboard.json: |-
+    {
+      "uid": "esendit-overview",
+      "title": "eSendIT Overview",
+      "timezone": "browser",
+      "schemaVersion": 39,
+      "version": 1,
+      "refresh": "30s",
+      "time": { "from": "now-6h", "to": "now" },
+      "templating": {
+        "list": [
+          {
+            "type": "constant",
+            "name": "namespace",
+            "label": "Namespace",
+            "query": "esendit",
+            "current": { "text": "esendit", "value": "esendit" }
+          },
+          {
+            "type": "query",
+            "name": "pod",
+            "label": "Pod",
+            "datasource": "Prometheus",
+            "query": "label_values(kube_pod_info{namespace=\"$namespace\"}, pod)",
+            "includeAll": true,
+            "multi": true,
+            "refresh": 2,
+            "current": { "text": "All", "value": "$__all" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Ready Pods (esendit)",
+          "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+          "datasource": "Prometheus",
+          "targets": [
+            { "refId": "A", "expr": "sum(kube_pod_status_ready{namespace=\"$namespace\",condition=\"true\"})" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Pod Restarts (10m)",
+          "gridPos": { "x": 6, "y": 0, "w": 18, "h": 4 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (pod) (increase(kube_pod_container_status_restarts_total{namespace=\"$namespace\"}[10m]))"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU (cores) by Pod",
+          "gridPos": { "x": 0, "y": 4, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",pod=~\"$pod\",container!=\"POD\",container!=\"\"}[5m]))"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Memory Working Set (bytes) by Pod",
+          "gridPos": { "x": 12, "y": 4, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"$pod\",container!=\"POD\",container!=\"\"})"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Ingress Requests/sec (eSendIT)",
+          "gridPos": { "x": 0, "y": 10, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum(rate(nginx_ingress_controller_requests{namespace=\"$namespace\",ingress=~\"esendit-.*\"}[5m]))"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Ingress 5xx/sec (eSendIT)",
+          "gridPos": { "x": 12, "y": 10, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum(rate(nginx_ingress_controller_requests{namespace=\"$namespace\",ingress=~\"esendit-.*\",status=~\"5..\"}[5m]))"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Transcode Transitions/sec",
+          "gridPos": { "x": 0, "y": 16, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            { "refId": "A", "expr": "sum(rate(esendit_transcode_task_transitions_total[5m]))" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Transcode Duration p95 (seconds)",
+          "gridPos": { "x": 12, "y": 16, "w": 12, "h": 6 },
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "histogram_quantile(0.95, sum(rate(esendit_transcode_task_duration_seconds_bucket[5m])) by (le))"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Transcode Tasks by Status/Profile",
+          "gridPos": { "x": 0, "y": 22, "w": 24, "h": 8 },
+          "datasource": "Prometheus",
+          "targets": [
+            { "refId": "A", "expr": "sum by (status, profile) (esendit_transcode_tasks_status_total)" }
+          ]
+        }
+      ]
+    }

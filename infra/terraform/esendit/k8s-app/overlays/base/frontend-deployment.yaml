@@ -13,8 +13,9 @@ spec:
         app: esendit-frontend
     spec:
       containers:
-        - name: esendit-frontend
-          image: acresenditdevesendit000.azurecr.io/esendit-frontend:120
+        - name: frontend
+          image: frontend-image
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
           readinessProbe:

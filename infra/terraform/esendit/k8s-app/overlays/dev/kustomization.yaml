@@ -1,9 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: esendit
+
 resources:
   - ../base
+
 images:
+  - name: frontend-image
+    newName: acresenditdevesendit000.azurecr.io/esendit-frontend
+    newTag: "12d3b38"
   - name: backend-image
     newName: acresenditdevesendit000.azurecr.io/esendit-backend
-    newTag: "121"
-  - name: worker-image
-    newName: acresenditdevesendit000.azurecr.io/esendit-backend
-    newTag: "121"
+    newTag: "905a4b7"
+  - name: transcode-worker-image
+    newName: acresenditdevesendit000.azurecr.io/esendit-transcode-worker
+    newTag: "12d3b38"
+  - name: delivery-worker-image
+    newName: acresenditdevesendit000.azurecr.io/esendit-delivery-worker
+    newTag: "12d3b38"
+
+patchesStrategicMerge:
+  - patch.yaml
