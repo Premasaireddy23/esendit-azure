@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: esendit-migrate-9157e1d
+  name: esendit-migrate-manual
   namespace: esendit
 spec:
   ttlSecondsAfterFinished: 900
@@ -19,7 +19,7 @@ spec:
               secretProviderClass: esendit-secrets
       containers:
         - name: migrate
-          image: acresenditdevesendit000.azurecr.io/esendit-backend:9157e1d
+          image: acresenditdevesendit000.azurecr.io/esendit-backend:8b9e7ce
           volumeMounts:
             - name: kv-secrets
               mountPath: /mnt/secrets-store

@@ -9,10 +9,10 @@ resources:
 images:
   - name: frontend-image
     newName: acresenditdevesendit000.azurecr.io/esendit-frontend
-    newTag: "61e0fdc"
+    newTag: "144724a"
   - name: backend-image
     newName: acresenditdevesendit000.azurecr.io/esendit-backend
-    newTag: "905a4b7"
+    newTag: "aeabf15"
   # - name: transcode-worker-image
     # newName: acresenditdevesendit000.azurecr.io/esendit-transcode-worker
     # newTag: "12d3b38"

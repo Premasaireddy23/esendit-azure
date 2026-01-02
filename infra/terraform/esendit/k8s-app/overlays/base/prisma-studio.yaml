@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prisma-studio
+  namespace: esendit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prisma-studio
+  template:
+    metadata:
+      labels:
+        app: prisma-studio
+    spec:
+      containers:
+        - name: studio
+          image: acresenditdevesendit000.azurecr.io/esendit-debug:latest
+          imagePullPolicy: Always
+          env:
+            - name: DB_USER
+              value: "esenditadmin"
+            - name: DB_PASSWORD
+              value: "sP%7D%24aH2SRY5%26B%7D%21zX8Q%25URp-"  # <-- put your URL-encoded password here
+            - name: DB_HOST
+              value: "pg-esendit-dev-esendit000.postgres.database.azure.com"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "esendit"
+            - name: DB_SSLMODE
+              value: "require"
+          command: ["bash","-lc"]
+          args:
+            - |
+              export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}"
+              export HOST=0.0.0.0
+              export BROWSER=none
+              prisma studio --port 5555 --url="$DATABASE_URL"
+          ports:
+            - containerPort: 5555
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prisma-studio
+  namespace: esendit
+spec:
+  selector:
+    app: prisma-studio
+  ports:
+    - name: http
+      port: 5555
+      targetPort: 5555
+      
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prisma-studio
+  namespace: esendit
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prisma-studio.4.187.181.124.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prisma-studio
+                port:
+                  number: 5555
+

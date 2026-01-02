@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: esendit-bootstrap-secrets
+  namespace: esendit
+spec:
+  ttlSecondsAfterFinished: 3600
+  backoffLimit: 6
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: bootstrap
+          image: acresenditdevesendit000.azurecr.io/esendit-backend:8b9e7ce
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: esendit-bootstrap-secrets
+          command: ["sh", "-lc"]
+          args:
+            - |
+              echo "[bootstrap-job] starting..."
+              node dist/scripts/bootstrap.js
+              echo "[bootstrap-job] done."
