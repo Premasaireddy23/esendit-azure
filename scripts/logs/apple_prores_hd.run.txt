@@ -1,0 +1,3 @@
+[container] RUN: ffmpeg -hide_banner -y -loglevel debug -i /work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4 -map_metadata -1 -c:v prores_ks -profile:v 3 -vendor apl0 -bits_per_mb 8000 -r 25 -s 1920x1080 -pix_fmt yuv422p10le -aspect 16:9 -flags +ildct+low_delay -metadata company_name=eSendIT -metadata product_name=Cloud\ Transcoder -metadata product_version=2.0 -metadata creation_time=2026-02-08T20:27:14Z -c:a pcm_s24le -ar 48000 -map 0:v:0 -map 0:a\? -movflags +use_metadata_tags -fflags +bitexact -flags:v +bitexact -flags:a +bitexact /work/out/apple_prores_hd.out.out 
+[container] OUT=/work/out/apple_prores_hd.out.out
+[container] timeout=900s

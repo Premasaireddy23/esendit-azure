@@ -1,0 +1,5 @@
+backend	backend--0000010,backend--0000011
+esendit-media-worker	esendit-media-worker--0000009
+esendit-preset-worker	esendit-preset-worker--0000009
+esendit-bulk-worker	esendit-bulk-worker--0000009
+esendit-delivery-worker	esendit-delivery-worker--0000009

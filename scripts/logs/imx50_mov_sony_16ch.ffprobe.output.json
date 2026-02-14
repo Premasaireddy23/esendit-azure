@@ -1,0 +1,209 @@
+{
+    "programs": [
+
+    ],
+    "streams": [
+        {
+            "index": 0,
+            "codec_name": "mpeg2video",
+            "codec_type": "video",
+            "tags": {
+                "timecode": "10:00:00:00"
+            },
+            "side_data_list": [
+                {
+
+                }
+            ]
+        },
+        {
+            "index": 1,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 2,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 3,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 4,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 5,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 6,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 7,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 8,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 9,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 10,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 11,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 12,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 13,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 14,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 15,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FL)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 16,
+            "codec_name": "pcm_s24le",
+            "codec_type": "audio",
+            "channels": 1,
+            "channel_layout": "1 channels (FR)",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 17,
+            "codec_type": "data",
+            "tags": {
+                "timecode": "10:00:00:00"
+            }
+        }
+    ],
+    "format": {
+        "filename": "/work/out/imx50_mov_sony_16ch.out.mov",
+        "nb_streams": 18,
+        "nb_programs": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "30.528000",
+        "size": "257816175",
+        "bit_rate": "67561890",
+        "probe_score": 100,
+        "tags": {
+            "major_brand": "qt  ",
+            "minor_version": "512",
+            "compatible_brands": "qt  ",
+            "product_version": "2.0",
+            "timecode": "10:00:00:00",
+            "company_name": "eSendIT",
+            "product_name": "Cloud Transcoder",
+            "creation_time": "2026-02-08T20:30:35Z"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "programs": [
+
+    ],
+    "streams": [
+        {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "tags": {
+
+            }
+        },
+        {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "tags": {
+
+            }
+        }
+    ],
+    "format": {
+        "filename": "/work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4",
+        "nb_streams": 2,
+        "nb_programs": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "30.526667",
+        "size": "9840497",
+        "bit_rate": "2578859",
+        "probe_score": 100,
+        "tags": {
+            "major_brand": "mp42",
+            "minor_version": "0",
+            "compatible_brands": "mp42mp41isomavc1",
+            "creation_time": "2015-08-07T09:13:32.000000Z"
+        }
+    }
+}

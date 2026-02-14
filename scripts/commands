@@ -1,0 +1,27 @@
+node /app/dist/scripts/seed-account-presets.js --file /app/downloadPresets_linux_profiles.json
+
+./run_ffmpeg_preset_debug.sh \
+  -p xdcamhd422_mxf_zee_loudnorm \
+  -i /path/to/failing.mxf \
+  -j ./downloadPresets_linux_profiles.fixed2.json \
+  -f ./backend/backend/Dockerfile \
+  -c ./backend/backend \
+  --timeout 900
+
+
+./run_ffmpeg_preset_debug.sh \
+  -p imx50_mov_sony_16ch \
+  -i /home/saisruthi/esendit-2.0/azure/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4 \
+  -j /home/saisruthi/esendit-2.0/backend/backend/downloadPresets_linux_profiles.json \
+  -f /home/saisruthi/esendit-2.0/backend/backend/Dockerfile \
+  -c /home/saisruthi/esendit-2.0/backend/backend \
+  --timeout 900
+
+RG=esendit
+APP=esendit-delivery-worker
+
+az containerapp exec -g "$RG" -n "$APP" --command "bash"
+
+ID="$(az containerapp show -g "$RG" -n "$APP" --query id -o tsv)"
+az rest -m post -u "https://management.azure.com${ID}/stop?api-version=2025-07-01"
+export DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"

@@ -1,0 +1,99 @@
+Splitting the commandline.
+Reading option '-hide_banner' ... matched as option 'hide_banner' (do not show program banner) with argument '1'.
+Reading option '-y' ... matched as option 'y' (overwrite output files) with argument '1'.
+Reading option '-loglevel' ... matched as option 'loglevel' (set logging level) with argument 'debug'.
+Reading option '-i' ... matched as input url with argument '/work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4'.
+Reading option '-map_metadata' ... matched as option 'map_metadata' (set metadata information of outfile from infile) with argument '-1'.
+Reading option '-c:v' ... matched as option 'c' (codec name) with argument 'prores_ks'.
+Reading option '-profile:v' ... matched as option 'profile' (set profile) with argument '3'.
+Reading option '-vendor' ... matched as AVOption 'vendor' with argument 'apl0'.
+Reading option '-bits_per_mb' ... matched as AVOption 'bits_per_mb' with argument '8000'.
+Reading option '-r' ... matched as option 'r' (set frame rate (Hz value, fraction or abbreviation)) with argument '25'.
+Reading option '-s' ... matched as option 's' (set frame size (WxH or abbreviation)) with argument '1920x1080'.
+Reading option '-pix_fmt' ... matched as option 'pix_fmt' (set pixel format) with argument 'yuv422p10le'.
+Reading option '-aspect' ... matched as option 'aspect' (set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)) with argument '16:9'.
+Reading option '-flags' ... matched as AVOption 'flags' with argument '+ildct+low_delay'.
+Reading option '-metadata' ... matched as option 'metadata' (add metadata) with argument 'company_name=eSendIT'.
+Reading option '-metadata' ... matched as option 'metadata' (add metadata) with argument 'product_name=Cloud Transcoder'.
+Reading option '-metadata' ... matched as option 'metadata' (add metadata) with argument 'product_version=2.0'.
+Reading option '-metadata' ... matched as option 'metadata' (add metadata) with argument 'creation_time=2026-02-08T20:27:14Z'.
+Reading option '-c:a' ... matched as option 'c' (codec name) with argument 'pcm_s24le'.
+Reading option '-ar' ... matched as option 'ar' (set audio sampling rate (in Hz)) with argument '48000'.
+Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '0:v:0'.
+Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '0:a?'.
+Reading option '-movflags' ... matched as AVOption 'movflags' with argument '+use_metadata_tags'.
+Reading option '-fflags' ... matched as AVOption 'fflags' with argument '+bitexact'.
+Reading option '-flags:v' ... matched as AVOption 'flags:v' with argument '+bitexact'.
+Reading option '-flags:a' ... matched as AVOption 'flags:a' with argument '+bitexact'.
+Reading option '/work/out/apple_prores_hd.out.out' ... matched as output url.
+Finished splitting the commandline.
+Parsing a group of options: global .
+Applying option hide_banner (do not show program banner) with argument 1.
+Applying option y (overwrite output files) with argument 1.
+Applying option loglevel (set logging level) with argument debug.
+Successfully parsed a group of options.
+Parsing a group of options: input url /work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4.
+Successfully parsed a group of options.
+Opening an input file: /work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4.
+[NULL @ 0x5f532d885140] Opening '/work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4' for reading
+[file @ 0x5f532d885980] Setting default whitelist 'file,crypto,data'
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Format mov,mp4,m4a,3gp,3g2,mj2 probed with size=2048 and score=100
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] ISO: File Type Major Brand: mp42
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Unknown dref type 0x206c7275 size 12
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Processing st: 0, edit list 0 - media time: 2, duration: 901
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Offset DTS by 2 to make first pts zero.
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Setting codecpar->delay to 2 for stream st: 0
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Unknown dref type 0x206c7275 size 12
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Processing st: 1, edit list 0 - media time: 0, duration: 1465280
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] Before avformat_find_stream_info() pos: 19091 bytes read:32768 seeks:0 nb_streams:2
+[h264 @ 0x5f532d8866c0] nal_unit_type: 7(SPS), nal_ref_idc: 3
+[h264 @ 0x5f532d8866c0] nal_unit_type: 8(PPS), nal_ref_idc: 3
+[h264 @ 0x5f532d8866c0] nal_unit_type: 7(SPS), nal_ref_idc: 3
+[h264 @ 0x5f532d8866c0] nal_unit_type: 8(PPS), nal_ref_idc: 3
+[h264 @ 0x5f532d8866c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[h264 @ 0x5f532d8866c0] nal_unit_type: 5(IDR), nal_ref_idc: 3
+[h264 @ 0x5f532d8866c0] Format yuv420p chosen by get_format().
+[h264 @ 0x5f532d8866c0] Reinit context to 1280x720, pix_fmt: yuv420p
+[h264 @ 0x5f532d8866c0] no picture 
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] All info found
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x5f532d885140] After avformat_find_stream_info() pos: 397869 bytes read:410872 seeks:0 frames:32
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/work/in/fa88d2ce-49b5-44be-a8eb-13952142518e-file_example_MP4_1280_10MG.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: mp42mp41isomavc1
+    creation_time   : 2015-08-07T09:13:32.000000Z
+  Duration: 00:00:30.53, start: 0.000000, bitrate: 2578 kb/s
+  Stream #0:0[0x1](und), 31, 1/30: Video: h264 (High), 1 reference frame (avc1 / 0x31637661), yuv420p(tv, bt709, progressive, left), 1280x720 [SAR 1:1 DAR 16:9], 0/1, 2453 kb/s, 30 fps, 30 tbr, 30 tbn (default)
+    Metadata:
+      creation_time   : 2015-08-07T09:13:32.000000Z
+      handler_name    : L-SMASH Video Handler
+      vendor_id       : [0][0][0][0]
+      encoder         : AVC Coding
+  Stream #0:1[0x2](und), 1, 1/48000: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 160 kb/s (default)
+    Metadata:
+      creation_time   : 2015-08-07T09:13:32.000000Z
+      handler_name    : L-SMASH Audio Handler
+      vendor_id       : [0][0][0][0]
+Successfully opened the file.
+Parsing a group of options: output url /work/out/apple_prores_hd.out.out.
+Applying option map_metadata (set metadata information of outfile from infile) with argument -1.
+Applying option c:v (codec name) with argument prores_ks.
+Applying option profile:v (set profile) with argument 3.
+Applying option r (set frame rate (Hz value, fraction or abbreviation)) with argument 25.
+Applying option s (set frame size (WxH or abbreviation)) with argument 1920x1080.
+Applying option pix_fmt (set pixel format) with argument yuv422p10le.
+Applying option aspect (set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)) with argument 16:9.
+Applying option metadata (add metadata) with argument company_name=eSendIT.
+Applying option metadata (add metadata) with argument product_name=Cloud Transcoder.
+Applying option metadata (add metadata) with argument product_version=2.0.
+Applying option metadata (add metadata) with argument creation_time=2026-02-08T20:27:14Z.
+Applying option c:a (codec name) with argument pcm_s24le.
+Applying option ar (set audio sampling rate (in Hz)) with argument 48000.
+Applying option map (set input stream mapping) with argument 0:v:0.
+Applying option map (set input stream mapping) with argument 0:a?.
+Successfully parsed a group of options.
+Opening an output file: /work/out/apple_prores_hd.out.out.
+[NULL @ 0x5f532d89d340] Unable to find a suitable output format for '/work/out/apple_prores_hd.out.out'
+/work/out/apple_prores_hd.out.out: Invalid argument
+[AVIOContext @ 0x5f532d88de00] Statistics: 410872 bytes read, 0 seeks
