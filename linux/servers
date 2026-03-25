@@ -1,0 +1,8 @@
+!!
+!$
+$_
+!*
+lsof
+fuser
+git clean -nd
+git clean -fd

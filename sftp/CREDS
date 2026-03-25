@@ -1,0 +1,19 @@
+Recommended (use hostname):
+
+Host: esendit-ftp-32628-27645.northeurope.azurecontainer.io
+
+Port: 21
+
+User: ftpuser
+
+Pass: Test@12345678
+
+finalPath: upload
+
+Passive: true
+
+Fallback (use IP):
+
+Host: 20.105.102.30 (will change if you redeploy)
+
+Everything else same
