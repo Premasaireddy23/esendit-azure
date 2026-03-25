@@ -34,7 +34,7 @@ npx prisma migrate deploy
 
 
 export DOCKERHUB_USER="premasaireddy" 
-export DOCKERHUB_TOKEN="dckr_pat_z1ghQxyZocVOEzGhmyJsm5I0wF8"
+#export DOCKERHUB_TOKEN="dckr_pat_z1ghQxyZocVOEzGhmyJsm5I0wF8"
 
 this is my frontend and backend application code understand it. then i will ask what to change or improve . then make the changes with out breaking existing functionalities and features 
 
