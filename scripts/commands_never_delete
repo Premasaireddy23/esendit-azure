@@ -25,7 +25,7 @@ az containerapp exec -g "$RG" -n "$APP" --command "bash"
 ID="$(az containerapp show -g "$RG" -n "$APP" --query id -o tsv)"
 az rest -m post -u "https://management.azure.com${ID}/stop?api-version=2025-07-01"
 
-#export DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
+export DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
 
 unset DATABASE_URL
 
@@ -38,8 +38,11 @@ export DOCKERHUB_USER="premasaireddy"
 
 this is my frontend and backend application code understand it. then i will ask what to change or improve . then make the changes with out breaking existing functionalities and features 
 
+this is important make remember or highlight across all the chats, when making new changes we should dont breaking existing features, functionalities and operation flow everything are highly coupled together in both backend and frontend 
 
-----
+so we have to additive manner only 
+
+----application migration-----
 cd ~/esendit-2.0/backend/backend
 
 #export DATABASE_URL="postgresql://esendit:Premasai3@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
@@ -47,3 +50,26 @@ export ACCOUNT_CODE="default"
 export PRESETS_FILE="$PWD/downloadPresets_linux_profiles.json"
 
 npx tsx src/scripts/seed-account-presets.ts
+
+
+----db migration------
+
+npx prisma migrate dev --name add_aspera_filecatalyst_delivery_protocol
+npx prisma generate
+
+export DATABASE_URL="your-azure-postgres-url"
+npx prisma migrate deploy
+npx prisma generate
+
+-----------
+az containerapp exec --name esendit-preset-worker --resource-group esendit
+
+
+----seed permissions----
+cd /home/saisruthi/esendit-2.0/backend/backend
+
+DATABASE_URL='your_db_url' \
+ACCOUNT_CODE='default' \
+ADMIN_ROLE_NAME='Admin' \
+RESET_ADMIN_ROLE_PERMS=false \
+npx tsx src/scripts/seed-permissions.ts

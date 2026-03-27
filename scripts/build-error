@@ -1,5 +1,52 @@
+Deploying tag: v140
+Image: esendit.azurecr.io/esendit-backend:v140
+2026/03/25 04:34:48 Downloading source code...
+2026/03/25 04:34:48 Finished downloading source code
+2026/03/25 04:34:49 Using acb_vol_ae742bb9-8a6f-4f11-a94e-dd8686a7c75e as the home volume
+2026/03/25 04:34:49 Setting up Docker configuration...
+2026/03/25 04:34:49 Successfully set up Docker configuration
+2026/03/25 04:34:49 Logging in to registry: esendit.azurecr.io
+2026/03/25 04:34:50 Successfully logged into esendit.azurecr.io
+2026/03/25 04:34:50 Executing step ID: build. Timeout(sec): 28800, Working directory: '', Network: ''
+2026/03/25 04:34:50 Scanning for dependencies...
+2026/03/25 04:34:50 Successfully scanned dependencies
+2026/03/25 04:34:50 Launching container with name: build
+Sending build context to Docker daemon   9.46MB
+Step 1/30 : FROM node:20-bookworm-slim AS deps
+20-bookworm-slim: Pulling from library/node
+6db0909c4473: Pulling fs layer
+826a82fd63cc: Pulling fs layer
+cd109496182f: Pulling fs layer
+74251002e6dd: Pulling fs layer
+44d7c76471e2: Pulling fs layer
+74251002e6dd: Waiting
+44d7c76471e2: Waiting
+826a82fd63cc: Verifying Checksum
+826a82fd63cc: Download complete
+6db0909c4473: Verifying Checksum
+6db0909c4473: Download complete
+cd109496182f: Verifying Checksum
+cd109496182f: Download complete
+74251002e6dd: Verifying Checksum
+74251002e6dd: Download complete
+44d7c76471e2: Verifying Checksum
+44d7c76471e2: Download complete
+6db0909c4473: Pull complete
+826a82fd63cc: Pull complete
+cd109496182f: Pull complete
+74251002e6dd: Pull complete
+44d7c76471e2: Pull complete
+Digest: sha256:17281e8d1dc4d671976c6b89a12f47a44c2f390b63a989e2e327631041f544fd
+Status: Downloaded newer image for node:20-bookworm-slim
+ ---> a42f4ddc4f03
+Step 2/30 : WORKDIR /app
+ ---> Running in ec313f4c0c45
+Removing intermediate container ec313f4c0c45
+ ---> 7a4a88893fce
+Step 3/30 : COPY package*.json ./
+ ---> 0f75ad6309a7
 Step 4/30 : RUN npm ci
- ---> Running in 27c9dd61fa9e
+ ---> Running in ed6084b2757c
 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
 npm warn deprecated lodash.isequal@4.5.0: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
@@ -8,7 +55,2929 @@ npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supporte
 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 
+
 added 748 packages, and audited 749 packages in 23s
 
+111 packages are looking for funding
+  run `npm fund` for details
 
-----
+33 vulnerabilities (3 low, 14 moderate, 13 high, 3 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.12.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.0
+npm notice To update run: npm install -g npm@11.12.0
+npm notice
+Removing intermediate container ed6084b2757c
+ ---> 5d4110afbe7e
+Step 5/30 : FROM node:20-bookworm-slim AS build
+20-bookworm-slim: Pulling from library/node
+Digest: sha256:17281e8d1dc4d671976c6b89a12f47a44c2f390b63a989e2e327631041f544fd
+Status: Image is up to date for node:20-bookworm-slim
+ ---> a42f4ddc4f03
+Step 6/30 : WORKDIR /app
+ ---> Using cache
+ ---> 7a4a88893fce
+Step 7/30 : COPY --from=deps /app/node_modules ./node_modules
+
+ ---> 7076c7a9c3f4
+Step 8/30 : COPY . .
+ ---> 135a839fcfa0
+Step 9/30 : RUN npx prisma generate
+ ---> Running in e39b4bd790f9
+[dotenv@17.2.3] injecting env (10) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+Loaded Prisma config from prisma.config.ts.
+
+prisma:warn Prisma failed to detect the libssl/openssl version to use, and may not work as expected. Defaulting to "openssl-1.1.x".
+Please manually install OpenSSL via `apt-get update -y && apt-get install -y openssl` and try installing Prisma again. If you're running Prisma on Docker, add this command to your Dockerfile, or switch to an image that already has OpenSSL installed.
+prisma:warn Prisma failed to detect the libssl/openssl version to use, and may not work as expected. Defaulting to "openssl-1.1.x".
+Please manually install OpenSSL via `apt-get update -y && apt-get install -y openssl` and try installing Prisma again. If you're running Prisma on Docker, add this command to your Dockerfile, or switch to an image that already has OpenSSL installed.
+Prisma schema loaded from prisma/schema.prisma.
+
+✔ Generated Prisma Client (v7.2.0) to ./node_modules/@prisma/client in 799ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.12.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.0
+npm notice To update run: npm install -g npm@11.12.0
+npm notice
+Removing intermediate container e39b4bd790f9
+ ---> 1e55f4bd7eae
+Step 10/30 : RUN npm run build
+ ---> Running in 34083f20e7f5
+
+> esendit-backend@1.0.0 build
+> npx nest build
+
+Removing intermediate container 34083f20e7f5
+ ---> ac59d65407c9
+Step 11/30 : RUN npm prune --omit=dev
+ ---> Running in ac6c8215472f
+
+up to date, audited 531 packages in 8s
+
+80 packages are looking for funding
+  run `npm fund` for details
+
+22 vulnerabilities (1 low, 8 moderate, 10 high, 3 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+Removing intermediate container ac6c8215472f
+ ---> 379d9fe0419c
+Step 12/30 : FROM node:20-bookworm-slim AS runner
+20-bookworm-slim: Pulling from library/node
+Digest: sha256:17281e8d1dc4d671976c6b89a12f47a44c2f390b63a989e2e327631041f544fd
+Status: Image is up to date for node:20-bookworm-slim
+ ---> a42f4ddc4f03
+Step 13/30 : WORKDIR /app
+ ---> Using cache
+ ---> 7a4a88893fce
+Step 14/30 : ARG ENABLE_FFMBC=1
+ ---> Running in fe68cc395e96
+Removing intermediate container fe68cc395e96
+ ---> 1a90546d036c
+Step 15/30 : ENV NODE_ENV=production
+ ---> Running in 7d70a126da4a
+Removing intermediate container 7d70a126da4a
+ ---> 5c289a1c0dc0
+Step 16/30 : ENV FFMPEG_BIN=/usr/bin/ffmpeg
+ ---> Running in 736043b73858
+Removing intermediate container 736043b73858
+ ---> 0cbb129ef6f5
+Step 17/30 : ENV FFMBC_BIN=/usr/local/bin/ffmbc
+ ---> Running in d5d1a4ebdd26
+Removing intermediate container d5d1a4ebdd26
+ ---> b7fc0d99efed
+Step 18/30 : ENV PRESETS_FILE=/app/downloadPresets_linux_profiles.json
+ ---> Running in a0ad69b800fb
+Removing intermediate container a0ad69b800fb
+ ---> f31721b30ff0
+Step 19/30 : RUN apt-get update && apt-get install -y --no-install-recommends     dumb-init ca-certificates procps ffmpeg curl mediainfo jq wget gnupg file  && wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-26_all.deb  && dpkg -i repo-mediaarea_1.0-26_all.deb  && apt-get update  && apt-get install -y --no-install-recommends qcli qctools  && rm -f repo-mediaarea_1.0-26_all.deb  && rm -rf /var/lib/apt/lists/*
+ ---> Running in 9ef77353029e
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8792 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [294 kB]
+Fetched 9347 kB in 2s (5750 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  dirmngr fontconfig fontconfig-config fonts-dejavu-core gnupg-l10n
+  gnupg-utils gpg gpg-agent gpg-wks-client gpg-wks-server gpgconf gpgsm
+  libaom3 libasound2 libasound2-data libass9 libassuan0 libasyncns0
+  libavc1394-0 libavcodec59 libavdevice59 libavfilter8 libavformat59
+  libavutil57 libblas3 libbluray2 libbrotli1 libbs2b0 libbsd0 libcaca0
+  libcairo-gobject2 libcairo2 libcdio-cdda2 libcdio-paranoia2 libcdio19
+  libchromaprint1 libcjson1 libcodec2-1.0 libcurl3-gnutls libcurl4 libdatrie1
+  libdav1d6 libdbus-1-3 libdc1394-25 libdecor-0-0 libdeflate0 libdrm-amdgpu1
+  libdrm-common libdrm-intel1 libdrm-nouveau2 libdrm-radeon1 libdrm2 libedit2
+  libelf1 libepoxy0 libexpat1 libflac12 libflite1 libfontconfig1 libfreetype6
+  libfribidi0 libgbm1 libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-common libgfortran5
+  libgl1 libgl1-mesa-dri libglapi-mesa libglib2.0-0 libglvnd0 libglx-mesa0
+  libglx0 libgme0 libgomp1 libgraphite2-3 libgsm1 libgssapi-krb5-2
+  libharfbuzz0b libhwy1 libicu72 libiec61883-0 libjack-jackd2-0 libjbig0
+  libjpeg62-turbo libjq1 libjxl0.7 libk5crypto3 libkeyutils1 libkrb5-3
+  libkrb5support0 libksba8 liblapack3 liblcms2-2 libldap-2.5-0 liblerc4
+  liblilv-0-0 libllvm15 libmagic-mgc libmagic1 libmbedcrypto7 libmediainfo0v5
+  libmfx1 libmms0 libmp3lame0 libmpg123-0 libmysofa1 libncursesw6
+  libnghttp2-14 libnorm1 libnpth0 libnuma1 libogg0 libonig5 libopenal-data
+  libopenal1 libopenjp2-7 libopenmpt0 libopus0 libpango-1.0-0
+  libpangocairo-1.0-0 libpangoft2-1.0-0 libpciaccess0 libpgm-5.3-0
+  libpixman-1-0 libplacebo208 libpng16-16 libpocketsphinx3 libpostproc56
+  libproc2-0 libpsl5 libpulse0 libquadmath0 librabbitmq4 librav1e0
+  libraw1394-11 libreadline8 librist4 librsvg2-2 librtmp1 librubberband2
+  libsamplerate0 libsasl2-2 libsasl2-modules-db libsdl2-2.0-0
+  libsensors-config libsensors5 libserd-0-0 libshine3 libslang2 libsnappy1v5
+  libsndfile1 libsndio7.0 libsodium23 libsord-0-0 libsoxr0 libspeex1
+  libsphinxbase3 libsqlite3-0 libsratom-0-0 libsrt1.5-gnutls libssh-gcrypt-4
+  libssh2-1 libssl3 libsvtav1enc1 libswresample4 libswscale6 libthai-data
+  libthai0 libtheora0 libtiff6 libtinyxml2-9 libtwolame0 libudfread0
+  libusb-1.0-0 libva-drm2 libva-x11-2 libva2 libvdpau1 libvidstab1.1
+  libvorbis0a libvorbisenc2 libvorbisfile3 libvpx7 libvulkan1
+  libwayland-client0 libwayland-cursor0 libwayland-egl1 libwayland-server0
+  libwebp7 libwebpmux3 libx11-6 libx11-data libx11-xcb1 libx264-164
+  libx265-199 libxau6 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0
+  libxcb-randr0 libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1
+  libxcb-xfixes0 libxcb1 libxcursor1 libxdmcp6 libxext6 libxfixes3 libxi6
+  libxkbcommon0 libxml2 libxrandr2 libxrender1 libxshmfence1 libxss1 libxv1
+  libxvidcore4 libxxf86vm1 libz3-4 libzen0v5 libzimg2 libzmq5 libzvbi-common
+  libzvbi0 ocl-icd-libopencl1 openssl pinentry-curses readline-common
+  shared-mime-info x11-common xkb-data
+Suggested packages:
+  dbus-user-session libpam-systemd pinentry-gnome3 tor ffmpeg-doc parcimonie
+  xloadimage scdaemon libasound2-plugins alsa-utils libcuda1 libnvcuvid1
+  libnvidia-encode1 libbluray-bdj low-memory-monitor krb5-doc krb5-user jackd2
+  liblcms2-utils libportaudio2 opus-tools pciutils pulseaudio libraw1394-doc
+  librsvg2-bin xdg-utils lm-sensors serdi sndiod sordi speex mediainfo-gui
+  opencl-icd pinentry-doc readline-doc
+Recommended packages:
+  alsa-ucm-conf alsa-topology-conf libaacs0 dbus libdecor-0-plugin-1-cairo
+  | libdecor-0-plugin-1 libgdk-pixbuf2.0-bin libglib2.0-data xdg-user-dirs
+  krb5-locales libldap-common libgpm2 pocketsphinx-en-us publicsuffix
+  librsvg2-common libsasl2-modules va-driver-all | va-driver vdpau-driver-all
+  | vdpau-driver mesa-vulkan-drivers | vulkan-icd psmisc
+The following NEW packages will be installed:
+  ca-certificates curl dirmngr dumb-init ffmpeg file fontconfig
+  fontconfig-config fonts-dejavu-core gnupg gnupg-l10n gnupg-utils gpg
+  gpg-agent gpg-wks-client gpg-wks-server gpgconf gpgsm jq libaom3 libasound2
+  libasound2-data libass9 libassuan0 libasyncns0 libavc1394-0 libavcodec59
+  libavdevice59 libavfilter8 libavformat59 libavutil57 libblas3 libbluray2
+  libbrotli1 libbs2b0 libbsd0 libcaca0 libcairo-gobject2 libcairo2
+  libcdio-cdda2 libcdio-paranoia2 libcdio19 libchromaprint1 libcjson1
+  libcodec2-1.0 libcurl3-gnutls libcurl4 libdatrie1 libdav1d6 libdbus-1-3
+  libdc1394-25 libdecor-0-0 libdeflate0 libdrm-amdgpu1 libdrm-common
+  libdrm-intel1 libdrm-nouveau2 libdrm-radeon1 libdrm2 libedit2 libelf1
+  libepoxy0 libexpat1 libflac12 libflite1 libfontconfig1 libfreetype6
+  libfribidi0 libgbm1 libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-common libgfortran5
+  libgl1 libgl1-mesa-dri libglapi-mesa libglib2.0-0 libglvnd0 libglx-mesa0
+  libglx0 libgme0 libgomp1 libgraphite2-3 libgsm1 libgssapi-krb5-2
+  libharfbuzz0b libhwy1 libicu72 libiec61883-0 libjack-jackd2-0 libjbig0
+  libjpeg62-turbo libjq1 libjxl0.7 libk5crypto3 libkeyutils1 libkrb5-3
+  libkrb5support0 libksba8 liblapack3 liblcms2-2 libldap-2.5-0 liblerc4
+  liblilv-0-0 libllvm15 libmagic-mgc libmagic1 libmbedcrypto7 libmediainfo0v5
+  libmfx1 libmms0 libmp3lame0 libmpg123-0 libmysofa1 libncursesw6
+  libnghttp2-14 libnorm1 libnpth0 libnuma1 libogg0 libonig5 libopenal-data
+  libopenal1 libopenjp2-7 libopenmpt0 libopus0 libpango-1.0-0
+  libpangocairo-1.0-0 libpangoft2-1.0-0 libpciaccess0 libpgm-5.3-0
+  libpixman-1-0 libplacebo208 libpng16-16 libpocketsphinx3 libpostproc56
+  libproc2-0 libpsl5 libpulse0 libquadmath0 librabbitmq4 librav1e0
+  libraw1394-11 libreadline8 librist4 librsvg2-2 librtmp1 librubberband2
+  libsamplerate0 libsasl2-2 libsasl2-modules-db libsdl2-2.0-0
+  libsensors-config libsensors5 libserd-0-0 libshine3 libslang2 libsnappy1v5
+  libsndfile1 libsndio7.0 libsodium23 libsord-0-0 libsoxr0 libspeex1
+  libsphinxbase3 libsqlite3-0 libsratom-0-0 libsrt1.5-gnutls libssh-gcrypt-4
+  libssh2-1 libssl3 libsvtav1enc1 libswresample4 libswscale6 libthai-data
+  libthai0 libtheora0 libtiff6 libtinyxml2-9 libtwolame0 libudfread0
+  libusb-1.0-0 libva-drm2 libva-x11-2 libva2 libvdpau1 libvidstab1.1
+  libvorbis0a libvorbisenc2 libvorbisfile3 libvpx7 libvulkan1
+  libwayland-client0 libwayland-cursor0 libwayland-egl1 libwayland-server0
+  libwebp7 libwebpmux3 libx11-6 libx11-data libx11-xcb1 libx264-164
+  libx265-199 libxau6 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0
+  libxcb-randr0 libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1
+  libxcb-xfixes0 libxcb1 libxcursor1 libxdmcp6 libxext6 libxfixes3 libxi6
+  libxkbcommon0 libxml2 libxrandr2 libxrender1 libxshmfence1 libxss1 libxv1
+  libxvidcore4 libxxf86vm1 libz3-4 libzen0v5 libzimg2 libzmq5 libzvbi-common
+  libzvbi0 mediainfo ocl-icd-libopencl1 openssl pinentry-curses procps
+  readline-common shared-mime-info wget x11-common xkb-data
+0 upgraded, 244 newly installed, 0 to remove and 0 not upgraded.
+Need to get 151 MB of archives.
+After this operation, 531 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libproc2-0 amd64 2:4.0.2-3 [62.8 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 procps amd64 2:4.0.2-3 [709 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 readline-common all 8.2-1.3 [69.0 kB]
+Get:5 http://deb.debian.org/debian-security bookworm-security/main amd64 libssl3 amd64 3.0.18-1~deb12u2 [2030 kB]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 openssl amd64 3.0.18-1~deb12u2 [1433 kB]
+Get:7 http://deb.debian.org/debian bookworm/main amd64 ca-certificates all 20230311+deb12u1 [155 kB]
+Get:8 http://deb.debian.org/debian bookworm/main amd64 libmagic-mgc amd64 1:5.44-3 [305 kB]
+Get:9 http://deb.debian.org/debian bookworm/main amd64 libmagic1 amd64 1:5.44-3 [104 kB]
+Get:10 http://deb.debian.org/debian bookworm/main amd64 file amd64 1:5.44-3 [42.5 kB]
+Get:11 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+Get:12 http://deb.debian.org/debian bookworm/main amd64 wget amd64 1.21.3-1+deb12u1 [937 kB]
+Get:13 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+Get:14 http://deb.debian.org/debian bookworm/main amd64 libkrb5support0 amd64 1.20.1-2+deb12u4 [33.2 kB]
+Get:15 http://deb.debian.org/debian bookworm/main amd64 libk5crypto3 amd64 1.20.1-2+deb12u4 [79.8 kB]
+Get:16 http://deb.debian.org/debian bookworm/main amd64 libkeyutils1 amd64 1.6.3-2 [8808 B]
+Get:17 http://deb.debian.org/debian bookworm/main amd64 libkrb5-3 amd64 1.20.1-2+deb12u4 [334 kB]
+Get:18 http://deb.debian.org/debian bookworm/main amd64 libgssapi-krb5-2 amd64 1.20.1-2+deb12u4 [135 kB]
+Get:19 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+Get:20 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+Get:21 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+Get:22 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u2 [73.0 kB]
+Get:23 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+Get:24 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
+Get:25 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u14 [392 kB]
+Get:26 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u14 [316 kB]
+Get:27 http://deb.debian.org/debian bookworm/main amd64 libassuan0 amd64 2.5.5-5 [48.5 kB]
+Get:28 http://deb.debian.org/debian bookworm/main amd64 libreadline8 amd64 8.2-1.3 [166 kB]
+Get:29 http://deb.debian.org/debian bookworm/main amd64 gpgconf amd64 2.2.40-1.1+deb12u2 [565 kB]
+Get:30 http://deb.debian.org/debian bookworm/main amd64 libksba8 amd64 1.6.3-2 [128 kB]
+Get:31 http://deb.debian.org/debian bookworm/main amd64 libnpth0 amd64 1.6-3 [19.0 kB]
+Get:32 http://deb.debian.org/debian bookworm/main amd64 dirmngr amd64 2.2.40-1.1+deb12u2 [793 kB]
+Get:33 http://deb.debian.org/debian bookworm/main amd64 dumb-init amd64 1.2.5-2 [14.1 kB]
+Get:34 http://deb.debian.org/debian bookworm/main amd64 libaom3 amd64 3.6.0-1+deb12u2 [1850 kB]
+Get:35 http://deb.debian.org/debian bookworm/main amd64 libdrm-common all 2.4.114-1 [7112 B]
+Get:36 http://deb.debian.org/debian bookworm/main amd64 libdrm2 amd64 2.4.114-1+b1 [37.5 kB]
+Get:37 http://deb.debian.org/debian bookworm/main amd64 libva2 amd64 2.17.0-1 [69.2 kB]
+Get:38 http://deb.debian.org/debian bookworm/main amd64 libmfx1 amd64 22.5.4-1 [3219 kB]
+Get:39 http://deb.debian.org/debian bookworm/main amd64 libva-drm2 amd64 2.17.0-1 [16.4 kB]
+Get:40 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
+Get:41 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
+Get:42 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+Get:43 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
+Get:44 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
+Get:45 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
+Get:46 http://deb.debian.org/debian bookworm/main amd64 libx11-xcb1 amd64 2:1.8.4-2+deb12u2 [192 kB]
+Get:47 http://deb.debian.org/debian bookworm/main amd64 libxcb-dri3-0 amd64 1.15-1 [107 kB]
+Get:48 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
+Get:49 http://deb.debian.org/debian bookworm/main amd64 libxfixes3 amd64 1:6.0.0-2 [22.7 kB]
+Get:50 http://deb.debian.org/debian bookworm/main amd64 libva-x11-2 amd64 2.17.0-1 [21.0 kB]
+Get:51 http://deb.debian.org/debian bookworm/main amd64 libvdpau1 amd64 1.5-2 [26.1 kB]
+Get:52 http://deb.debian.org/debian bookworm/main amd64 ocl-icd-libopencl1 amd64 2.3.1-1 [43.0 kB]
+Get:53 http://deb.debian.org/debian bookworm/main amd64 libavutil57 amd64 7:5.1.8-0+deb12u1 [370 kB]
+Get:54 http://deb.debian.org/debian bookworm/main amd64 libexpat1 amd64 2.5.0-1+deb12u2 [99.9 kB]
+Get:55 http://deb.debian.org/debian-security bookworm-security/main amd64 libpng16-16 amd64 1.6.39-2+deb12u3 [276 kB]
+Get:56 http://deb.debian.org/debian bookworm/main amd64 libfreetype6 amd64 2.12.1+dfsg-5+deb12u4 [398 kB]
+Get:57 http://deb.debian.org/debian bookworm/main amd64 fonts-dejavu-core all 2.37-6 [1068 kB]
+Get:58 http://deb.debian.org/debian bookworm/main amd64 fontconfig-config amd64 2.14.1-4 [315 kB]
+Get:59 http://deb.debian.org/debian bookworm/main amd64 libfontconfig1 amd64 2.14.1-4 [386 kB]
+Get:60 http://deb.debian.org/debian bookworm/main amd64 libpixman-1-0 amd64 0.42.2-1 [546 kB]
+Get:61 http://deb.debian.org/debian bookworm/main amd64 libxcb-render0 amd64 1.15-1 [115 kB]
+Get:62 http://deb.debian.org/debian bookworm/main amd64 libxcb-shm0 amd64 1.15-1 [105 kB]
+Get:63 http://deb.debian.org/debian bookworm/main amd64 libxrender1 amd64 1:0.9.10-1.1 [33.2 kB]
+Get:64 http://deb.debian.org/debian bookworm/main amd64 libcairo2 amd64 1.16.0-7 [575 kB]
+Get:65 http://deb.debian.org/debian bookworm/main amd64 libcodec2-1.0 amd64 1.0.5-1 [8171 kB]
+Get:66 http://deb.debian.org/debian bookworm/main amd64 libdav1d6 amd64 1.0.0-2+deb12u1 [513 kB]
+Get:67 http://deb.debian.org/debian bookworm/main amd64 libglib2.0-0 amd64 2.74.6-2+deb12u8 [1402 kB]
+Get:68 http://deb.debian.org/debian bookworm/main amd64 libgsm1 amd64 1.0.22-1 [30.9 kB]
+Get:69 http://deb.debian.org/debian bookworm/main amd64 libhwy1 amd64 1.0.3-3+deb12u1 [348 kB]
+Get:70 http://deb.debian.org/debian bookworm/main amd64 liblcms2-2 amd64 2.14-2 [154 kB]
+Get:71 http://deb.debian.org/debian bookworm/main amd64 libjxl0.7 amd64 0.7.0-10+deb12u1 [1046 kB]
+Get:72 http://deb.debian.org/debian bookworm/main amd64 libmp3lame0 amd64 3.100-6 [365 kB]
+Get:73 http://deb.debian.org/debian bookworm/main amd64 libopenjp2-7 amd64 2.5.0-2+deb12u2 [189 kB]
+Get:74 http://deb.debian.org/debian bookworm/main amd64 libopus0 amd64 1.3.1-3 [195 kB]
+Get:75 http://deb.debian.org/debian bookworm/main amd64 librav1e0 amd64 0.5.1-6 [763 kB]
+Get:76 http://deb.debian.org/debian bookworm/main amd64 libcairo-gobject2 amd64 1.16.0-7 [112 kB]
+Get:77 http://deb.debian.org/debian bookworm/main amd64 libgdk-pixbuf2.0-common all 2.42.10+dfsg-1+deb12u3 [307 kB]
+Get:78 http://deb.debian.org/debian bookworm/main amd64 libicu72 amd64 72.1-3+deb12u1 [9376 kB]
+Get:79 http://deb.debian.org/debian bookworm/main amd64 libxml2 amd64 2.9.14+dfsg-1.3~deb12u5 [688 kB]
+Get:80 http://deb.debian.org/debian bookworm/main amd64 shared-mime-info amd64 2.2-1 [729 kB]
+Get:81 http://deb.debian.org/debian bookworm/main amd64 libjpeg62-turbo amd64 1:2.1.5-2 [166 kB]
+Get:82 http://deb.debian.org/debian bookworm/main amd64 libdeflate0 amd64 1.14-1 [61.4 kB]
+Get:83 http://deb.debian.org/debian bookworm/main amd64 libjbig0 amd64 2.1-6.1 [31.7 kB]
+Get:84 http://deb.debian.org/debian bookworm/main amd64 liblerc4 amd64 4.0.0+ds-2 [170 kB]
+Get:85 http://deb.debian.org/debian bookworm/main amd64 libwebp7 amd64 1.2.4-0.2+deb12u1 [286 kB]
+Get:86 http://deb.debian.org/debian bookworm/main amd64 libtiff6 amd64 4.5.0-6+deb12u3 [316 kB]
+Get:87 http://deb.debian.org/debian bookworm/main amd64 libgdk-pixbuf-2.0-0 amd64 2.42.10+dfsg-1+deb12u3 [139 kB]
+Get:88 http://deb.debian.org/debian bookworm/main amd64 fontconfig amd64 2.14.1-4 [449 kB]
+Get:89 http://deb.debian.org/debian bookworm/main amd64 libfribidi0 amd64 1.0.8-2.1 [65.0 kB]
+Get:90 http://deb.debian.org/debian bookworm/main amd64 libgraphite2-3 amd64 1.3.14-1 [81.2 kB]
+Get:91 http://deb.debian.org/debian bookworm/main amd64 libharfbuzz0b amd64 6.0.0+dfsg-3 [1945 kB]
+Get:92 http://deb.debian.org/debian bookworm/main amd64 libthai-data all 0.1.29-1 [176 kB]
+Get:93 http://deb.debian.org/debian bookworm/main amd64 libdatrie1 amd64 0.2.13-2+b1 [43.3 kB]
+Get:94 http://deb.debian.org/debian bookworm/main amd64 libthai0 amd64 0.1.29-1 [57.5 kB]
+Get:95 http://deb.debian.org/debian bookworm/main amd64 libpango-1.0-0 amd64 1.50.12+ds-1 [212 kB]
+Get:96 http://deb.debian.org/debian bookworm/main amd64 libpangoft2-1.0-0 amd64 1.50.12+ds-1 [47.4 kB]
+Get:97 http://deb.debian.org/debian bookworm/main amd64 libpangocairo-1.0-0 amd64 1.50.12+ds-1 [34.2 kB]
+Get:98 http://deb.debian.org/debian bookworm/main amd64 librsvg2-2 amd64 2.54.7+dfsg-1~deb12u1 [2620 kB]
+Get:99 http://deb.debian.org/debian bookworm/main amd64 libshine3 amd64 3.1.1-2 [23.6 kB]
+Get:100 http://deb.debian.org/debian bookworm/main amd64 libsnappy1v5 amd64 1.1.9-3 [26.0 kB]
+Get:101 http://deb.debian.org/debian bookworm/main amd64 libspeex1 amd64 1.2.1-2 [54.6 kB]
+Get:102 http://deb.debian.org/debian bookworm/main amd64 libsvtav1enc1 amd64 1.4.1+dfsg-1 [2121 kB]
+Get:103 http://deb.debian.org/debian bookworm/main amd64 libgomp1 amd64 12.2.0-14+deb12u1 [116 kB]
+Get:104 http://deb.debian.org/debian bookworm/main amd64 libsoxr0 amd64 0.1.3-4 [77.8 kB]
+Get:105 http://deb.debian.org/debian bookworm/main amd64 libswresample4 amd64 7:5.1.8-0+deb12u1 [104 kB]
+Get:106 http://deb.debian.org/debian bookworm/main amd64 libogg0 amd64 1.3.5-3 [23.4 kB]
+Get:107 http://deb.debian.org/debian bookworm/main amd64 libtheora0 amd64 1.1.1+dfsg.1-16.1+deb12u1 [154 kB]
+Get:108 http://deb.debian.org/debian bookworm/main amd64 libtwolame0 amd64 0.4.0-2 [51.1 kB]
+Get:109 http://deb.debian.org/debian bookworm/main amd64 libvorbis0a amd64 1.3.7-1 [93.0 kB]
+Get:110 http://deb.debian.org/debian bookworm/main amd64 libvorbisenc2 amd64 1.3.7-1 [80.6 kB]
+Get:111 http://deb.debian.org/debian-security bookworm-security/main amd64 libvpx7 amd64 1.12.0-1+deb12u5 [1003 kB]
+Get:112 http://deb.debian.org/debian bookworm/main amd64 libwebpmux3 amd64 1.2.4-0.2+deb12u1 [109 kB]
+Get:113 http://deb.debian.org/debian bookworm/main amd64 libx264-164 amd64 2:0.164.3095+gitbaee400-3 [547 kB]
+Get:114 http://deb.debian.org/debian bookworm/main amd64 libnuma1 amd64 2.0.16-1 [21.0 kB]
+Get:115 http://deb.debian.org/debian bookworm/main amd64 libx265-199 amd64 3.5-2+b1 [1150 kB]
+Get:116 http://deb.debian.org/debian bookworm/main amd64 libxvidcore4 amd64 2:1.3.7-1 [242 kB]
+Get:117 http://deb.debian.org/debian bookworm/main amd64 libzvbi-common all 0.2.41-1 [69.7 kB]
+Get:118 http://deb.debian.org/debian bookworm/main amd64 libzvbi0 amd64 0.2.41-1 [274 kB]
+Get:119 http://deb.debian.org/debian bookworm/main amd64 libavcodec59 amd64 7:5.1.8-0+deb12u1 [5230 kB]
+Get:120 http://deb.debian.org/debian bookworm/main amd64 libasound2-data all 1.2.8-1 [20.5 kB]
+Get:121 http://deb.debian.org/debian bookworm/main amd64 libasound2 amd64 1.2.8-1+b1 [362 kB]
+Get:122 http://deb.debian.org/debian bookworm/main amd64 libraw1394-11 amd64 2.1.2-2 [41.1 kB]
+Get:123 http://deb.debian.org/debian bookworm/main amd64 libavc1394-0 amd64 0.5.4-5 [19.9 kB]
+Get:124 http://deb.debian.org/debian bookworm/main amd64 libass9 amd64 1:0.17.1-1 [107 kB]
+Get:125 http://deb.debian.org/debian bookworm/main amd64 libudfread0 amd64 1.1.2-1 [16.5 kB]
+Get:126 http://deb.debian.org/debian bookworm/main amd64 libbluray2 amd64 1:1.3.4-1 [138 kB]
+Get:127 http://deb.debian.org/debian bookworm/main amd64 libchromaprint1 amd64 1.5.1-2+b1 [41.0 kB]
+Get:128 http://deb.debian.org/debian bookworm/main amd64 libgme0 amd64 0.6.3-6 [130 kB]
+Get:129 http://deb.debian.org/debian bookworm/main amd64 libmpg123-0 amd64 1.31.2-1+deb12u1 [147 kB]
+Get:130 http://deb.debian.org/debian bookworm/main amd64 libvorbisfile3 amd64 1.3.7-1 [26.1 kB]
+Get:131 http://deb.debian.org/debian bookworm/main amd64 libopenmpt0 amd64 0.6.9-1 [693 kB]
+Get:132 http://deb.debian.org/debian bookworm/main amd64 librabbitmq4 amd64 0.11.0-1+deb12u1 [41.4 kB]
+Get:133 http://deb.debian.org/debian bookworm/main amd64 libcjson1 amd64 1.7.15-1+deb12u4 [23.2 kB]
+Get:134 http://deb.debian.org/debian bookworm/main amd64 libmbedcrypto7 amd64 2.28.3-1 [277 kB]
+Get:135 http://deb.debian.org/debian bookworm/main amd64 librist4 amd64 0.2.7+dfsg-1 [73.9 kB]
+Get:136 http://deb.debian.org/debian bookworm/main amd64 libsrt1.5-gnutls amd64 1.5.1-1+deb12u1 [313 kB]
+Get:137 http://deb.debian.org/debian bookworm/main amd64 libssh-gcrypt-4 amd64 0.10.6-0+deb12u2 [220 kB]
+Get:138 http://deb.debian.org/debian bookworm/main amd64 libnorm1 amd64 1.5.9+dfsg-2 [221 kB]
+Get:139 http://deb.debian.org/debian bookworm/main amd64 libpgm-5.3-0 amd64 5.3.128~dfsg-2 [161 kB]
+Get:140 http://deb.debian.org/debian-security bookworm-security/main amd64 libsodium23 amd64 1.0.18-1+deb12u1 [162 kB]
+Get:141 http://deb.debian.org/debian bookworm/main amd64 libzmq5 amd64 4.3.4-6 [273 kB]
+Get:142 http://deb.debian.org/debian bookworm/main amd64 libavformat59 amd64 7:5.1.8-0+deb12u1 [1110 kB]
+Get:143 http://deb.debian.org/debian bookworm/main amd64 libbs2b0 amd64 3.1.0+dfsg-7 [11.5 kB]
+Get:144 http://deb.debian.org/debian bookworm/main amd64 libflite1 amd64 2.2-5 [12.8 MB]
+Get:145 http://deb.debian.org/debian bookworm/main amd64 libserd-0-0 amd64 0.30.16-1 [47.5 kB]
+Get:146 http://deb.debian.org/debian bookworm/main amd64 libsord-0-0 amd64 0.16.14+git221008-1 [20.8 kB]
+Get:147 http://deb.debian.org/debian bookworm/main amd64 libsratom-0-0 amd64 0.6.14-1 [17.7 kB]
+Get:148 http://deb.debian.org/debian bookworm/main amd64 liblilv-0-0 amd64 0.24.14-1 [49.4 kB]
+Get:149 http://deb.debian.org/debian bookworm/main amd64 libmysofa1 amd64 1.3.1~dfsg0-1 [1158 kB]
+Get:150 http://deb.debian.org/debian bookworm/main amd64 libepoxy0 amd64 1.5.10-1 [189 kB]
+Get:151 http://deb.debian.org/debian bookworm/main amd64 libvulkan1 amd64 1.3.239.0-1 [116 kB]
+Get:152 http://deb.debian.org/debian bookworm/main amd64 libplacebo208 amd64 4.208.0-3 [2239 kB]
+Get:153 http://deb.debian.org/debian bookworm/main amd64 libblas3 amd64 3.11.0-2 [149 kB]
+Get:154 http://deb.debian.org/debian bookworm/main amd64 libquadmath0 amd64 12.2.0-14+deb12u1 [145 kB]
+Get:155 http://deb.debian.org/debian bookworm/main amd64 libgfortran5 amd64 12.2.0-14+deb12u1 [793 kB]
+Get:156 http://deb.debian.org/debian bookworm/main amd64 liblapack3 amd64 3.11.0-2 [2323 kB]
+Get:157 http://deb.debian.org/debian bookworm/main amd64 libasyncns0 amd64 0.8-6+b3 [12.9 kB]
+Get:158 http://deb.debian.org/debian bookworm/main amd64 libdbus-1-3 amd64 1.14.10-1~deb12u1 [201 kB]
+Get:159 http://deb.debian.org/debian bookworm/main amd64 libflac12 amd64 1.4.2+ds-2 [198 kB]
+Get:160 http://deb.debian.org/debian bookworm/main amd64 libsndfile1 amd64 1.2.0-1+deb12u1 [197 kB]
+Get:161 http://deb.debian.org/debian bookworm/main amd64 libpulse0 amd64 16.1+dfsg1-2+b1 [274 kB]
+Get:162 http://deb.debian.org/debian bookworm/main amd64 libsphinxbase3 amd64 0.8+5prealpha+1-16 [118 kB]
+Get:163 http://deb.debian.org/debian bookworm/main amd64 libpocketsphinx3 amd64 0.8+5prealpha+1-15 [125 kB]
+Get:164 http://deb.debian.org/debian bookworm/main amd64 libpostproc56 amd64 7:5.1.8-0+deb12u1 [100 kB]
+Get:165 http://deb.debian.org/debian bookworm/main amd64 librubberband2 amd64 3.1.2+dfsg0-1 [137 kB]
+Get:166 http://deb.debian.org/debian bookworm/main amd64 libswscale6 amd64 7:5.1.8-0+deb12u1 [221 kB]
+Get:167 http://deb.debian.org/debian bookworm/main amd64 libvidstab1.1 amd64 1.1.0-2+b1 [37.8 kB]
+Get:168 http://deb.debian.org/debian bookworm/main amd64 libzimg2 amd64 3.0.4+ds1-1 [227 kB]
+Get:169 http://deb.debian.org/debian bookworm/main amd64 libavfilter8 amd64 7:5.1.8-0+deb12u1 [3709 kB]
+Get:170 http://deb.debian.org/debian bookworm/main amd64 libslang2 amd64 2.3.3-3 [554 kB]
+Get:171 http://deb.debian.org/debian bookworm/main amd64 libcaca0 amd64 0.99.beta20-3 [205 kB]
+Get:172 http://deb.debian.org/debian bookworm/main amd64 libcdio19 amd64 2.1.0-4 [203 kB]
+Get:173 http://deb.debian.org/debian bookworm/main amd64 libcdio-cdda2 amd64 10.2+2.0.1-1 [20.9 kB]
+Get:174 http://deb.debian.org/debian bookworm/main amd64 libcdio-paranoia2 amd64 10.2+2.0.1-1 [20.4 kB]
+Get:175 http://deb.debian.org/debian bookworm/main amd64 libusb-1.0-0 amd64 2:1.0.26-1 [62.6 kB]
+Get:176 http://deb.debian.org/debian bookworm/main amd64 libdc1394-25 amd64 2.2.6-4 [109 kB]
+Get:177 http://deb.debian.org/debian bookworm/main amd64 libglvnd0 amd64 1.6.0-1 [51.8 kB]
+Get:178 http://deb.debian.org/debian bookworm/main amd64 libglapi-mesa amd64 22.3.6-1+deb12u1 [35.7 kB]
+Get:179 http://deb.debian.org/debian bookworm/main amd64 libxcb-dri2-0 amd64 1.15-1 [107 kB]
+Get:180 http://deb.debian.org/debian bookworm/main amd64 libxcb-glx0 amd64 1.15-1 [122 kB]
+Get:181 http://deb.debian.org/debian bookworm/main amd64 libxcb-present0 amd64 1.15-1 [105 kB]
+Get:182 http://deb.debian.org/debian bookworm/main amd64 libxcb-randr0 amd64 1.15-1 [117 kB]
+Get:183 http://deb.debian.org/debian bookworm/main amd64 libxcb-sync1 amd64 1.15-1 [109 kB]
+Get:184 http://deb.debian.org/debian bookworm/main amd64 libxcb-xfixes0 amd64 1.15-1 [109 kB]
+Get:185 http://deb.debian.org/debian bookworm/main amd64 libxshmfence1 amd64 1.3-1 [8820 B]
+Get:186 http://deb.debian.org/debian bookworm/main amd64 libxxf86vm1 amd64 1:1.1.4-1+b2 [20.8 kB]
+Get:187 http://deb.debian.org/debian bookworm/main amd64 libdrm-amdgpu1 amd64 2.4.114-1+b1 [20.9 kB]
+Get:188 http://deb.debian.org/debian bookworm/main amd64 libpciaccess0 amd64 0.17-2 [51.4 kB]
+Get:189 http://deb.debian.org/debian bookworm/main amd64 libdrm-intel1 amd64 2.4.114-1+b1 [64.0 kB]
+Get:190 http://deb.debian.org/debian bookworm/main amd64 libdrm-nouveau2 amd64 2.4.114-1+b1 [19.1 kB]
+Get:191 http://deb.debian.org/debian bookworm/main amd64 libdrm-radeon1 amd64 2.4.114-1+b1 [21.8 kB]
+Get:192 http://deb.debian.org/debian bookworm/main amd64 libelf1 amd64 0.188-2.1 [174 kB]
+Get:193 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
+Get:194 http://deb.debian.org/debian bookworm/main amd64 libz3-4 amd64 4.8.12-3.1 [7216 kB]
+Get:195 http://deb.debian.org/debian bookworm/main amd64 libllvm15 amd64 1:15.0.6-4+b1 [23.1 MB]
+Get:196 http://deb.debian.org/debian bookworm/main amd64 libsensors-config all 1:3.6.0-7.1 [14.3 kB]
+Get:197 http://deb.debian.org/debian bookworm/main amd64 libsensors5 amd64 1:3.6.0-7.1 [34.2 kB]
+Get:198 http://deb.debian.org/debian bookworm/main amd64 libgl1-mesa-dri amd64 22.3.6-1+deb12u1 [7239 kB]
+Get:199 http://deb.debian.org/debian bookworm/main amd64 libglx-mesa0 amd64 22.3.6-1+deb12u1 [147 kB]
+Get:200 http://deb.debian.org/debian bookworm/main amd64 libglx0 amd64 1.6.0-1 [34.4 kB]
+Get:201 http://deb.debian.org/debian bookworm/main amd64 libgl1 amd64 1.6.0-1 [88.4 kB]
+Get:202 http://deb.debian.org/debian bookworm/main amd64 libiec61883-0 amd64 1.2.0-6+b1 [30.5 kB]
+Get:203 http://deb.debian.org/debian bookworm/main amd64 libsamplerate0 amd64 0.2.2-3 [952 kB]
+Get:204 http://deb.debian.org/debian bookworm/main amd64 libjack-jackd2-0 amd64 1.9.21~dfsg-3 [281 kB]
+Get:205 http://deb.debian.org/debian bookworm/main amd64 libopenal-data all 1:1.19.1-2 [170 kB]
+Get:206 http://deb.debian.org/debian bookworm/main amd64 libsndio7.0 amd64 1.9.0-0.3+b2 [27.3 kB]
+Get:207 http://deb.debian.org/debian bookworm/main amd64 libopenal1 amd64 1:1.19.1-2 [501 kB]
+Get:208 http://deb.debian.org/debian bookworm/main amd64 libwayland-client0 amd64 1.21.0-1 [28.3 kB]
+Get:209 http://deb.debian.org/debian bookworm/main amd64 libdecor-0-0 amd64 0.1.1-2 [14.6 kB]
+Get:210 http://deb.debian.org/debian bookworm/main amd64 libwayland-server0 amd64 1.21.0-1 [35.9 kB]
+Get:211 http://deb.debian.org/debian bookworm/main amd64 libgbm1 amd64 22.3.6-1+deb12u1 [38.0 kB]
+Get:212 http://deb.debian.org/debian bookworm/main amd64 libwayland-cursor0 amd64 1.21.0-1 [14.4 kB]
+Get:213 http://deb.debian.org/debian bookworm/main amd64 libwayland-egl1 amd64 1.21.0-1 [8640 B]
+Get:214 http://deb.debian.org/debian bookworm/main amd64 libxcursor1 amd64 1:1.2.1-1 [40.9 kB]
+Get:215 http://deb.debian.org/debian bookworm/main amd64 libxi6 amd64 2:1.8-1+b1 [84.2 kB]
+Get:216 http://deb.debian.org/debian bookworm/main amd64 xkb-data all 2.35.1-1 [764 kB]
+Get:217 http://deb.debian.org/debian bookworm/main amd64 libxkbcommon0 amd64 1.5.0-1 [106 kB]
+Get:218 http://deb.debian.org/debian bookworm/main amd64 libxrandr2 amd64 2:1.5.2-2+b1 [39.2 kB]
+Get:219 http://deb.debian.org/debian bookworm/main amd64 x11-common all 1:7.7+23 [252 kB]
+Get:220 http://deb.debian.org/debian bookworm/main amd64 libxss1 amd64 1:1.2.3-1 [17.8 kB]
+Get:221 http://deb.debian.org/debian bookworm/main amd64 libsdl2-2.0-0 amd64 2.26.5+dfsg-1 [629 kB]
+Get:222 http://deb.debian.org/debian bookworm/main amd64 libxcb-shape0 amd64 1.15-1 [106 kB]
+Get:223 http://deb.debian.org/debian bookworm/main amd64 libxv1 amd64 2:1.0.11-1.1 [24.8 kB]
+Get:224 http://deb.debian.org/debian bookworm/main amd64 libavdevice59 amd64 7:5.1.8-0+deb12u1 [121 kB]
+Get:225 http://deb.debian.org/debian bookworm/main amd64 ffmpeg amd64 7:5.1.8-0+deb12u1 [1819 kB]
+Get:226 http://deb.debian.org/debian bookworm/main amd64 gnupg-l10n all 2.2.40-1.1+deb12u2 [1093 kB]
+Get:227 http://deb.debian.org/debian bookworm/main amd64 gnupg-utils amd64 2.2.40-1.1+deb12u2 [927 kB]
+Get:228 http://deb.debian.org/debian bookworm/main amd64 libsqlite3-0 amd64 3.40.1-2+deb12u2 [839 kB]
+Get:229 http://deb.debian.org/debian bookworm/main amd64 gpg amd64 2.2.40-1.1+deb12u2 [950 kB]
+Get:230 http://deb.debian.org/debian bookworm/main amd64 pinentry-curses amd64 1.2.1-1 [77.4 kB]
+Get:231 http://deb.debian.org/debian bookworm/main amd64 gpg-agent amd64 2.2.40-1.1+deb12u2 [695 kB]
+Get:232 http://deb.debian.org/debian bookworm/main amd64 gpg-wks-client amd64 2.2.40-1.1+deb12u2 [541 kB]
+Get:233 http://deb.debian.org/debian bookworm/main amd64 gpg-wks-server amd64 2.2.40-1.1+deb12u2 [531 kB]
+Get:234 http://deb.debian.org/debian bookworm/main amd64 gpgsm amd64 2.2.40-1.1+deb12u2 [671 kB]
+Get:235 http://deb.debian.org/debian bookworm/main amd64 gnupg all 2.2.40-1.1+deb12u2 [846 kB]
+Get:236 http://deb.debian.org/debian bookworm/main amd64 libonig5 amd64 6.9.8-1 [188 kB]
+Get:237 http://deb.debian.org/debian bookworm/main amd64 libjq1 amd64 1.6-2.1+deb12u1 [134 kB]
+Get:238 http://deb.debian.org/debian bookworm/main amd64 jq amd64 1.6-2.1+deb12u1 [63.7 kB]
+Get:239 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u14 [386 kB]
+Get:240 http://deb.debian.org/debian bookworm/main amd64 libmms0 amd64 0.6.4-3 [34.6 kB]
+Get:241 http://deb.debian.org/debian bookworm/main amd64 libtinyxml2-9 amd64 9.0.0+dfsg-3.1 [31.8 kB]
+Get:242 http://deb.debian.org/debian bookworm/main amd64 libzen0v5 amd64 0.4.41-2 [104 kB]
+Get:243 http://deb.debian.org/debian bookworm/main amd64 libmediainfo0v5 amd64 23.04+dfsg-1 [2480 kB]
+Get:244 http://deb.debian.org/debian bookworm/main amd64 mediainfo amd64 23.04-1 [82.1 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 151 MB in 5s (33.1 MB/s)
+Selecting previously unselected package libncursesw6:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6096 files and directories currently installed.)
+Preparing to unpack .../000-libncursesw6_6.4-4_amd64.deb ...
+Unpacking libncursesw6:amd64 (6.4-4) ...
+Selecting previously unselected package libproc2-0:amd64.
+Preparing to unpack .../001-libproc2-0_2%3a4.0.2-3_amd64.deb ...
+Unpacking libproc2-0:amd64 (2:4.0.2-3) ...
+Selecting previously unselected package procps.
+Preparing to unpack .../002-procps_2%3a4.0.2-3_amd64.deb ...
+Unpacking procps (2:4.0.2-3) ...
+Selecting previously unselected package readline-common.
+Preparing to unpack .../003-readline-common_8.2-1.3_all.deb ...
+Unpacking readline-common (8.2-1.3) ...
+Selecting previously unselected package libssl3:amd64.
+Preparing to unpack .../004-libssl3_3.0.18-1~deb12u2_amd64.deb ...
+Unpacking libssl3:amd64 (3.0.18-1~deb12u2) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../005-openssl_3.0.18-1~deb12u2_amd64.deb ...
+Unpacking openssl (3.0.18-1~deb12u2) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../006-ca-certificates_20230311+deb12u1_all.deb ...
+Unpacking ca-certificates (20230311+deb12u1) ...
+Selecting previously unselected package libmagic-mgc.
+Preparing to unpack .../007-libmagic-mgc_1%3a5.44-3_amd64.deb ...
+Unpacking libmagic-mgc (1:5.44-3) ...
+Selecting previously unselected package libmagic1:amd64.
+Preparing to unpack .../008-libmagic1_1%3a5.44-3_amd64.deb ...
+Unpacking libmagic1:amd64 (1:5.44-3) ...
+Selecting previously unselected package file.
+Preparing to unpack .../009-file_1%3a5.44-3_amd64.deb ...
+Unpacking file (1:5.44-3) ...
+Selecting previously unselected package libpsl5:amd64.
+Preparing to unpack .../010-libpsl5_0.21.2-1_amd64.deb ...
+Unpacking libpsl5:amd64 (0.21.2-1) ...
+Selecting previously unselected package wget.
+Preparing to unpack .../011-wget_1.21.3-1+deb12u1_amd64.deb ...
+Unpacking wget (1.21.3-1+deb12u1) ...
+Selecting previously unselected package libbrotli1:amd64.
+Preparing to unpack .../012-libbrotli1_1.0.9-2+b6_amd64.deb ...
+Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+Selecting previously unselected package libkrb5support0:amd64.
+Preparing to unpack .../013-libkrb5support0_1.20.1-2+deb12u4_amd64.deb ...
+Unpacking libkrb5support0:amd64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libk5crypto3:amd64.
+Preparing to unpack .../014-libk5crypto3_1.20.1-2+deb12u4_amd64.deb ...
+Unpacking libk5crypto3:amd64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libkeyutils1:amd64.
+Preparing to unpack .../015-libkeyutils1_1.6.3-2_amd64.deb ...
+Unpacking libkeyutils1:amd64 (1.6.3-2) ...
+Selecting previously unselected package libkrb5-3:amd64.
+Preparing to unpack .../016-libkrb5-3_1.20.1-2+deb12u4_amd64.deb ...
+Unpacking libkrb5-3:amd64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libgssapi-krb5-2:amd64.
+Preparing to unpack .../017-libgssapi-krb5-2_1.20.1-2+deb12u4_amd64.deb ...
+Unpacking libgssapi-krb5-2:amd64 (1.20.1-2+deb12u4) ...
+Selecting previously unselected package libsasl2-modules-db:amd64.
+Preparing to unpack .../018-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libsasl2-2:amd64.
+Preparing to unpack .../019-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libldap-2.5-0:amd64.
+Preparing to unpack .../020-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+Selecting previously unselected package libnghttp2-14:amd64.
+Preparing to unpack .../021-libnghttp2-14_1.52.0-1+deb12u2_amd64.deb ...
+Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u2) ...
+Selecting previously unselected package librtmp1:amd64.
+Preparing to unpack .../022-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Selecting previously unselected package libssh2-1:amd64.
+Preparing to unpack .../023-libssh2-1_1.10.0-3+b1_amd64.deb ...
+Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
+Selecting previously unselected package libcurl4:amd64.
+Preparing to unpack .../024-libcurl4_7.88.1-10+deb12u14_amd64.deb ...
+Unpacking libcurl4:amd64 (7.88.1-10+deb12u14) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../025-curl_7.88.1-10+deb12u14_amd64.deb ...
+Unpacking curl (7.88.1-10+deb12u14) ...
+Selecting previously unselected package libassuan0:amd64.
+Preparing to unpack .../026-libassuan0_2.5.5-5_amd64.deb ...
+Unpacking libassuan0:amd64 (2.5.5-5) ...
+Selecting previously unselected package libreadline8:amd64.
+Preparing to unpack .../027-libreadline8_8.2-1.3_amd64.deb ...
+Unpacking libreadline8:amd64 (8.2-1.3) ...
+Selecting previously unselected package gpgconf.
+Preparing to unpack .../028-gpgconf_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpgconf (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package libksba8:amd64.
+Preparing to unpack .../029-libksba8_1.6.3-2_amd64.deb ...
+Unpacking libksba8:amd64 (1.6.3-2) ...
+Selecting previously unselected package libnpth0:amd64.
+Preparing to unpack .../030-libnpth0_1.6-3_amd64.deb ...
+Unpacking libnpth0:amd64 (1.6-3) ...
+Selecting previously unselected package dirmngr.
+Preparing to unpack .../031-dirmngr_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking dirmngr (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package dumb-init.
+Preparing to unpack .../032-dumb-init_1.2.5-2_amd64.deb ...
+Unpacking dumb-init (1.2.5-2) ...
+Selecting previously unselected package libaom3:amd64.
+Preparing to unpack .../033-libaom3_3.6.0-1+deb12u2_amd64.deb ...
+Unpacking libaom3:amd64 (3.6.0-1+deb12u2) ...
+Selecting previously unselected package libdrm-common.
+Preparing to unpack .../034-libdrm-common_2.4.114-1_all.deb ...
+Unpacking libdrm-common (2.4.114-1) ...
+Selecting previously unselected package libdrm2:amd64.
+Preparing to unpack .../035-libdrm2_2.4.114-1+b1_amd64.deb ...
+Unpacking libdrm2:amd64 (2.4.114-1+b1) ...
+Selecting previously unselected package libva2:amd64.
+Preparing to unpack .../036-libva2_2.17.0-1_amd64.deb ...
+Unpacking libva2:amd64 (2.17.0-1) ...
+Selecting previously unselected package libmfx1:amd64.
+Preparing to unpack .../037-libmfx1_22.5.4-1_amd64.deb ...
+Unpacking libmfx1:amd64 (22.5.4-1) ...
+Selecting previously unselected package libva-drm2:amd64.
+Preparing to unpack .../038-libva-drm2_2.17.0-1_amd64.deb ...
+Unpacking libva-drm2:amd64 (2.17.0-1) ...
+Selecting previously unselected package libxau6:amd64.
+Preparing to unpack .../039-libxau6_1%3a1.0.9-1_amd64.deb ...
+Unpacking libxau6:amd64 (1:1.0.9-1) ...
+Selecting previously unselected package libbsd0:amd64.
+Preparing to unpack .../040-libbsd0_0.11.7-2_amd64.deb ...
+Unpacking libbsd0:amd64 (0.11.7-2) ...
+Selecting previously unselected package libxdmcp6:amd64.
+Preparing to unpack .../041-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+Selecting previously unselected package libxcb1:amd64.
+Preparing to unpack .../042-libxcb1_1.15-1_amd64.deb ...
+Unpacking libxcb1:amd64 (1.15-1) ...
+Selecting previously unselected package libx11-data.
+Preparing to unpack .../043-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
+Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
+Selecting previously unselected package libx11-6:amd64.
+Preparing to unpack .../044-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
+Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+Selecting previously unselected package libx11-xcb1:amd64.
+Preparing to unpack .../045-libx11-xcb1_2%3a1.8.4-2+deb12u2_amd64.deb ...
+Unpacking libx11-xcb1:amd64 (2:1.8.4-2+deb12u2) ...
+Selecting previously unselected package libxcb-dri3-0:amd64.
+Preparing to unpack .../046-libxcb-dri3-0_1.15-1_amd64.deb ...
+Unpacking libxcb-dri3-0:amd64 (1.15-1) ...
+Selecting previously unselected package libxext6:amd64.
+Preparing to unpack .../047-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
+Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
+Selecting previously unselected package libxfixes3:amd64.
+Preparing to unpack .../048-libxfixes3_1%3a6.0.0-2_amd64.deb ...
+Unpacking libxfixes3:amd64 (1:6.0.0-2) ...
+Selecting previously unselected package libva-x11-2:amd64.
+Preparing to unpack .../049-libva-x11-2_2.17.0-1_amd64.deb ...
+Unpacking libva-x11-2:amd64 (2.17.0-1) ...
+Selecting previously unselected package libvdpau1:amd64.
+Preparing to unpack .../050-libvdpau1_1.5-2_amd64.deb ...
+Unpacking libvdpau1:amd64 (1.5-2) ...
+Selecting previously unselected package ocl-icd-libopencl1:amd64.
+Preparing to unpack .../051-ocl-icd-libopencl1_2.3.1-1_amd64.deb ...
+Unpacking ocl-icd-libopencl1:amd64 (2.3.1-1) ...
+Selecting previously unselected package libavutil57:amd64.
+Preparing to unpack .../052-libavutil57_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libavutil57:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libexpat1:amd64.
+Preparing to unpack .../053-libexpat1_2.5.0-1+deb12u2_amd64.deb ...
+Unpacking libexpat1:amd64 (2.5.0-1+deb12u2) ...
+Selecting previously unselected package libpng16-16:amd64.
+Preparing to unpack .../054-libpng16-16_1.6.39-2+deb12u3_amd64.deb ...
+Unpacking libpng16-16:amd64 (1.6.39-2+deb12u3) ...
+Selecting previously unselected package libfreetype6:amd64.
+Preparing to unpack .../055-libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb ...
+Unpacking libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+Selecting previously unselected package fonts-dejavu-core.
+Preparing to unpack .../056-fonts-dejavu-core_2.37-6_all.deb ...
+Unpacking fonts-dejavu-core (2.37-6) ...
+Selecting previously unselected package fontconfig-config.
+Preparing to unpack .../057-fontconfig-config_2.14.1-4_amd64.deb ...
+Unpacking fontconfig-config (2.14.1-4) ...
+Selecting previously unselected package libfontconfig1:amd64.
+Preparing to unpack .../058-libfontconfig1_2.14.1-4_amd64.deb ...
+Unpacking libfontconfig1:amd64 (2.14.1-4) ...
+Selecting previously unselected package libpixman-1-0:amd64.
+Preparing to unpack .../059-libpixman-1-0_0.42.2-1_amd64.deb ...
+Unpacking libpixman-1-0:amd64 (0.42.2-1) ...
+Selecting previously unselected package libxcb-render0:amd64.
+Preparing to unpack .../060-libxcb-render0_1.15-1_amd64.deb ...
+Unpacking libxcb-render0:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-shm0:amd64.
+Preparing to unpack .../061-libxcb-shm0_1.15-1_amd64.deb ...
+Unpacking libxcb-shm0:amd64 (1.15-1) ...
+Selecting previously unselected package libxrender1:amd64.
+Preparing to unpack .../062-libxrender1_1%3a0.9.10-1.1_amd64.deb ...
+Unpacking libxrender1:amd64 (1:0.9.10-1.1) ...
+Selecting previously unselected package libcairo2:amd64.
+Preparing to unpack .../063-libcairo2_1.16.0-7_amd64.deb ...
+Unpacking libcairo2:amd64 (1.16.0-7) ...
+Selecting previously unselected package libcodec2-1.0:amd64.
+Preparing to unpack .../064-libcodec2-1.0_1.0.5-1_amd64.deb ...
+Unpacking libcodec2-1.0:amd64 (1.0.5-1) ...
+Selecting previously unselected package libdav1d6:amd64.
+Preparing to unpack .../065-libdav1d6_1.0.0-2+deb12u1_amd64.deb ...
+Unpacking libdav1d6:amd64 (1.0.0-2+deb12u1) ...
+Selecting previously unselected package libglib2.0-0:amd64.
+Preparing to unpack .../066-libglib2.0-0_2.74.6-2+deb12u8_amd64.deb ...
+Unpacking libglib2.0-0:amd64 (2.74.6-2+deb12u8) ...
+Selecting previously unselected package libgsm1:amd64.
+Preparing to unpack .../067-libgsm1_1.0.22-1_amd64.deb ...
+Unpacking libgsm1:amd64 (1.0.22-1) ...
+Selecting previously unselected package libhwy1:amd64.
+Preparing to unpack .../068-libhwy1_1.0.3-3+deb12u1_amd64.deb ...
+Unpacking libhwy1:amd64 (1.0.3-3+deb12u1) ...
+Selecting previously unselected package liblcms2-2:amd64.
+Preparing to unpack .../069-liblcms2-2_2.14-2_amd64.deb ...
+Unpacking liblcms2-2:amd64 (2.14-2) ...
+Selecting previously unselected package libjxl0.7:amd64.
+Preparing to unpack .../070-libjxl0.7_0.7.0-10+deb12u1_amd64.deb ...
+Unpacking libjxl0.7:amd64 (0.7.0-10+deb12u1) ...
+Selecting previously unselected package libmp3lame0:amd64.
+Preparing to unpack .../071-libmp3lame0_3.100-6_amd64.deb ...
+Unpacking libmp3lame0:amd64 (3.100-6) ...
+Selecting previously unselected package libopenjp2-7:amd64.
+Preparing to unpack .../072-libopenjp2-7_2.5.0-2+deb12u2_amd64.deb ...
+Unpacking libopenjp2-7:amd64 (2.5.0-2+deb12u2) ...
+Selecting previously unselected package libopus0:amd64.
+Preparing to unpack .../073-libopus0_1.3.1-3_amd64.deb ...
+Unpacking libopus0:amd64 (1.3.1-3) ...
+Selecting previously unselected package librav1e0:amd64.
+Preparing to unpack .../074-librav1e0_0.5.1-6_amd64.deb ...
+Unpacking librav1e0:amd64 (0.5.1-6) ...
+Selecting previously unselected package libcairo-gobject2:amd64.
+Preparing to unpack .../075-libcairo-gobject2_1.16.0-7_amd64.deb ...
+Unpacking libcairo-gobject2:amd64 (1.16.0-7) ...
+Selecting previously unselected package libgdk-pixbuf2.0-common.
+Preparing to unpack .../076-libgdk-pixbuf2.0-common_2.42.10+dfsg-1+deb12u3_all.deb ...
+Unpacking libgdk-pixbuf2.0-common (2.42.10+dfsg-1+deb12u3) ...
+Selecting previously unselected package libicu72:amd64.
+Preparing to unpack .../077-libicu72_72.1-3+deb12u1_amd64.deb ...
+Unpacking libicu72:amd64 (72.1-3+deb12u1) ...
+Selecting previously unselected package libxml2:amd64.
+Preparing to unpack .../078-libxml2_2.9.14+dfsg-1.3~deb12u5_amd64.deb ...
+Unpacking libxml2:amd64 (2.9.14+dfsg-1.3~deb12u5) ...
+Selecting previously unselected package shared-mime-info.
+Preparing to unpack .../079-shared-mime-info_2.2-1_amd64.deb ...
+Unpacking shared-mime-info (2.2-1) ...
+Selecting previously unselected package libjpeg62-turbo:amd64.
+Preparing to unpack .../080-libjpeg62-turbo_1%3a2.1.5-2_amd64.deb ...
+Unpacking libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+Selecting previously unselected package libdeflate0:amd64.
+Preparing to unpack .../081-libdeflate0_1.14-1_amd64.deb ...
+Unpacking libdeflate0:amd64 (1.14-1) ...
+Selecting previously unselected package libjbig0:amd64.
+Preparing to unpack .../082-libjbig0_2.1-6.1_amd64.deb ...
+Unpacking libjbig0:amd64 (2.1-6.1) ...
+Selecting previously unselected package liblerc4:amd64.
+Preparing to unpack .../083-liblerc4_4.0.0+ds-2_amd64.deb ...
+Unpacking liblerc4:amd64 (4.0.0+ds-2) ...
+Selecting previously unselected package libwebp7:amd64.
+Preparing to unpack .../084-libwebp7_1.2.4-0.2+deb12u1_amd64.deb ...
+Unpacking libwebp7:amd64 (1.2.4-0.2+deb12u1) ...
+Selecting previously unselected package libtiff6:amd64.
+Preparing to unpack .../085-libtiff6_4.5.0-6+deb12u3_amd64.deb ...
+Unpacking libtiff6:amd64 (4.5.0-6+deb12u3) ...
+Selecting previously unselected package libgdk-pixbuf-2.0-0:amd64.
+Preparing to unpack .../086-libgdk-pixbuf-2.0-0_2.42.10+dfsg-1+deb12u3_amd64.deb ...
+Unpacking libgdk-pixbuf-2.0-0:amd64 (2.42.10+dfsg-1+deb12u3) ...
+Selecting previously unselected package fontconfig.
+Preparing to unpack .../087-fontconfig_2.14.1-4_amd64.deb ...
+Unpacking fontconfig (2.14.1-4) ...
+Selecting previously unselected package libfribidi0:amd64.
+Preparing to unpack .../088-libfribidi0_1.0.8-2.1_amd64.deb ...
+Unpacking libfribidi0:amd64 (1.0.8-2.1) ...
+Selecting previously unselected package libgraphite2-3:amd64.
+Preparing to unpack .../089-libgraphite2-3_1.3.14-1_amd64.deb ...
+Unpacking libgraphite2-3:amd64 (1.3.14-1) ...
+Selecting previously unselected package libharfbuzz0b:amd64.
+Preparing to unpack .../090-libharfbuzz0b_6.0.0+dfsg-3_amd64.deb ...
+Unpacking libharfbuzz0b:amd64 (6.0.0+dfsg-3) ...
+Selecting previously unselected package libthai-data.
+Preparing to unpack .../091-libthai-data_0.1.29-1_all.deb ...
+Unpacking libthai-data (0.1.29-1) ...
+Selecting previously unselected package libdatrie1:amd64.
+Preparing to unpack .../092-libdatrie1_0.2.13-2+b1_amd64.deb ...
+Unpacking libdatrie1:amd64 (0.2.13-2+b1) ...
+Selecting previously unselected package libthai0:amd64.
+Preparing to unpack .../093-libthai0_0.1.29-1_amd64.deb ...
+Unpacking libthai0:amd64 (0.1.29-1) ...
+Selecting previously unselected package libpango-1.0-0:amd64.
+Preparing to unpack .../094-libpango-1.0-0_1.50.12+ds-1_amd64.deb ...
+Unpacking libpango-1.0-0:amd64 (1.50.12+ds-1) ...
+Selecting previously unselected package libpangoft2-1.0-0:amd64.
+Preparing to unpack .../095-libpangoft2-1.0-0_1.50.12+ds-1_amd64.deb ...
+Unpacking libpangoft2-1.0-0:amd64 (1.50.12+ds-1) ...
+Selecting previously unselected package libpangocairo-1.0-0:amd64.
+Preparing to unpack .../096-libpangocairo-1.0-0_1.50.12+ds-1_amd64.deb ...
+Unpacking libpangocairo-1.0-0:amd64 (1.50.12+ds-1) ...
+Selecting previously unselected package librsvg2-2:amd64.
+Preparing to unpack .../097-librsvg2-2_2.54.7+dfsg-1~deb12u1_amd64.deb ...
+Unpacking librsvg2-2:amd64 (2.54.7+dfsg-1~deb12u1) ...
+Selecting previously unselected package libshine3:amd64.
+Preparing to unpack .../098-libshine3_3.1.1-2_amd64.deb ...
+Unpacking libshine3:amd64 (3.1.1-2) ...
+Selecting previously unselected package libsnappy1v5:amd64.
+Preparing to unpack .../099-libsnappy1v5_1.1.9-3_amd64.deb ...
+Unpacking libsnappy1v5:amd64 (1.1.9-3) ...
+Selecting previously unselected package libspeex1:amd64.
+Preparing to unpack .../100-libspeex1_1.2.1-2_amd64.deb ...
+Unpacking libspeex1:amd64 (1.2.1-2) ...
+Selecting previously unselected package libsvtav1enc1:amd64.
+Preparing to unpack .../101-libsvtav1enc1_1.4.1+dfsg-1_amd64.deb ...
+Unpacking libsvtav1enc1:amd64 (1.4.1+dfsg-1) ...
+Selecting previously unselected package libgomp1:amd64.
+Preparing to unpack .../102-libgomp1_12.2.0-14+deb12u1_amd64.deb ...
+Unpacking libgomp1:amd64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libsoxr0:amd64.
+Preparing to unpack .../103-libsoxr0_0.1.3-4_amd64.deb ...
+Unpacking libsoxr0:amd64 (0.1.3-4) ...
+Selecting previously unselected package libswresample4:amd64.
+Preparing to unpack .../104-libswresample4_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libswresample4:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libogg0:amd64.
+Preparing to unpack .../105-libogg0_1.3.5-3_amd64.deb ...
+Unpacking libogg0:amd64 (1.3.5-3) ...
+Selecting previously unselected package libtheora0:amd64.
+Preparing to unpack .../106-libtheora0_1.1.1+dfsg.1-16.1+deb12u1_amd64.deb ...
+Unpacking libtheora0:amd64 (1.1.1+dfsg.1-16.1+deb12u1) ...
+Selecting previously unselected package libtwolame0:amd64.
+Preparing to unpack .../107-libtwolame0_0.4.0-2_amd64.deb ...
+Unpacking libtwolame0:amd64 (0.4.0-2) ...
+Selecting previously unselected package libvorbis0a:amd64.
+Preparing to unpack .../108-libvorbis0a_1.3.7-1_amd64.deb ...
+Unpacking libvorbis0a:amd64 (1.3.7-1) ...
+Selecting previously unselected package libvorbisenc2:amd64.
+Preparing to unpack .../109-libvorbisenc2_1.3.7-1_amd64.deb ...
+Unpacking libvorbisenc2:amd64 (1.3.7-1) ...
+Selecting previously unselected package libvpx7:amd64.
+Preparing to unpack .../110-libvpx7_1.12.0-1+deb12u5_amd64.deb ...
+Unpacking libvpx7:amd64 (1.12.0-1+deb12u5) ...
+Selecting previously unselected package libwebpmux3:amd64.
+Preparing to unpack .../111-libwebpmux3_1.2.4-0.2+deb12u1_amd64.deb ...
+Unpacking libwebpmux3:amd64 (1.2.4-0.2+deb12u1) ...
+Selecting previously unselected package libx264-164:amd64.
+Preparing to unpack .../112-libx264-164_2%3a0.164.3095+gitbaee400-3_amd64.deb ...
+Unpacking libx264-164:amd64 (2:0.164.3095+gitbaee400-3) ...
+Selecting previously unselected package libnuma1:amd64.
+Preparing to unpack .../113-libnuma1_2.0.16-1_amd64.deb ...
+Unpacking libnuma1:amd64 (2.0.16-1) ...
+Selecting previously unselected package libx265-199:amd64.
+Preparing to unpack .../114-libx265-199_3.5-2+b1_amd64.deb ...
+Unpacking libx265-199:amd64 (3.5-2+b1) ...
+Selecting previously unselected package libxvidcore4:amd64.
+Preparing to unpack .../115-libxvidcore4_2%3a1.3.7-1_amd64.deb ...
+Unpacking libxvidcore4:amd64 (2:1.3.7-1) ...
+Selecting previously unselected package libzvbi-common.
+Preparing to unpack .../116-libzvbi-common_0.2.41-1_all.deb ...
+Unpacking libzvbi-common (0.2.41-1) ...
+Selecting previously unselected package libzvbi0:amd64.
+Preparing to unpack .../117-libzvbi0_0.2.41-1_amd64.deb ...
+Unpacking libzvbi0:amd64 (0.2.41-1) ...
+Selecting previously unselected package libavcodec59:amd64.
+Preparing to unpack .../118-libavcodec59_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libavcodec59:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libasound2-data.
+Preparing to unpack .../119-libasound2-data_1.2.8-1_all.deb ...
+Unpacking libasound2-data (1.2.8-1) ...
+Selecting previously unselected package libasound2:amd64.
+Preparing to unpack .../120-libasound2_1.2.8-1+b1_amd64.deb ...
+Unpacking libasound2:amd64 (1.2.8-1+b1) ...
+Selecting previously unselected package libraw1394-11:amd64.
+Preparing to unpack .../121-libraw1394-11_2.1.2-2_amd64.deb ...
+Unpacking libraw1394-11:amd64 (2.1.2-2) ...
+Selecting previously unselected package libavc1394-0:amd64.
+Preparing to unpack .../122-libavc1394-0_0.5.4-5_amd64.deb ...
+Unpacking libavc1394-0:amd64 (0.5.4-5) ...
+Selecting previously unselected package libass9:amd64.
+Preparing to unpack .../123-libass9_1%3a0.17.1-1_amd64.deb ...
+Unpacking libass9:amd64 (1:0.17.1-1) ...
+Selecting previously unselected package libudfread0:amd64.
+Preparing to unpack .../124-libudfread0_1.1.2-1_amd64.deb ...
+Unpacking libudfread0:amd64 (1.1.2-1) ...
+Selecting previously unselected package libbluray2:amd64.
+Preparing to unpack .../125-libbluray2_1%3a1.3.4-1_amd64.deb ...
+Unpacking libbluray2:amd64 (1:1.3.4-1) ...
+Selecting previously unselected package libchromaprint1:amd64.
+Preparing to unpack .../126-libchromaprint1_1.5.1-2+b1_amd64.deb ...
+Unpacking libchromaprint1:amd64 (1.5.1-2+b1) ...
+Selecting previously unselected package libgme0:amd64.
+Preparing to unpack .../127-libgme0_0.6.3-6_amd64.deb ...
+Unpacking libgme0:amd64 (0.6.3-6) ...
+Selecting previously unselected package libmpg123-0:amd64.
+Preparing to unpack .../128-libmpg123-0_1.31.2-1+deb12u1_amd64.deb ...
+Unpacking libmpg123-0:amd64 (1.31.2-1+deb12u1) ...
+Selecting previously unselected package libvorbisfile3:amd64.
+Preparing to unpack .../129-libvorbisfile3_1.3.7-1_amd64.deb ...
+Unpacking libvorbisfile3:amd64 (1.3.7-1) ...
+Selecting previously unselected package libopenmpt0:amd64.
+Preparing to unpack .../130-libopenmpt0_0.6.9-1_amd64.deb ...
+Unpacking libopenmpt0:amd64 (0.6.9-1) ...
+Selecting previously unselected package librabbitmq4:amd64.
+Preparing to unpack .../131-librabbitmq4_0.11.0-1+deb12u1_amd64.deb ...
+Unpacking librabbitmq4:amd64 (0.11.0-1+deb12u1) ...
+Selecting previously unselected package libcjson1:amd64.
+Preparing to unpack .../132-libcjson1_1.7.15-1+deb12u4_amd64.deb ...
+Unpacking libcjson1:amd64 (1.7.15-1+deb12u4) ...
+Selecting previously unselected package libmbedcrypto7:amd64.
+Preparing to unpack .../133-libmbedcrypto7_2.28.3-1_amd64.deb ...
+Unpacking libmbedcrypto7:amd64 (2.28.3-1) ...
+Selecting previously unselected package librist4:amd64.
+Preparing to unpack .../134-librist4_0.2.7+dfsg-1_amd64.deb ...
+Unpacking librist4:amd64 (0.2.7+dfsg-1) ...
+Selecting previously unselected package libsrt1.5-gnutls:amd64.
+Preparing to unpack .../135-libsrt1.5-gnutls_1.5.1-1+deb12u1_amd64.deb ...
+Unpacking libsrt1.5-gnutls:amd64 (1.5.1-1+deb12u1) ...
+Selecting previously unselected package libssh-gcrypt-4:amd64.
+Preparing to unpack .../136-libssh-gcrypt-4_0.10.6-0+deb12u2_amd64.deb ...
+Unpacking libssh-gcrypt-4:amd64 (0.10.6-0+deb12u2) ...
+Selecting previously unselected package libnorm1:amd64.
+Preparing to unpack .../137-libnorm1_1.5.9+dfsg-2_amd64.deb ...
+Unpacking libnorm1:amd64 (1.5.9+dfsg-2) ...
+Selecting previously unselected package libpgm-5.3-0:amd64.
+Preparing to unpack .../138-libpgm-5.3-0_5.3.128~dfsg-2_amd64.deb ...
+Unpacking libpgm-5.3-0:amd64 (5.3.128~dfsg-2) ...
+Selecting previously unselected package libsodium23:amd64.
+Preparing to unpack .../139-libsodium23_1.0.18-1+deb12u1_amd64.deb ...
+Unpacking libsodium23:amd64 (1.0.18-1+deb12u1) ...
+Selecting previously unselected package libzmq5:amd64.
+Preparing to unpack .../140-libzmq5_4.3.4-6_amd64.deb ...
+Unpacking libzmq5:amd64 (4.3.4-6) ...
+Selecting previously unselected package libavformat59:amd64.
+Preparing to unpack .../141-libavformat59_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libavformat59:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libbs2b0:amd64.
+Preparing to unpack .../142-libbs2b0_3.1.0+dfsg-7_amd64.deb ...
+Unpacking libbs2b0:amd64 (3.1.0+dfsg-7) ...
+Selecting previously unselected package libflite1:amd64.
+Preparing to unpack .../143-libflite1_2.2-5_amd64.deb ...
+Unpacking libflite1:amd64 (2.2-5) ...
+Selecting previously unselected package libserd-0-0:amd64.
+Preparing to unpack .../144-libserd-0-0_0.30.16-1_amd64.deb ...
+Unpacking libserd-0-0:amd64 (0.30.16-1) ...
+Selecting previously unselected package libsord-0-0:amd64.
+Preparing to unpack .../145-libsord-0-0_0.16.14+git221008-1_amd64.deb ...
+Unpacking libsord-0-0:amd64 (0.16.14+git221008-1) ...
+Selecting previously unselected package libsratom-0-0:amd64.
+Preparing to unpack .../146-libsratom-0-0_0.6.14-1_amd64.deb ...
+Unpacking libsratom-0-0:amd64 (0.6.14-1) ...
+Selecting previously unselected package liblilv-0-0:amd64.
+Preparing to unpack .../147-liblilv-0-0_0.24.14-1_amd64.deb ...
+Unpacking liblilv-0-0:amd64 (0.24.14-1) ...
+Selecting previously unselected package libmysofa1:amd64.
+Preparing to unpack .../148-libmysofa1_1.3.1~dfsg0-1_amd64.deb ...
+Unpacking libmysofa1:amd64 (1.3.1~dfsg0-1) ...
+Selecting previously unselected package libepoxy0:amd64.
+Preparing to unpack .../149-libepoxy0_1.5.10-1_amd64.deb ...
+Unpacking libepoxy0:amd64 (1.5.10-1) ...
+Selecting previously unselected package libvulkan1:amd64.
+Preparing to unpack .../150-libvulkan1_1.3.239.0-1_amd64.deb ...
+Unpacking libvulkan1:amd64 (1.3.239.0-1) ...
+Selecting previously unselected package libplacebo208:amd64.
+Preparing to unpack .../151-libplacebo208_4.208.0-3_amd64.deb ...
+Unpacking libplacebo208:amd64 (4.208.0-3) ...
+Selecting previously unselected package libblas3:amd64.
+Preparing to unpack .../152-libblas3_3.11.0-2_amd64.deb ...
+Unpacking libblas3:amd64 (3.11.0-2) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../153-libquadmath0_12.2.0-14+deb12u1_amd64.deb ...
+Unpacking libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package libgfortran5:amd64.
+Preparing to unpack .../154-libgfortran5_12.2.0-14+deb12u1_amd64.deb ...
+Unpacking libgfortran5:amd64 (12.2.0-14+deb12u1) ...
+Selecting previously unselected package liblapack3:amd64.
+Preparing to unpack .../155-liblapack3_3.11.0-2_amd64.deb ...
+Unpacking liblapack3:amd64 (3.11.0-2) ...
+Selecting previously unselected package libasyncns0:amd64.
+Preparing to unpack .../156-libasyncns0_0.8-6+b3_amd64.deb ...
+Unpacking libasyncns0:amd64 (0.8-6+b3) ...
+Selecting previously unselected package libdbus-1-3:amd64.
+Preparing to unpack .../157-libdbus-1-3_1.14.10-1~deb12u1_amd64.deb ...
+Unpacking libdbus-1-3:amd64 (1.14.10-1~deb12u1) ...
+Selecting previously unselected package libflac12:amd64.
+Preparing to unpack .../158-libflac12_1.4.2+ds-2_amd64.deb ...
+Unpacking libflac12:amd64 (1.4.2+ds-2) ...
+Selecting previously unselected package libsndfile1:amd64.
+Preparing to unpack .../159-libsndfile1_1.2.0-1+deb12u1_amd64.deb ...
+Unpacking libsndfile1:amd64 (1.2.0-1+deb12u1) ...
+Selecting previously unselected package libpulse0:amd64.
+Preparing to unpack .../160-libpulse0_16.1+dfsg1-2+b1_amd64.deb ...
+Unpacking libpulse0:amd64 (16.1+dfsg1-2+b1) ...
+Selecting previously unselected package libsphinxbase3:amd64.
+Preparing to unpack .../161-libsphinxbase3_0.8+5prealpha+1-16_amd64.deb ...
+Unpacking libsphinxbase3:amd64 (0.8+5prealpha+1-16) ...
+Selecting previously unselected package libpocketsphinx3:amd64.
+Preparing to unpack .../162-libpocketsphinx3_0.8+5prealpha+1-15_amd64.deb ...
+Unpacking libpocketsphinx3:amd64 (0.8+5prealpha+1-15) ...
+Selecting previously unselected package libpostproc56:amd64.
+Preparing to unpack .../163-libpostproc56_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libpostproc56:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package librubberband2:amd64.
+Preparing to unpack .../164-librubberband2_3.1.2+dfsg0-1_amd64.deb ...
+Unpacking librubberband2:amd64 (3.1.2+dfsg0-1) ...
+Selecting previously unselected package libswscale6:amd64.
+Preparing to unpack .../165-libswscale6_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libswscale6:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libvidstab1.1:amd64.
+Preparing to unpack .../166-libvidstab1.1_1.1.0-2+b1_amd64.deb ...
+Unpacking libvidstab1.1:amd64 (1.1.0-2+b1) ...
+Selecting previously unselected package libzimg2:amd64.
+Preparing to unpack .../167-libzimg2_3.0.4+ds1-1_amd64.deb ...
+Unpacking libzimg2:amd64 (3.0.4+ds1-1) ...
+Selecting previously unselected package libavfilter8:amd64.
+Preparing to unpack .../168-libavfilter8_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libavfilter8:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package libslang2:amd64.
+Preparing to unpack .../169-libslang2_2.3.3-3_amd64.deb ...
+Unpacking libslang2:amd64 (2.3.3-3) ...
+Selecting previously unselected package libcaca0:amd64.
+Preparing to unpack .../170-libcaca0_0.99.beta20-3_amd64.deb ...
+Unpacking libcaca0:amd64 (0.99.beta20-3) ...
+Selecting previously unselected package libcdio19:amd64.
+Preparing to unpack .../171-libcdio19_2.1.0-4_amd64.deb ...
+Unpacking libcdio19:amd64 (2.1.0-4) ...
+Selecting previously unselected package libcdio-cdda2:amd64.
+Preparing to unpack .../172-libcdio-cdda2_10.2+2.0.1-1_amd64.deb ...
+Unpacking libcdio-cdda2:amd64 (10.2+2.0.1-1) ...
+Selecting previously unselected package libcdio-paranoia2:amd64.
+Preparing to unpack .../173-libcdio-paranoia2_10.2+2.0.1-1_amd64.deb ...
+Unpacking libcdio-paranoia2:amd64 (10.2+2.0.1-1) ...
+Selecting previously unselected package libusb-1.0-0:amd64.
+Preparing to unpack .../174-libusb-1.0-0_2%3a1.0.26-1_amd64.deb ...
+Unpacking libusb-1.0-0:amd64 (2:1.0.26-1) ...
+Selecting previously unselected package libdc1394-25:amd64.
+Preparing to unpack .../175-libdc1394-25_2.2.6-4_amd64.deb ...
+Unpacking libdc1394-25:amd64 (2.2.6-4) ...
+Selecting previously unselected package libglvnd0:amd64.
+Preparing to unpack .../176-libglvnd0_1.6.0-1_amd64.deb ...
+Unpacking libglvnd0:amd64 (1.6.0-1) ...
+Selecting previously unselected package libglapi-mesa:amd64.
+Preparing to unpack .../177-libglapi-mesa_22.3.6-1+deb12u1_amd64.deb ...
+Unpacking libglapi-mesa:amd64 (22.3.6-1+deb12u1) ...
+Selecting previously unselected package libxcb-dri2-0:amd64.
+Preparing to unpack .../178-libxcb-dri2-0_1.15-1_amd64.deb ...
+Unpacking libxcb-dri2-0:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-glx0:amd64.
+Preparing to unpack .../179-libxcb-glx0_1.15-1_amd64.deb ...
+Unpacking libxcb-glx0:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-present0:amd64.
+Preparing to unpack .../180-libxcb-present0_1.15-1_amd64.deb ...
+Unpacking libxcb-present0:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-randr0:amd64.
+Preparing to unpack .../181-libxcb-randr0_1.15-1_amd64.deb ...
+Unpacking libxcb-randr0:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-sync1:amd64.
+Preparing to unpack .../182-libxcb-sync1_1.15-1_amd64.deb ...
+Unpacking libxcb-sync1:amd64 (1.15-1) ...
+Selecting previously unselected package libxcb-xfixes0:amd64.
+Preparing to unpack .../183-libxcb-xfixes0_1.15-1_amd64.deb ...
+Unpacking libxcb-xfixes0:amd64 (1.15-1) ...
+Selecting previously unselected package libxshmfence1:amd64.
+Preparing to unpack .../184-libxshmfence1_1.3-1_amd64.deb ...
+Unpacking libxshmfence1:amd64 (1.3-1) ...
+Selecting previously unselected package libxxf86vm1:amd64.
+Preparing to unpack .../185-libxxf86vm1_1%3a1.1.4-1+b2_amd64.deb ...
+Unpacking libxxf86vm1:amd64 (1:1.1.4-1+b2) ...
+Selecting previously unselected package libdrm-amdgpu1:amd64.
+Preparing to unpack .../186-libdrm-amdgpu1_2.4.114-1+b1_amd64.deb ...
+Unpacking libdrm-amdgpu1:amd64 (2.4.114-1+b1) ...
+Selecting previously unselected package libpciaccess0:amd64.
+Preparing to unpack .../187-libpciaccess0_0.17-2_amd64.deb ...
+Unpacking libpciaccess0:amd64 (0.17-2) ...
+Selecting previously unselected package libdrm-intel1:amd64.
+Preparing to unpack .../188-libdrm-intel1_2.4.114-1+b1_amd64.deb ...
+Unpacking libdrm-intel1:amd64 (2.4.114-1+b1) ...
+Selecting previously unselected package libdrm-nouveau2:amd64.
+Preparing to unpack .../189-libdrm-nouveau2_2.4.114-1+b1_amd64.deb ...
+Unpacking libdrm-nouveau2:amd64 (2.4.114-1+b1) ...
+Selecting previously unselected package libdrm-radeon1:amd64.
+Preparing to unpack .../190-libdrm-radeon1_2.4.114-1+b1_amd64.deb ...
+Unpacking libdrm-radeon1:amd64 (2.4.114-1+b1) ...
+Selecting previously unselected package libelf1:amd64.
+Preparing to unpack .../191-libelf1_0.188-2.1_amd64.deb ...
+Unpacking libelf1:amd64 (0.188-2.1) ...
+Selecting previously unselected package libedit2:amd64.
+Preparing to unpack .../192-libedit2_3.1-20221030-2_amd64.deb ...
+Unpacking libedit2:amd64 (3.1-20221030-2) ...
+Selecting previously unselected package libz3-4:amd64.
+Preparing to unpack .../193-libz3-4_4.8.12-3.1_amd64.deb ...
+Unpacking libz3-4:amd64 (4.8.12-3.1) ...
+Selecting previously unselected package libllvm15:amd64.
+Preparing to unpack .../194-libllvm15_1%3a15.0.6-4+b1_amd64.deb ...
+Unpacking libllvm15:amd64 (1:15.0.6-4+b1) ...
+Selecting previously unselected package libsensors-config.
+Preparing to unpack .../195-libsensors-config_1%3a3.6.0-7.1_all.deb ...
+Unpacking libsensors-config (1:3.6.0-7.1) ...
+Selecting previously unselected package libsensors5:amd64.
+Preparing to unpack .../196-libsensors5_1%3a3.6.0-7.1_amd64.deb ...
+Unpacking libsensors5:amd64 (1:3.6.0-7.1) ...
+Selecting previously unselected package libgl1-mesa-dri:amd64.
+Preparing to unpack .../197-libgl1-mesa-dri_22.3.6-1+deb12u1_amd64.deb ...
+Unpacking libgl1-mesa-dri:amd64 (22.3.6-1+deb12u1) ...
+Selecting previously unselected package libglx-mesa0:amd64.
+Preparing to unpack .../198-libglx-mesa0_22.3.6-1+deb12u1_amd64.deb ...
+Unpacking libglx-mesa0:amd64 (22.3.6-1+deb12u1) ...
+Selecting previously unselected package libglx0:amd64.
+Preparing to unpack .../199-libglx0_1.6.0-1_amd64.deb ...
+Unpacking libglx0:amd64 (1.6.0-1) ...
+Selecting previously unselected package libgl1:amd64.
+Preparing to unpack .../200-libgl1_1.6.0-1_amd64.deb ...
+Unpacking libgl1:amd64 (1.6.0-1) ...
+Selecting previously unselected package libiec61883-0:amd64.
+Preparing to unpack .../201-libiec61883-0_1.2.0-6+b1_amd64.deb ...
+Unpacking libiec61883-0:amd64 (1.2.0-6+b1) ...
+Selecting previously unselected package libsamplerate0:amd64.
+Preparing to unpack .../202-libsamplerate0_0.2.2-3_amd64.deb ...
+Unpacking libsamplerate0:amd64 (0.2.2-3) ...
+Selecting previously unselected package libjack-jackd2-0:amd64.
+Preparing to unpack .../203-libjack-jackd2-0_1.9.21~dfsg-3_amd64.deb ...
+Unpacking libjack-jackd2-0:amd64 (1.9.21~dfsg-3) ...
+Selecting previously unselected package libopenal-data.
+Preparing to unpack .../204-libopenal-data_1%3a1.19.1-2_all.deb ...
+Unpacking libopenal-data (1:1.19.1-2) ...
+Selecting previously unselected package libsndio7.0:amd64.
+Preparing to unpack .../205-libsndio7.0_1.9.0-0.3+b2_amd64.deb ...
+Unpacking libsndio7.0:amd64 (1.9.0-0.3+b2) ...
+Selecting previously unselected package libopenal1:amd64.
+Preparing to unpack .../206-libopenal1_1%3a1.19.1-2_amd64.deb ...
+Unpacking libopenal1:amd64 (1:1.19.1-2) ...
+Selecting previously unselected package libwayland-client0:amd64.
+Preparing to unpack .../207-libwayland-client0_1.21.0-1_amd64.deb ...
+Unpacking libwayland-client0:amd64 (1.21.0-1) ...
+Selecting previously unselected package libdecor-0-0:amd64.
+Preparing to unpack .../208-libdecor-0-0_0.1.1-2_amd64.deb ...
+Unpacking libdecor-0-0:amd64 (0.1.1-2) ...
+Selecting previously unselected package libwayland-server0:amd64.
+Preparing to unpack .../209-libwayland-server0_1.21.0-1_amd64.deb ...
+Unpacking libwayland-server0:amd64 (1.21.0-1) ...
+Selecting previously unselected package libgbm1:amd64.
+Preparing to unpack .../210-libgbm1_22.3.6-1+deb12u1_amd64.deb ...
+Unpacking libgbm1:amd64 (22.3.6-1+deb12u1) ...
+Selecting previously unselected package libwayland-cursor0:amd64.
+Preparing to unpack .../211-libwayland-cursor0_1.21.0-1_amd64.deb ...
+Unpacking libwayland-cursor0:amd64 (1.21.0-1) ...
+Selecting previously unselected package libwayland-egl1:amd64.
+Preparing to unpack .../212-libwayland-egl1_1.21.0-1_amd64.deb ...
+Unpacking libwayland-egl1:amd64 (1.21.0-1) ...
+Selecting previously unselected package libxcursor1:amd64.
+Preparing to unpack .../213-libxcursor1_1%3a1.2.1-1_amd64.deb ...
+Unpacking libxcursor1:amd64 (1:1.2.1-1) ...
+Selecting previously unselected package libxi6:amd64.
+Preparing to unpack .../214-libxi6_2%3a1.8-1+b1_amd64.deb ...
+Unpacking libxi6:amd64 (2:1.8-1+b1) ...
+Selecting previously unselected package xkb-data.
+Preparing to unpack .../215-xkb-data_2.35.1-1_all.deb ...
+Unpacking xkb-data (2.35.1-1) ...
+Selecting previously unselected package libxkbcommon0:amd64.
+Preparing to unpack .../216-libxkbcommon0_1.5.0-1_amd64.deb ...
+Unpacking libxkbcommon0:amd64 (1.5.0-1) ...
+Selecting previously unselected package libxrandr2:amd64.
+Preparing to unpack .../217-libxrandr2_2%3a1.5.2-2+b1_amd64.deb ...
+Unpacking libxrandr2:amd64 (2:1.5.2-2+b1) ...
+Selecting previously unselected package x11-common.
+Preparing to unpack .../218-x11-common_1%3a7.7+23_all.deb ...
+Unpacking x11-common (1:7.7+23) ...
+Selecting previously unselected package libxss1:amd64.
+Preparing to unpack .../219-libxss1_1%3a1.2.3-1_amd64.deb ...
+Unpacking libxss1:amd64 (1:1.2.3-1) ...
+Selecting previously unselected package libsdl2-2.0-0:amd64.
+Preparing to unpack .../220-libsdl2-2.0-0_2.26.5+dfsg-1_amd64.deb ...
+Unpacking libsdl2-2.0-0:amd64 (2.26.5+dfsg-1) ...
+Selecting previously unselected package libxcb-shape0:amd64.
+Preparing to unpack .../221-libxcb-shape0_1.15-1_amd64.deb ...
+Unpacking libxcb-shape0:amd64 (1.15-1) ...
+Selecting previously unselected package libxv1:amd64.
+Preparing to unpack .../222-libxv1_2%3a1.0.11-1.1_amd64.deb ...
+Unpacking libxv1:amd64 (2:1.0.11-1.1) ...
+Selecting previously unselected package libavdevice59:amd64.
+Preparing to unpack .../223-libavdevice59_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking libavdevice59:amd64 (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package ffmpeg.
+Preparing to unpack .../224-ffmpeg_7%3a5.1.8-0+deb12u1_amd64.deb ...
+Unpacking ffmpeg (7:5.1.8-0+deb12u1) ...
+Selecting previously unselected package gnupg-l10n.
+Preparing to unpack .../225-gnupg-l10n_2.2.40-1.1+deb12u2_all.deb ...
+Unpacking gnupg-l10n (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package gnupg-utils.
+Preparing to unpack .../226-gnupg-utils_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gnupg-utils (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package libsqlite3-0:amd64.
+Preparing to unpack .../227-libsqlite3-0_3.40.1-2+deb12u2_amd64.deb ...
+Unpacking libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+Selecting previously unselected package gpg.
+Preparing to unpack .../228-gpg_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpg (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package pinentry-curses.
+Preparing to unpack .../229-pinentry-curses_1.2.1-1_amd64.deb ...
+Unpacking pinentry-curses (1.2.1-1) ...
+Selecting previously unselected package gpg-agent.
+Preparing to unpack .../230-gpg-agent_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpg-agent (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package gpg-wks-client.
+Preparing to unpack .../231-gpg-wks-client_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpg-wks-client (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package gpg-wks-server.
+Preparing to unpack .../232-gpg-wks-server_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpg-wks-server (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package gpgsm.
+Preparing to unpack .../233-gpgsm_2.2.40-1.1+deb12u2_amd64.deb ...
+Unpacking gpgsm (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package gnupg.
+Preparing to unpack .../234-gnupg_2.2.40-1.1+deb12u2_all.deb ...
+Unpacking gnupg (2.2.40-1.1+deb12u2) ...
+Selecting previously unselected package libonig5:amd64.
+Preparing to unpack .../235-libonig5_6.9.8-1_amd64.deb ...
+Unpacking libonig5:amd64 (6.9.8-1) ...
+Selecting previously unselected package libjq1:amd64.
+Preparing to unpack .../236-libjq1_1.6-2.1+deb12u1_amd64.deb ...
+Unpacking libjq1:amd64 (1.6-2.1+deb12u1) ...
+Selecting previously unselected package jq.
+Preparing to unpack .../237-jq_1.6-2.1+deb12u1_amd64.deb ...
+Unpacking jq (1.6-2.1+deb12u1) ...
+Selecting previously unselected package libcurl3-gnutls:amd64.
+Preparing to unpack .../238-libcurl3-gnutls_7.88.1-10+deb12u14_amd64.deb ...
+Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u14) ...
+Selecting previously unselected package libmms0:amd64.
+Preparing to unpack .../239-libmms0_0.6.4-3_amd64.deb ...
+Unpacking libmms0:amd64 (0.6.4-3) ...
+Selecting previously unselected package libtinyxml2-9:amd64.
+Preparing to unpack .../240-libtinyxml2-9_9.0.0+dfsg-3.1_amd64.deb ...
+Unpacking libtinyxml2-9:amd64 (9.0.0+dfsg-3.1) ...
+Selecting previously unselected package libzen0v5:amd64.
+Preparing to unpack .../241-libzen0v5_0.4.41-2_amd64.deb ...
+Unpacking libzen0v5:amd64 (0.4.41-2) ...
+Selecting previously unselected package libmediainfo0v5:amd64.
+Preparing to unpack .../242-libmediainfo0v5_23.04+dfsg-1_amd64.deb ...
+Unpacking libmediainfo0v5:amd64 (23.04+dfsg-1) ...
+Selecting previously unselected package mediainfo.
+Preparing to unpack .../243-mediainfo_23.04-1_amd64.deb ...
+Unpacking mediainfo (23.04-1) ...
+Setting up libgme0:amd64 (0.6.3-6) ...
+Setting up libksba8:amd64 (1.6.3-2) ...
+Setting up libexpat1:amd64 (2.5.0-1+deb12u2) ...
+Setting up dumb-init (1.2.5-2) ...
+Setting up libgraphite2-3:amd64 (1.3.14-1) ...
+Setting up liblcms2-2:amd64 (2.14-2) ...
+Setting up libpixman-1-0:amd64 (0.42.2-1) ...
+Setting up libudfread0:amd64 (1.1.2-1) ...
+Setting up libwayland-server0:amd64 (1.21.0-1) ...
+Setting up libaom3:amd64 (3.6.0-1+deb12u2) ...
+Setting up libpciaccess0:amd64 (0.17-2) ...
+Setting up libxau6:amd64 (1:1.0.9-1) ...
+Setting up libraw1394-11:amd64 (2.1.2-2) ...
+Setting up libkeyutils1:amd64 (1.6.3-2) ...
+Setting up libpsl5:amd64 (0.21.2-1) ...
+Setting up libcodec2-1.0:amd64 (1.0.5-1) ...
+Setting up libsodium23:amd64 (1.0.18-1+deb12u1) ...
+Setting up libicu72:amd64 (72.1-3+deb12u1) ...
+Setting up libmpg123-0:amd64 (1.31.2-1+deb12u1) ...
+Setting up libogg0:amd64 (1.3.5-3) ...
+Setting up liblerc4:amd64 (4.0.0+ds-2) ...
+Setting up libspeex1:amd64 (1.2.1-2) ...
+Setting up libshine3:amd64 (3.1.1-2) ...
+Setting up wget (1.21.3-1+deb12u1) ...
+Setting up libx264-164:amd64 (2:0.164.3095+gitbaee400-3) ...
+Setting up libtwolame0:amd64 (0.4.0-2) ...
+Setting up libdatrie1:amd64 (0.2.13-2+b1) ...
+Setting up libmagic-mgc (1:5.44-3) ...
+Setting up libgsm1:amd64 (1.0.22-1) ...
+Setting up libglib2.0-0:amd64 (2.74.6-2+deb12u8) ...
+No schema files found: doing nothing.
+Setting up libglvnd0:amd64 (1.6.0-1) ...
+Setting up libpgm-5.3-0:amd64 (5.3.128~dfsg-2) ...
+Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+Setting up libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+Setting up libgdk-pixbuf2.0-common (2.42.10+dfsg-1+deb12u3) ...
+Setting up libnorm1:amd64 (1.5.9+dfsg-2) ...
+Setting up libmysofa1:amd64 (1.3.1~dfsg0-1) ...
+Setting up libssl3:amd64 (3.0.18-1~deb12u2) ...
+Setting up x11-common (1:7.7+23) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of restart.
+Setting up libsensors-config (1:3.6.0-7.1) ...
+Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u2) ...
+Setting up libmagic1:amd64 (1:5.44-3) ...
+Setting up libdeflate0:amd64 (1.14-1) ...
+Setting up xkb-data (2.35.1-1) ...
+Setting up libnpth0:amd64 (1.6-3) ...
+Setting up libhwy1:amd64 (1.0.3-3+deb12u1) ...
+Setting up file (1:5.44-3) ...
+Setting up libsvtav1enc1:amd64 (1.4.1+dfsg-1) ...
+Setting up libassuan0:amd64 (2.5.5-5) ...
+Setting up libgomp1:amd64 (12.2.0-14+deb12u1) ...
+Setting up libcdio19:amd64 (2.1.0-4) ...
+Setting up libcjson1:amd64 (1.7.15-1+deb12u4) ...
+Setting up libxvidcore4:amd64 (2:1.3.7-1) ...
+Setting up libjbig0:amd64 (2.1-6.1) ...
+Setting up librav1e0:amd64 (0.5.1-6) ...
+Setting up libmms0:amd64 (0.6.4-3) ...
+Setting up libsnappy1v5:amd64 (1.1.9-3) ...
+Setting up libkrb5support0:amd64 (1.20.1-2+deb12u4) ...
+Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+Setting up libasound2-data (1.2.8-1) ...
+Setting up libz3-4:amd64 (4.8.12-3.1) ...
+Setting up libblas3:amd64 (3.11.0-2) ...
+update-alternatives: using /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 to provide /usr/lib/x86_64-linux-gnu/libblas.so.3 (libblas.so.3-x86_64-linux-gnu) in auto mode
+Setting up libflac12:amd64 (1.4.2+ds-2) ...
+Setting up libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+Setting up libslang2:amd64 (2.3.3-3) ...
+Setting up libva2:amd64 (2.17.0-1) ...
+Setting up libmbedcrypto7:amd64 (2.28.3-1) ...
+Setting up libx11-data (2:1.8.4-2+deb12u2) ...
+Setting up libepoxy0:amd64 (1.5.10-1) ...
+Setting up gnupg-l10n (2.2.40-1.1+deb12u2) ...
+Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Setting up libdbus-1-3:amd64 (1.14.10-1~deb12u1) ...
+Setting up libfribidi0:amd64 (1.0.8-2.1) ...
+Setting up libopus0:amd64 (1.3.1-3) ...
+Setting up libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+Setting up libproc2-0:amd64 (2:4.0.2-3) ...
+Setting up libpng16-16:amd64 (1.6.39-2+deb12u3) ...
+Setting up libzen0v5:amd64 (0.4.41-2) ...
+Setting up libvorbis0a:amd64 (1.3.7-1) ...
+Setting up libtinyxml2-9:amd64 (9.0.0+dfsg-3.1) ...
+Setting up fonts-dejavu-core (2.37-6) ...
+Setting up libsensors5:amd64 (1:3.6.0-7.1) ...
+Setting up libjxl0.7:amd64 (0.7.0-10+deb12u1) ...
+Setting up libncursesw6:amd64 (6.4-4) ...
+Setting up libk5crypto3:amd64 (1.20.1-2+deb12u4) ...
+Setting up libdav1d6:amd64 (1.0.0-2+deb12u1) ...
+Setting up libglapi-mesa:amd64 (22.3.6-1+deb12u1) ...
+Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+Setting up libgfortran5:amd64 (12.2.0-14+deb12u1) ...
+Setting up libvulkan1:amd64 (1.3.239.0-1) ...
+Setting up libwebp7:amd64 (1.2.4-0.2+deb12u1) ...
+Setting up librubberband2:amd64 (3.1.2+dfsg0-1) ...
+Setting up libnuma1:amd64 (2.0.16-1) ...
+Setting up libvidstab1.1:amd64 (1.1.0-2+b1) ...
+Setting up libsrt1.5-gnutls:amd64 (1.5.1-1+deb12u1) ...
+Setting up ocl-icd-libopencl1:amd64 (2.3.1-1) ...
+Setting up libasyncns0:amd64 (0.8-6+b3) ...
+Setting up libxshmfence1:amd64 (1.3-1) ...
+Setting up libtiff6:amd64 (4.5.0-6+deb12u3) ...
+Setting up libbs2b0:amd64 (3.1.0+dfsg-7) ...
+Setting up procps (2:4.0.2-3) ...
+Setting up libasound2:amd64 (1.2.8-1+b1) ...
+Setting up libzimg2:amd64 (3.0.4+ds1-1) ...
+Setting up libopenjp2-7:amd64 (2.5.0-2+deb12u2) ...
+Setting up libopenal-data (1:1.19.1-2) ...
+Setting up libthai-data (0.1.29-1) ...
+Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
+Setting up libvpx7:amd64 (1.12.0-1+deb12u5) ...
+Setting up libkrb5-3:amd64 (1.20.1-2+deb12u4) ...
+Setting up libwayland-egl1:amd64 (1.21.0-1) ...
+Setting up libusb-1.0-0:amd64 (2:1.0.26-1) ...
+Setting up libmfx1:amd64 (22.5.4-1) ...
+Setting up libsamplerate0:amd64 (0.2.2-3) ...
+Setting up openssl (3.0.18-1~deb12u2) ...
+Setting up libwebpmux3:amd64 (1.2.4-0.2+deb12u1) ...
+Setting up libbsd0:amd64 (0.11.7-2) ...
+Setting up libdrm-common (2.4.114-1) ...
+Setting up libelf1:amd64 (0.188-2.1) ...
+Setting up readline-common (8.2-1.3) ...
+Setting up libxml2:amd64 (2.9.14+dfsg-1.3~deb12u5) ...
+Setting up libonig5:amd64 (6.9.8-1) ...
+Setting up libzvbi-common (0.2.41-1) ...
+Setting up libmp3lame0:amd64 (3.100-6) ...
+Setting up libvorbisenc2:amd64 (1.3.7-1) ...
+Setting up libiec61883-0:amd64 (1.2.0-6+b1) ...
+Setting up libserd-0-0:amd64 (0.30.16-1) ...
+Setting up libxkbcommon0:amd64 (1.5.0-1) ...
+Setting up libwayland-client0:amd64 (1.21.0-1) ...
+Setting up pinentry-curses (1.2.1-1) ...
+Setting up libavc1394-0:amd64 (0.5.4-5) ...
+Setting up libzvbi0:amd64 (0.2.41-1) ...
+Setting up librabbitmq4:amd64 (0.11.0-1+deb12u1) ...
+Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+Setting up liblapack3:amd64 (3.11.0-2) ...
+update-alternatives: using /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3 to provide /usr/lib/x86_64-linux-gnu/liblapack.so.3 (liblapack.so.3-x86_64-linux-gnu) in auto mode
+Setting up libxcb1:amd64 (1.15-1) ...
+Setting up libxcb-xfixes0:amd64 (1.15-1) ...
+Setting up libplacebo208:amd64 (4.208.0-3) ...
+Setting up libcaca0:amd64 (0.99.beta20-3) ...
+Setting up libxcb-render0:amd64 (1.15-1) ...
+Setting up libsoxr0:amd64 (0.1.3-4) ...
+Setting up libcdio-cdda2:amd64 (10.2+2.0.1-1) ...
+Setting up libjq1:amd64 (1.6-2.1+deb12u1) ...
+Setting up fontconfig-config (2.14.1-4) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up libcdio-paranoia2:amd64 (10.2+2.0.1-1) ...
+Setting up libxcb-glx0:amd64 (1.15-1) ...
+Setting up libedit2:amd64 (3.1-20221030-2) ...
+Setting up libreadline8:amd64 (8.2-1.3) ...
+Setting up libxcb-shape0:amd64 (1.15-1) ...
+Setting up libxcb-shm0:amd64 (1.15-1) ...
+Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+Setting up librist4:amd64 (0.2.7+dfsg-1) ...
+Setting up libxcb-present0:amd64 (1.15-1) ...
+Setting up libthai0:amd64 (0.1.29-1) ...
+Setting up ca-certificates (20230311+deb12u1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Updating certificates in /etc/ssl/certs...
+142 added, 0 removed; done.
+Setting up libvorbisfile3:amd64 (1.3.7-1) ...
+Setting up libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+Setting up libxcb-sync1:amd64 (1.15-1) ...
+Setting up shared-mime-info (2.2-1) ...
+Setting up libdc1394-25:amd64 (2.2.6-4) ...
+Setting up libgssapi-krb5-2:amd64 (1.20.1-2+deb12u4) ...
+Setting up libx265-199:amd64 (3.5-2+b1) ...
+Setting up libsndio7.0:amd64 (1.9.0-0.3+b2) ...
+Setting up libxcb-dri2-0:amd64 (1.15-1) ...
+Setting up libjack-jackd2-0:amd64 (1.9.21~dfsg-3) ...
+Setting up libdrm2:amd64 (2.4.114-1+b1) ...
+Setting up libflite1:amd64 (2.2-5) ...
+Setting up libva-drm2:amd64 (2.17.0-1) ...
+Setting up libsord-0-0:amd64 (0.16.14+git221008-1) ...
+Setting up libwayland-cursor0:amd64 (1.21.0-1) ...
+Setting up libxcb-randr0:amd64 (1.15-1) ...
+Setting up libsratom-0-0:amd64 (0.6.14-1) ...
+Setting up jq (1.6-2.1+deb12u1) ...
+Setting up libllvm15:amd64 (1:15.0.6-4+b1) ...
+Setting up gpgconf (2.2.40-1.1+deb12u2) ...
+Setting up libdecor-0-0:amd64 (0.1.1-2) ...
+Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
+Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+Setting up libharfbuzz0b:amd64 (6.0.0+dfsg-3) ...
+Setting up libgdk-pixbuf-2.0-0:amd64 (2.42.10+dfsg-1+deb12u3) ...
+Setting up curl (7.88.1-10+deb12u14) ...
+Setting up libfontconfig1:amd64 (2.14.1-4) ...
+Setting up libsndfile1:amd64 (1.2.0-1+deb12u1) ...
+Setting up libbluray2:amd64 (1:1.3.4-1) ...
+Setting up liblilv-0-0:amd64 (0.24.14-1) ...
+Setting up libopenmpt0:amd64 (0.6.9-1) ...
+Setting up gpg (2.2.40-1.1+deb12u2) ...
+Setting up gnupg-utils (2.2.40-1.1+deb12u2) ...
+Setting up libdrm-amdgpu1:amd64 (2.4.114-1+b1) ...
+Setting up libssh-gcrypt-4:amd64 (0.10.6-0+deb12u2) ...
+Setting up libxcb-dri3-0:amd64 (1.15-1) ...
+Setting up libx11-xcb1:amd64 (2:1.8.4-2+deb12u2) ...
+Setting up fontconfig (2.14.1-4) ...
+Regenerating fonts cache... done.
+Setting up libdrm-nouveau2:amd64 (2.4.114-1+b1) ...
+Setting up gpg-agent (2.2.40-1.1+deb12u2) ...
+Setting up libzmq5:amd64 (4.3.4-6) ...
+Setting up libxrender1:amd64 (1:0.9.10-1.1) ...
+Setting up libgbm1:amd64 (22.3.6-1+deb12u1) ...
+Setting up libpulse0:amd64 (16.1+dfsg1-2+b1) ...
+Setting up libdrm-radeon1:amd64 (2.4.114-1+b1) ...
+Setting up gpgsm (2.2.40-1.1+deb12u2) ...
+Setting up libpango-1.0-0:amd64 (1.50.12+ds-1) ...
+Setting up libdrm-intel1:amd64 (2.4.114-1+b1) ...
+Setting up libgl1-mesa-dri:amd64 (22.3.6-1+deb12u1) ...
+Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
+Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u14) ...
+Setting up libopenal1:amd64 (1:1.19.1-2) ...
+Setting up libcairo2:amd64 (1.16.0-7) ...
+Setting up libxxf86vm1:amd64 (1:1.1.4-1+b2) ...
+Setting up dirmngr (2.2.40-1.1+deb12u2) ...
+Setting up libass9:amd64 (1:0.17.1-1) ...
+Setting up libxfixes3:amd64 (1:6.0.0-2) ...
+Setting up libxv1:amd64 (2:1.0.11-1.1) ...
+Setting up libxrandr2:amd64 (2:1.5.2-2+b1) ...
+Setting up gpg-wks-server (2.2.40-1.1+deb12u2) ...
+Setting up libvdpau1:amd64 (1.5-2) ...
+Setting up libtheora0:amd64 (1.1.1+dfsg.1-16.1+deb12u1) ...
+Setting up libcairo-gobject2:amd64 (1.16.0-7) ...
+Setting up libxss1:amd64 (1:1.2.3-1) ...
+Setting up libpangoft2-1.0-0:amd64 (1.50.12+ds-1) ...
+Setting up libva-x11-2:amd64 (2.17.0-1) ...
+Setting up libmediainfo0v5:amd64 (23.04+dfsg-1) ...
+Setting up mediainfo (23.04-1) ...
+Setting up libpangocairo-1.0-0:amd64 (1.50.12+ds-1) ...
+Setting up libglx-mesa0:amd64 (22.3.6-1+deb12u1) ...
+Setting up libxi6:amd64 (2:1.8-1+b1) ...
+Setting up gpg-wks-client (2.2.40-1.1+deb12u2) ...
+Setting up libglx0:amd64 (1.6.0-1) ...
+Setting up libsphinxbase3:amd64 (0.8+5prealpha+1-16) ...
+Setting up libxcursor1:amd64 (1:1.2.1-1) ...
+Setting up librsvg2-2:amd64 (2.54.7+dfsg-1~deb12u1) ...
+Setting up libpocketsphinx3:amd64 (0.8+5prealpha+1-15) ...
+Setting up libavutil57:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libgl1:amd64 (1.6.0-1) ...
+Setting up libswresample4:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up gnupg (2.2.40-1.1+deb12u2) ...
+Setting up libpostproc56:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libavcodec59:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libsdl2-2.0-0:amd64 (2.26.5+dfsg-1) ...
+Setting up libswscale6:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libchromaprint1:amd64 (1.5.1-2+b1) ...
+Setting up libavformat59:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libavfilter8:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up libavdevice59:amd64 (7:5.1.8-0+deb12u1) ...
+Setting up ffmpeg (7:5.1.8-0+deb12u1) ...
+Processing triggers for libc-bin (2.36-9+deb12u13) ...
+Processing triggers for ca-certificates (20230311+deb12u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+--2026-03-25 04:37:09--  https://mediaarea.net/repo/deb/repo-mediaarea_1.0-26_all.deb
+Resolving mediaarea.net (mediaarea.net)... 139.99.40.229, 2402:1f00:8000:800::c2f
+Connecting to mediaarea.net (mediaarea.net)|139.99.40.229|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4974 (4.9K) [application/vnd.debian.binary-package]
+Saving to: 'repo-mediaarea_1.0-26_all.deb'
+
+     0K ....                                                  100%  168M=0s
+
+2026-03-25 04:37:10 (168 MB/s) - 'repo-mediaarea_1.0-26_all.deb' saved [4974/4974]
+
+Selecting previously unselected package repo-mediaarea.
+(Reading database ... 9891 files and directories currently installed.)
+Preparing to unpack repo-mediaarea_1.0-26_all.deb ...
+Unpacking repo-mediaarea (1.0-26) ...
+Setting up repo-mediaarea (1.0-26) ...
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Get:4 https://mediaarea.net/repo/deb/debian bookworm InRelease [42.5 kB]
+Get:5 https://mediaarea.net/repo/deb/debian bookworm/main amd64 Packages [11.8 kB]
+Fetched 54.4 kB in 2s (34.7 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  iso-codes libb2-1 libcap2-bin libdouble-conversion3 libdw1 libegl-mesa0
+  libegl1 libevdev2 libgstreamer-gl1.0-0 libgstreamer-plugins-base1.0-0
+  libgstreamer1.0-0 libgudev-1.0-0 libice6 libinput-bin libinput10 libmd4c0
+  libmtdev1 libopengl0 liborc-0.4-0 libpcre2-16-0 libproxy1v5 libqt6core6
+  libqt6dbus6 libqt6gui6 libqt6multimedia6 libqt6multimediawidgets6
+  libqt6network6 libqt6qml6 libqt6widgets6 libsm6 libts0 libunwind8
+  libwacom-common libwacom9 libxcb-icccm4 libxcb-image0 libxcb-keysyms1
+  libxcb-render-util0 libxcb-util1 libxcb-xkb1 libxkbcommon-x11-0
+Suggested packages:
+  isoquery libvisual-0.4-plugins gstreamer1.0-tools qt6-qmltooling-plugins
+  libwacom-bin
+Recommended packages:
+  libpam-cap gstreamer1.0-gl gstreamer1.0-plugins-base qt6-translations-l10n
+  qt6-gtk-platformtheme qt6-qpa-plugins
+The following NEW packages will be installed:
+  iso-codes libb2-1 libcap2-bin libdouble-conversion3 libdw1 libegl-mesa0
+  libegl1 libevdev2 libgstreamer-gl1.0-0 libgstreamer-plugins-base1.0-0
+  libgstreamer1.0-0 libgudev-1.0-0 libice6 libinput-bin libinput10 libmd4c0
+  libmtdev1 libopengl0 liborc-0.4-0 libpcre2-16-0 libproxy1v5 libqt6core6
+  libqt6dbus6 libqt6gui6 libqt6multimedia6 libqt6multimediawidgets6
+  libqt6network6 libqt6qml6 libqt6widgets6 libsm6 libts0 libunwind8
+  libwacom-common libwacom9 libxcb-icccm4 libxcb-image0 libxcb-keysyms1
+  libxcb-render-util0 libxcb-util1 libxcb-xkb1 libxkbcommon-x11-0 qcli qctools
+0 upgraded, 43 newly installed, 0 to remove and 2 not upgraded.
+Need to get 37.6 MB of archives.
+After this operation, 124 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 iso-codes all 4.15.0-1 [2906 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libb2-1 amd64 0.98.1-1.1 [40.9 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libcap2-bin amd64 1:2.66-4+deb12u2+b2 [35.2 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 libdouble-conversion3 amd64 3.2.1-1 [41.5 kB]
+Get:5 http://deb.debian.org/debian bookworm/main amd64 libdw1 amd64 0.188-2.1 [235 kB]
+Get:6 http://deb.debian.org/debian bookworm/main amd64 libegl-mesa0 amd64 22.3.6-1+deb12u1 [114 kB]
+Get:7 http://deb.debian.org/debian bookworm/main amd64 libevdev2 amd64 1.13.0+dfsg-1 [34.0 kB]
+Get:8 http://deb.debian.org/debian bookworm/main amd64 libegl1 amd64 1.6.0-1 [33.7 kB]
+Get:9 http://deb.debian.org/debian bookworm/main amd64 libunwind8 amd64 1.6.2-3 [51.2 kB]
+Get:10 http://deb.debian.org/debian bookworm/main amd64 libgstreamer1.0-0 amd64 1.22.0-2+deb12u1 [1170 kB]
+Get:11 http://deb.debian.org/debian bookworm/main amd64 liborc-0.4-0 amd64 1:0.4.33-2 [164 kB]
+Get:12 http://deb.debian.org/debian-security bookworm-security/main amd64 libgstreamer-plugins-base1.0-0 amd64 1.22.0-3+deb12u6 [934 kB]
+Get:13 http://deb.debian.org/debian bookworm/main amd64 libgudev-1.0-0 amd64 237-2 [15.1 kB]
+Get:14 http://deb.debian.org/debian-security bookworm-security/main amd64 libgstreamer-gl1.0-0 amd64 1.22.0-3+deb12u6 [246 kB]
+Get:15 http://deb.debian.org/debian bookworm/main amd64 libice6 amd64 2:1.0.10-1 [58.5 kB]
+Get:16 http://deb.debian.org/debian bookworm/main amd64 libwacom-common all 2.6.0-1 [58.4 kB]
+Get:17 http://deb.debian.org/debian bookworm/main amd64 libwacom9 amd64 2.6.0-1 [21.5 kB]
+Get:18 http://deb.debian.org/debian bookworm/main amd64 libinput-bin amd64 1.22.1-1 [23.2 kB]
+Get:19 http://deb.debian.org/debian bookworm/main amd64 libmtdev1 amd64 1.1.6-1 [23.0 kB]
+Get:20 http://deb.debian.org/debian bookworm/main amd64 libinput10 amd64 1.22.1-1 [125 kB]
+Get:21 http://deb.debian.org/debian bookworm/main amd64 libmd4c0 amd64 0.4.8-1 [44.2 kB]
+Get:22 http://deb.debian.org/debian bookworm/main amd64 libpcre2-16-0 amd64 10.42-1 [245 kB]
+Get:23 http://deb.debian.org/debian bookworm/main amd64 libproxy1v5 amd64 0.4.18-1.2 [56.2 kB]
+Get:24 http://deb.debian.org/debian bookworm/main amd64 libqt6core6 amd64 6.4.2+dfsg-10 [1613 kB]
+Get:25 http://deb.debian.org/debian bookworm/main amd64 libqt6dbus6 amd64 6.4.2+dfsg-10 [248 kB]
+Get:26 http://deb.debian.org/debian bookworm/main amd64 libopengl0 amd64 1.6.0-1 [30.6 kB]
+Get:27 http://deb.debian.org/debian bookworm/main amd64 libsm6 amd64 2:1.2.3-1 [35.1 kB]
+Get:28 http://deb.debian.org/debian bookworm/main amd64 libts0 amd64 1.22-1+b1 [64.6 kB]
+Get:29 http://deb.debian.org/debian bookworm/main amd64 libxcb-icccm4 amd64 0.4.1-1.1 [27.4 kB]
+Get:30 http://deb.debian.org/debian bookworm/main amd64 libxcb-util1 amd64 0.4.0-1+b1 [23.2 kB]
+Get:31 http://deb.debian.org/debian bookworm/main amd64 libxcb-image0 amd64 0.4.0-2 [22.9 kB]
+Get:32 http://deb.debian.org/debian bookworm/main amd64 libxcb-keysyms1 amd64 0.4.0-1+b2 [16.4 kB]
+Get:33 http://deb.debian.org/debian bookworm/main amd64 libxcb-render-util0 amd64 0.3.9-1+b1 [18.3 kB]
+Get:34 http://deb.debian.org/debian bookworm/main amd64 libxcb-xkb1 amd64 1.15-1 [129 kB]
+Get:35 http://deb.debian.org/debian bookworm/main amd64 libxkbcommon-x11-0 amd64 1.5.0-1 [15.6 kB]
+Get:36 http://deb.debian.org/debian bookworm/main amd64 libqt6gui6 amd64 6.4.2+dfsg-10 [2854 kB]
+Get:37 http://deb.debian.org/debian bookworm/main amd64 libqt6network6 amd64 6.4.2+dfsg-10 [682 kB]
+Get:38 http://deb.debian.org/debian bookworm/main amd64 libqt6multimedia6 amd64 6.4.2-5 [484 kB]
+Get:39 http://deb.debian.org/debian bookworm/main amd64 libqt6widgets6 amd64 6.4.2+dfsg-10 [2445 kB]
+Get:40 http://deb.debian.org/debian bookworm/main amd64 libqt6multimediawidgets6 amd64 6.4.2-5 [17.8 kB]
+Get:41 http://deb.debian.org/debian bookworm/main amd64 libqt6qml6 amd64 6.4.2+dfsg-1 [1479 kB]
+Get:42 https://mediaarea.net/repo/deb/debian bookworm/main amd64 qcli amd64 1.4-1 [7950 kB]
+Get:43 https://mediaarea.net/repo/deb/debian bookworm/main amd64 qctools amd64 1.4-1 [12.8 MB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 37.6 MB in 7s (5241 kB/s)
+Selecting previously unselected package iso-codes.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 9896 files and directories currently installed.)
+Preparing to unpack .../00-iso-codes_4.15.0-1_all.deb ...
+Unpacking iso-codes (4.15.0-1) ...
+Selecting previously unselected package libb2-1:amd64.
+Preparing to unpack .../01-libb2-1_0.98.1-1.1_amd64.deb ...
+Unpacking libb2-1:amd64 (0.98.1-1.1) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../02-libcap2-bin_1%3a2.66-4+deb12u2+b2_amd64.deb ...
+Unpacking libcap2-bin (1:2.66-4+deb12u2+b2) ...
+Selecting previously unselected package libdouble-conversion3:amd64.
+Preparing to unpack .../03-libdouble-conversion3_3.2.1-1_amd64.deb ...
+Unpacking libdouble-conversion3:amd64 (3.2.1-1) ...
+Selecting previously unselected package libdw1:amd64.
+Preparing to unpack .../04-libdw1_0.188-2.1_amd64.deb ...
+Unpacking libdw1:amd64 (0.188-2.1) ...
+Selecting previously unselected package libegl-mesa0:amd64.
+Preparing to unpack .../05-libegl-mesa0_22.3.6-1+deb12u1_amd64.deb ...
+Unpacking libegl-mesa0:amd64 (22.3.6-1+deb12u1) ...
+Selecting previously unselected package libevdev2:amd64.
+Preparing to unpack .../06-libevdev2_1.13.0+dfsg-1_amd64.deb ...
+Unpacking libevdev2:amd64 (1.13.0+dfsg-1) ...
+Selecting previously unselected package libegl1:amd64.
+Preparing to unpack .../07-libegl1_1.6.0-1_amd64.deb ...
+Unpacking libegl1:amd64 (1.6.0-1) ...
+Selecting previously unselected package libunwind8:amd64.
+Preparing to unpack .../08-libunwind8_1.6.2-3_amd64.deb ...
+Unpacking libunwind8:amd64 (1.6.2-3) ...
+Selecting previously unselected package libgstreamer1.0-0:amd64.
+Preparing to unpack .../09-libgstreamer1.0-0_1.22.0-2+deb12u1_amd64.deb ...
+Unpacking libgstreamer1.0-0:amd64 (1.22.0-2+deb12u1) ...
+Selecting previously unselected package liborc-0.4-0:amd64.
+Preparing to unpack .../10-liborc-0.4-0_1%3a0.4.33-2_amd64.deb ...
+Unpacking liborc-0.4-0:amd64 (1:0.4.33-2) ...
+Selecting previously unselected package libgstreamer-plugins-base1.0-0:amd64.
+Preparing to unpack .../11-libgstreamer-plugins-base1.0-0_1.22.0-3+deb12u6_amd64.deb ...
+Unpacking libgstreamer-plugins-base1.0-0:amd64 (1.22.0-3+deb12u6) ...
+Selecting previously unselected package libgudev-1.0-0:amd64.
+Preparing to unpack .../12-libgudev-1.0-0_237-2_amd64.deb ...
+Unpacking libgudev-1.0-0:amd64 (237-2) ...
+Selecting previously unselected package libgstreamer-gl1.0-0:amd64.
+Preparing to unpack .../13-libgstreamer-gl1.0-0_1.22.0-3+deb12u6_amd64.deb ...
+Unpacking libgstreamer-gl1.0-0:amd64 (1.22.0-3+deb12u6) ...
+Selecting previously unselected package libice6:amd64.
+Preparing to unpack .../14-libice6_2%3a1.0.10-1_amd64.deb ...
+Unpacking libice6:amd64 (2:1.0.10-1) ...
+Selecting previously unselected package libwacom-common.
+Preparing to unpack .../15-libwacom-common_2.6.0-1_all.deb ...
+Unpacking libwacom-common (2.6.0-1) ...
+Selecting previously unselected package libwacom9:amd64.
+Preparing to unpack .../16-libwacom9_2.6.0-1_amd64.deb ...
+Unpacking libwacom9:amd64 (2.6.0-1) ...
+Selecting previously unselected package libinput-bin.
+Preparing to unpack .../17-libinput-bin_1.22.1-1_amd64.deb ...
+Unpacking libinput-bin (1.22.1-1) ...
+Selecting previously unselected package libmtdev1:amd64.
+Preparing to unpack .../18-libmtdev1_1.1.6-1_amd64.deb ...
+Unpacking libmtdev1:amd64 (1.1.6-1) ...
+Selecting previously unselected package libinput10:amd64.
+Preparing to unpack .../19-libinput10_1.22.1-1_amd64.deb ...
+Unpacking libinput10:amd64 (1.22.1-1) ...
+Selecting previously unselected package libmd4c0:amd64.
+Preparing to unpack .../20-libmd4c0_0.4.8-1_amd64.deb ...
+Unpacking libmd4c0:amd64 (0.4.8-1) ...
+Selecting previously unselected package libpcre2-16-0:amd64.
+Preparing to unpack .../21-libpcre2-16-0_10.42-1_amd64.deb ...
+Unpacking libpcre2-16-0:amd64 (10.42-1) ...
+Selecting previously unselected package libproxy1v5:amd64.
+Preparing to unpack .../22-libproxy1v5_0.4.18-1.2_amd64.deb ...
+Unpacking libproxy1v5:amd64 (0.4.18-1.2) ...
+Selecting previously unselected package libqt6core6:amd64.
+Preparing to unpack .../23-libqt6core6_6.4.2+dfsg-10_amd64.deb ...
+Unpacking libqt6core6:amd64 (6.4.2+dfsg-10) ...
+Selecting previously unselected package libqt6dbus6:amd64.
+Preparing to unpack .../24-libqt6dbus6_6.4.2+dfsg-10_amd64.deb ...
+Unpacking libqt6dbus6:amd64 (6.4.2+dfsg-10) ...
+Selecting previously unselected package libopengl0:amd64.
+Preparing to unpack .../25-libopengl0_1.6.0-1_amd64.deb ...
+Unpacking libopengl0:amd64 (1.6.0-1) ...
+Selecting previously unselected package libsm6:amd64.
+Preparing to unpack .../26-libsm6_2%3a1.2.3-1_amd64.deb ...
+Unpacking libsm6:amd64 (2:1.2.3-1) ...
+Selecting previously unselected package libts0:amd64.
+Preparing to unpack .../27-libts0_1.22-1+b1_amd64.deb ...
+Unpacking libts0:amd64 (1.22-1+b1) ...
+Selecting previously unselected package libxcb-icccm4:amd64.
+Preparing to unpack .../28-libxcb-icccm4_0.4.1-1.1_amd64.deb ...
+Unpacking libxcb-icccm4:amd64 (0.4.1-1.1) ...
+Selecting previously unselected package libxcb-util1:amd64.
+Preparing to unpack .../29-libxcb-util1_0.4.0-1+b1_amd64.deb ...
+Unpacking libxcb-util1:amd64 (0.4.0-1+b1) ...
+Selecting previously unselected package libxcb-image0:amd64.
+Preparing to unpack .../30-libxcb-image0_0.4.0-2_amd64.deb ...
+Unpacking libxcb-image0:amd64 (0.4.0-2) ...
+Selecting previously unselected package libxcb-keysyms1:amd64.
+Preparing to unpack .../31-libxcb-keysyms1_0.4.0-1+b2_amd64.deb ...
+Unpacking libxcb-keysyms1:amd64 (0.4.0-1+b2) ...
+Selecting previously unselected package libxcb-render-util0:amd64.
+Preparing to unpack .../32-libxcb-render-util0_0.3.9-1+b1_amd64.deb ...
+Unpacking libxcb-render-util0:amd64 (0.3.9-1+b1) ...
+Selecting previously unselected package libxcb-xkb1:amd64.
+Preparing to unpack .../33-libxcb-xkb1_1.15-1_amd64.deb ...
+Unpacking libxcb-xkb1:amd64 (1.15-1) ...
+Selecting previously unselected package libxkbcommon-x11-0:amd64.
+Preparing to unpack .../34-libxkbcommon-x11-0_1.5.0-1_amd64.deb ...
+Unpacking libxkbcommon-x11-0:amd64 (1.5.0-1) ...
+Selecting previously unselected package libqt6gui6:amd64.
+Preparing to unpack .../35-libqt6gui6_6.4.2+dfsg-10_amd64.deb ...
+Unpacking libqt6gui6:amd64 (6.4.2+dfsg-10) ...
+Selecting previously unselected package libqt6network6:amd64.
+Preparing to unpack .../36-libqt6network6_6.4.2+dfsg-10_amd64.deb ...
+Unpacking libqt6network6:amd64 (6.4.2+dfsg-10) ...
+Selecting previously unselected package libqt6multimedia6:amd64.
+Preparing to unpack .../37-libqt6multimedia6_6.4.2-5_amd64.deb ...
+Unpacking libqt6multimedia6:amd64 (6.4.2-5) ...
+Selecting previously unselected package libqt6widgets6:amd64.
+Preparing to unpack .../38-libqt6widgets6_6.4.2+dfsg-10_amd64.deb ...
+Unpacking libqt6widgets6:amd64 (6.4.2+dfsg-10) ...
+Selecting previously unselected package libqt6multimediawidgets6:amd64.
+Preparing to unpack .../39-libqt6multimediawidgets6_6.4.2-5_amd64.deb ...
+Unpacking libqt6multimediawidgets6:amd64 (6.4.2-5) ...
+Selecting previously unselected package libqt6qml6:amd64.
+Preparing to unpack .../40-libqt6qml6_6.4.2+dfsg-1_amd64.deb ...
+Unpacking libqt6qml6:amd64 (6.4.2+dfsg-1) ...
+Selecting previously unselected package qcli.
+Preparing to unpack .../41-qcli_1.4-1_amd64.deb ...
+Unpacking qcli (1.4-1) ...
+Selecting previously unselected package qctools.
+Preparing to unpack .../42-qctools_1.4-1_amd64.deb ...
+Unpacking qctools (1.4-1) ...
+Setting up libb2-1:amd64 (0.98.1-1.1) ...
+Setting up libice6:amd64 (2:1.0.10-1) ...
+Setting up libdw1:amd64 (0.188-2.1) ...
+Setting up libdouble-conversion3:amd64 (3.2.1-1) ...
+Setting up libproxy1v5:amd64 (0.4.18-1.2) ...
+Setting up libxcb-keysyms1:amd64 (0.4.0-1+b2) ...
+Setting up libxcb-render-util0:amd64 (0.3.9-1+b1) ...
+Setting up libxcb-icccm4:amd64 (0.4.1-1.1) ...
+Setting up libunwind8:amd64 (1.6.2-3) ...
+Setting up libts0:amd64 (1.22-1+b1) ...
+Setting up libpcre2-16-0:amd64 (10.42-1) ...
+Setting up libopengl0:amd64 (1.6.0-1) ...
+Setting up libxcb-util1:amd64 (0.4.0-1+b1) ...
+Setting up libxcb-xkb1:amd64 (1.15-1) ...
+Setting up libxcb-image0:amd64 (0.4.0-2) ...
+Setting up libcap2-bin (1:2.66-4+deb12u2+b2) ...
+Setting up libegl-mesa0:amd64 (22.3.6-1+deb12u1) ...
+Setting up libxkbcommon-x11-0:amd64 (1.5.0-1) ...
+Setting up liborc-0.4-0:amd64 (1:0.4.33-2) ...
+Setting up libmtdev1:amd64 (1.1.6-1) ...
+Setting up libegl1:amd64 (1.6.0-1) ...
+Setting up libmd4c0:amd64 (0.4.8-1) ...
+Setting up libsm6:amd64 (2:1.2.3-1) ...
+Setting up libevdev2:amd64 (1.13.0+dfsg-1) ...
+Setting up iso-codes (4.15.0-1) ...
+Setting up libgudev-1.0-0:amd64 (237-2) ...
+Setting up libgstreamer1.0-0:amd64 (1.22.0-2+deb12u1) ...
+Setcap worked! gst-ptp-helper is not suid!
+Setting up libwacom-common (2.6.0-1) ...
+Setting up libwacom9:amd64 (2.6.0-1) ...
+Setting up libgstreamer-plugins-base1.0-0:amd64 (1.22.0-3+deb12u6) ...
+Setting up libqt6core6:amd64 (6.4.2+dfsg-10) ...
+Setting up libinput-bin (1.22.1-1) ...
+Setting up libgstreamer-gl1.0-0:amd64 (1.22.0-3+deb12u6) ...
+Setting up libqt6dbus6:amd64 (6.4.2+dfsg-10) ...
+Setting up libinput10:amd64 (1.22.1-1) ...
+Setting up libqt6gui6:amd64 (6.4.2+dfsg-10) ...
+Setting up libqt6network6:amd64 (6.4.2+dfsg-10) ...
+Setting up libqt6multimedia6:amd64 (6.4.2-5) ...
+Setting up libqt6qml6:amd64 (6.4.2+dfsg-1) ...
+Setting up libqt6widgets6:amd64 (6.4.2+dfsg-10) ...
+Setting up qcli (1.4-1) ...
+Setting up libqt6multimediawidgets6:amd64 (6.4.2-5) ...
+Setting up qctools (1.4-1) ...
+Processing triggers for libc-bin (2.36-9+deb12u13) ...
+Removing intermediate container 9ef77353029e
+ ---> 9efd31039e47
+Step 20/30 : COPY --from=build /app/package*.json ./
+ ---> dede9f40fc1a
+Step 21/30 : COPY --from=build /app/node_modules ./node_modules
+ ---> f8fa3a6ae974
+Step 22/30 : COPY --from=build /app/dist ./dist
+ ---> ce40d463001f
+Step 23/30 : COPY --from=build /app/prisma ./prisma
+ ---> 7bc3db629229
+Step 24/30 : COPY --from=build /app/prisma.config.ts ./prisma.config.ts
+ ---> 75b7d910f3d9
+Step 25/30 : COPY --from=build /app/downloadPresets_linux_profiles.json ./downloadPresets_linux_profiles.json
+ ---> 094a27f4b98d
+Step 26/30 : COPY --from=build /app/docker/ffmbc/ /opt/esendit/docker/ffmbc/
+ ---> 775c0d8e36da
+Step 27/30 : RUN set -eux;     FFMBC_SRC="/opt/esendit/docker/ffmbc/ffmbc";     if [ -f "$FFMBC_SRC" ]; then       chmod +x "$FFMBC_SRC";       install -m 0755 "$FFMBC_SRC" /usr/local/bin/ffmbc;       ln -sf /usr/local/bin/ffmbc /opt/esendit/docker/ffmbc/ffmbc;       /usr/local/bin/ffmbc -version > /tmp/ffmbc-version.txt 2>&1 || (cat /tmp/ffmbc-version.txt && false);       rm -f /tmp/ffmbc-version.txt;       command -v ffmbc;       echo "FFmbc installed successfully at /usr/local/bin/ffmbc";     else       if [ "$ENABLE_FFMBC" = "1" ]; then         echo "ENABLE_FFMBC=1 but $FFMBC_SRC was not found";         exit 1;       fi;       echo "FFmbc binary not provided; continuing without FFmbc";     fi
+ ---> Running in a54b691ccde6
++ FFMBC_SRC=/opt/esendit/docker/ffmbc/ffmbc
++ [ -f /opt/esendit/docker/ffmbc/ffmbc ]
++ chmod +x /opt/esendit/docker/ffmbc/ffmbc
++ install -m 0755 /opt/esendit/docker/ffmbc/ffmbc /usr/local/bin/ffmbc
++ ln -sf /usr/local/bin/ffmbc /opt/esendit/docker/ffmbc/ffmbc
++ /usr/local/bin/ffmbc -version
++ rm -f /tmp/ffmbc-version.txt
+/usr/local/bin/ffmbc
+FFmbc installed successfully at /usr/local/bin/ffmbc
++ command -v ffmbc
++ echo FFmbc installed successfully at /usr/local/bin/ffmbc
+Removing intermediate container a54b691ccde6
+ ---> 41df0b87c466
+Step 28/30 : EXPOSE 3000
+ ---> Running in 4ef9bfe98039
+Removing intermediate container 4ef9bfe98039
+ ---> bfac3d386a88
+Step 29/30 : ENTRYPOINT ["dumb-init","--"]
+ ---> Running in b03c5261fe2b
+Removing intermediate container b03c5261fe2b
+ ---> 4e95ef7024bd
+Step 30/30 : CMD ["node","dist/main.js"]
+ ---> Running in 174d5ab545c2
+Removing intermediate container 174d5ab545c2
+ ---> a4a1624deafa
+Successfully built a4a1624deafa
+Successfully tagged esendit.azurecr.io/esendit-backend:v140
+2026/03/25 04:37:56 Successfully executed container: build
+2026/03/25 04:37:56 Executing step ID: push. Timeout(sec): 3600, Working directory: '', Network: ''
+2026/03/25 04:37:56 Pushing image: esendit.azurecr.io/esendit-backend:v140, attempt 1
+The push refers to repository [esendit.azurecr.io/esendit-backend]
+610e2f998e47: Preparing
+6a2f7017d3eb: Preparing
+2315afebd815: Preparing
+263b5777b2e9: Preparing
+0d74f1591039: Preparing
+eae118cc8f96: Preparing
+27bc8ebd94a5: Preparing
+a49f83a1c664: Preparing
+97fef2c74c69: Preparing
+ddfb9057a979: Preparing
+33e936d06aa8: Preparing
+3e01670ee78f: Preparing
+0159b1e67548: Preparing
+8e93510c6946: Preparing
+6143ee9e3de0: Preparing
+eae118cc8f96: Waiting
+27bc8ebd94a5: Waiting
+a49f83a1c664: Waiting
+97fef2c74c69: Waiting
+ddfb9057a979: Waiting
+33e936d06aa8: Waiting
+3e01670ee78f: Waiting
+0159b1e67548: Waiting
+6143ee9e3de0: Waiting
+8e93510c6946: Waiting
+263b5777b2e9: Pushed
+0d74f1591039: Pushed
+2315afebd815: Pushed
+6a2f7017d3eb: Pushed
+610e2f998e47: Pushed
+eae118cc8f96: Pushed
+a49f83a1c664: Pushed
+3e01670ee78f: Layer already exists
+33e936d06aa8: Layer already exists
+ddfb9057a979: Pushed
+0159b1e67548: Layer already exists
+8e93510c6946: Layer already exists
+6143ee9e3de0: Pushed
+27bc8ebd94a5: Pushed
+97fef2c74c69: Pushed
+v140: digest: sha256:98edde89096a2152bd385142ea3fb3efdb78a4306c7d4eee05f493d1c8e71d99 size: 3464
+2026/03/25 04:38:34 Successfully pushed image: esendit.azurecr.io/esendit-backend:v140
+2026/03/25 04:38:34 Step ID: build marked as successful (elapsed time in seconds: 186.456907)
+2026/03/25 04:38:34 Populating digests for step ID: build...
+2026/03/25 04:38:35 Successfully populated digests for step ID: build
+2026/03/25 04:38:35 Step ID: push marked as successful (elapsed time in seconds: 38.036426)
+2026/03/25 04:38:35 The following dependencies were found:
+2026/03/25 04:38:35 
+- image:
+    registry: esendit.azurecr.io
+    repository: esendit-backend
+    tag: v140
+    digest: sha256:98edde89096a2152bd385142ea3fb3efdb78a4306c7d4eee05f493d1c8e71d99
+  runtime-dependency:
+    registry: registry.hub.docker.com
+    repository: library/node
+    tag: 20-bookworm-slim
+    digest: sha256:17281e8d1dc4d671976c6b89a12f47a44c2f390b63a989e2e327631041f544fd
+  git: {}
+
+
+Run ID: cu4h was successful after 3m48s
+== update backend -> v140 ==
+{
+  "id": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/containerapps/backend",
+  "identity": {
+    "principalId": "1393a26f-360b-4120-89ad-203f2ceff60b",
+    "tenantId": "7dda7dc2-fa0d-4242-a85d-16907f632abc",
+    "type": "SystemAssigned"
+  },
+  "kind": "containerapps",
+  "location": "Central India",
+  "name": "backend",
+  "properties": {
+    "configuration": {
+      "activeRevisionsMode": "Single",
+      "dapr": null,
+      "identitySettings": [],
+      "ingress": {
+        "additionalPortMappings": null,
+        "allowInsecure": false,
+        "clientCertificateMode": null,
+        "corsPolicy": null,
+        "customDomains": null,
+        "exposedPort": 0,
+        "external": true,
+        "fqdn": "backend.purpleground-1c0c7aee.centralindia.azurecontainerapps.io",
+        "ipSecurityRestrictions": null,
+        "stickySessions": null,
+        "targetPort": 3000,
+        "targetPortHttpScheme": null,
+        "traffic": [
+          {
+            "latestRevision": true,
+            "weight": 100
+          }
+        ],
+        "transport": "Auto"
+      },
+      "maxInactiveRevisions": 100,
+      "registries": [
+        {
+          "identity": "system",
+          "passwordSecretRef": "",
+          "server": "esendit.azurecr.io",
+          "username": ""
+        }
+      ],
+      "revisionTransitionThreshold": null,
+      "runtime": null,
+      "secrets": [
+        {
+          "name": "storagecs"
+        },
+        {
+          "name": "dburl"
+        },
+        {
+          "name": "jwtsecret"
+        },
+        {
+          "name": "sb-cs"
+        },
+        {
+          "name": "acs-email-connstr"
+        }
+      ],
+      "service": null,
+      "targetLabel": ""
+    },
+    "customDomainVerificationId": "CAFCDF81450D7A32F42EE870E3E40EADE89EF6DB9751B8E08835960EB4FDFB9C",
+    "delegatedIdentities": [],
+    "environmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "eventStreamEndpoint": "https://centralindia.azurecontainerapps.dev/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/containerApps/backend/eventstream",
+    "latestReadyRevisionName": "backend--0000159",
+    "latestRevisionFqdn": "backend--0000160.purpleground-1c0c7aee.centralindia.azurecontainerapps.io",
+    "latestRevisionName": "backend--0000160",
+    "managedEnvironmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "outboundIpAddresses": [
+      "20.204.252.66",
+      "20.204.255.44",
+      "20.207.112.119",
+      "20.204.254.22",
+      "4.213.194.124",
+      "4.213.194.130",
+      "4.213.194.85",
+      "4.213.194.149",
+      "4.213.194.114",
+      "4.213.194.154",
+      "4.187.221.107",
+      "4.224.75.64",
+      "4.224.128.131",
+      "20.235.215.243",
+      "4.188.89.163",
+      "13.71.53.213",
+      "20.219.205.56",
+      "4.224.156.119",
+      "4.224.154.29",
+      "4.186.36.9",
+      "20.207.113.244",
+      "20.207.114.82",
+      "20.207.113.247",
+      "20.207.113.242",
+      "4.188.105.82",
+      "4.213.216.206",
+      "4.188.110.244",
+      "4.186.33.69",
+      "4.186.36.246",
+      "4.186.37.141",
+      "20.207.106.36"
+    ],
+    "patchingMode": "Automatic",
+    "provisioningState": "Succeeded",
+    "runningStatus": "Running",
+    "template": {
+      "containers": [
+        {
+          "env": [
+            {
+              "name": "STORAGE_DRIVER"
+            },
+            {
+              "name": "AZURE_STORAGE_CONNECTION_STRING",
+              "secretRef": "storagecs"
+            },
+            {
+              "name": "MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "PRESET_WORKER_ENABLED"
+            },
+            {
+              "name": "BULK_MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "DELIVERY_WORKER_ENABLED"
+            },
+            {
+              "name": "HOT_FOLDER_WORKER_ENABLED"
+            },
+            {
+              "name": "DATABASE_URL",
+              "secretRef": "dburl"
+            },
+            {
+              "name": "JWT_SECRET",
+              "secretRef": "jwtsecret"
+            },
+            {
+              "name": "CORS_ORIGINS"
+            },
+            {
+              "name": "AZURE_STORAGE_CONTAINER"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT_KEY"
+            },
+            {
+              "name": "SERVICE_BUS_ENABLED"
+            },
+            {
+              "name": "SERVICE_BUS_CONNECTION_STRING",
+              "secretRef": "sb-cs"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT"
+            },
+            {
+              "name": "QUEUE_PREFIX"
+            },
+            {
+              "name": "APP_MODE"
+            },
+            {
+              "name": "ESENDIT_QUEUE_PREFIX"
+            },
+            {
+              "name": "QC_OUTPUT_CONTAINER"
+            },
+            {
+              "name": "ACS_EMAIL_CONNECTION_STRING",
+              "secretRef": "acs-email-connstr"
+            },
+            {
+              "name": "ACS_EMAIL_FROM"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            }
+          ],
+          "image": "esendit.azurecr.io/esendit-backend:v140",
+          "imageType": "ContainerImage",
+          "name": "backend",
+          "probes": [],
+          "resources": {
+            "cpu": 0.5,
+            "ephemeralStorage": "2Gi",
+            "memory": "1Gi"
+          }
+        }
+      ],
+      "customMetricsSettings": null,
+      "initContainers": null,
+      "revisionSuffix": "",
+      "scale": {
+        "cooldownPeriod": 300,
+        "maxReplicas": 1,
+        "minReplicas": 1,
+        "pollingInterval": 30,
+        "rules": null
+      },
+      "serviceBinds": null,
+      "terminationGracePeriodSeconds": null,
+      "volumes": []
+    },
+    "workloadProfileName": "Consumption"
+  },
+  "resourceGroup": "esendit",
+  "systemData": {
+    "createdAt": "2026-02-02T16:31:21.0603104",
+    "createdBy": "esendit000@gmail.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-03-25T04:38:48.456472",
+    "lastModifiedBy": "esendit000@gmail.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.App/containerApps"
+}
+"Restart succeeded"
+== update esendit-media-worker -> v140 ==
+{
+  "id": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/containerapps/esendit-media-worker",
+  "identity": {
+    "principalId": "6437b545-106b-4354-8bc0-24acb502537a",
+    "tenantId": "7dda7dc2-fa0d-4242-a85d-16907f632abc",
+    "type": "SystemAssigned"
+  },
+  "location": "Central India",
+  "name": "esendit-media-worker",
+  "properties": {
+    "configuration": {
+      "activeRevisionsMode": "Single",
+      "dapr": null,
+      "identitySettings": [],
+      "ingress": null,
+      "maxInactiveRevisions": null,
+      "registries": [
+        {
+          "identity": "system",
+          "passwordSecretRef": "",
+          "server": "esendit.azurecr.io",
+          "username": ""
+        }
+      ],
+      "revisionTransitionThreshold": null,
+      "runtime": null,
+      "secrets": [
+        {
+          "name": "storagecs"
+        },
+        {
+          "name": "storagekey"
+        },
+        {
+          "name": "dburl"
+        },
+        {
+          "name": "jwtsecret"
+        },
+        {
+          "name": "sb-cs"
+        },
+        {
+          "name": "sb-conn"
+        }
+      ],
+      "service": null,
+      "targetLabel": ""
+    },
+    "customDomainVerificationId": "CAFCDF81450D7A32F42EE870E3E40EADE89EF6DB9751B8E08835960EB4FDFB9C",
+    "delegatedIdentities": [],
+    "environmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "eventStreamEndpoint": "https://centralindia.azurecontainerapps.dev/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/containerApps/esendit-media-worker/eventstream",
+    "latestReadyRevisionName": "esendit-media-worker--0000149",
+    "latestRevisionFqdn": "",
+    "latestRevisionName": "esendit-media-worker--0000150",
+    "managedEnvironmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "outboundIpAddresses": [
+      "20.204.252.66",
+      "20.204.255.44",
+      "20.207.112.119",
+      "20.204.254.22",
+      "4.213.194.124",
+      "4.213.194.130",
+      "4.213.194.85",
+      "4.213.194.149",
+      "4.213.194.114",
+      "4.213.194.154",
+      "4.187.221.107",
+      "4.224.75.64",
+      "4.224.128.131",
+      "20.235.215.243",
+      "4.188.89.163",
+      "13.71.53.213",
+      "20.219.205.56",
+      "4.224.156.119",
+      "4.224.154.29",
+      "4.186.36.9",
+      "20.207.113.244",
+      "20.207.114.82",
+      "20.207.113.247",
+      "20.207.113.242",
+      "4.188.105.82",
+      "4.213.216.206",
+      "4.188.110.244",
+      "4.186.33.69",
+      "4.186.36.246",
+      "4.186.37.141",
+      "20.207.106.36"
+    ],
+    "patchingMode": "Automatic",
+    "provisioningState": "Succeeded",
+    "runningStatus": "Running",
+    "template": {
+      "containers": [
+        {
+          "args": [
+            "dist/main.js"
+          ],
+          "command": [
+            "node"
+          ],
+          "env": [
+            {
+              "name": "STORAGE_DRIVER"
+            },
+            {
+              "name": "AZURE_STORAGE_CONNECTION_STRING",
+              "secretRef": "storagecs"
+            },
+            {
+              "name": "MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "PRESET_WORKER_ENABLED"
+            },
+            {
+              "name": "BULK_MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "DELIVERY_WORKER_ENABLED"
+            },
+            {
+              "name": "HOT_FOLDER_WORKER_ENABLED"
+            },
+            {
+              "name": "DATABASE_URL",
+              "secretRef": "dburl"
+            },
+            {
+              "name": "JWT_SECRET",
+              "secretRef": "jwtsecret"
+            },
+            {
+              "name": "SERVICE_BUS_ENABLED"
+            },
+            {
+              "name": "SERVICE_BUS_CONNECTION_STRING",
+              "secretRef": "sb-conn"
+            },
+            {
+              "name": "AZURE_STORAGE_CONTAINER"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT"
+            },
+            {
+              "name": "QUEUE_PREFIX"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT_KEY",
+              "secretRef": "storagekey"
+            },
+            {
+              "name": "APP_MODE"
+            },
+            {
+              "name": "ESENDIT_QUEUE_PREFIX"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            },
+            {
+              "name": "QC_OUTPUT_CONTAINER"
+            }
+          ],
+          "image": "esendit.azurecr.io/esendit-backend:v140",
+          "imageType": "ContainerImage",
+          "name": "esendit-media-worker",
+          "resources": {
+            "cpu": 1.0,
+            "ephemeralStorage": "4Gi",
+            "memory": "2Gi"
+          }
+        }
+      ],
+      "customMetricsSettings": null,
+      "initContainers": null,
+      "revisionSuffix": "",
+      "scale": {
+        "cooldownPeriod": 300,
+        "maxReplicas": 1,
+        "minReplicas": 1,
+        "pollingInterval": 30,
+        "rules": [
+          {
+            "custom": {
+              "auth": [
+                {
+                  "secretRef": "sb-conn",
+                  "triggerParameter": "connection"
+                }
+              ],
+              "metadata": {
+                "messageCount": "",
+                "namespace": "",
+                "queueName": ""
+              },
+              "type": "azure-servicebus"
+            },
+            "name": "sb-media"
+          }
+        ]
+      },
+      "serviceBinds": null,
+      "terminationGracePeriodSeconds": null,
+      "volumes": null
+    },
+    "workloadProfileName": "Consumption"
+  },
+  "resourceGroup": "esendit",
+  "systemData": {
+    "createdAt": "2026-02-02T19:09:35.9659424",
+    "createdBy": "esendit000@gmail.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-03-25T04:39:26.7107361",
+    "lastModifiedBy": "esendit000@gmail.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.App/containerApps"
+}
+"Restart succeeded"
+== update esendit-preset-worker -> v140 ==
+{
+  "id": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/containerapps/esendit-preset-worker",
+  "identity": {
+    "principalId": "3be1a1f5-957c-421e-8cd4-314291b2854a",
+    "tenantId": "7dda7dc2-fa0d-4242-a85d-16907f632abc",
+    "type": "SystemAssigned"
+  },
+  "location": "Central India",
+  "name": "esendit-preset-worker",
+  "properties": {
+    "configuration": {
+      "activeRevisionsMode": "Single",
+      "dapr": null,
+      "identitySettings": [],
+      "ingress": null,
+      "maxInactiveRevisions": null,
+      "registries": [
+        {
+          "identity": "system",
+          "passwordSecretRef": "",
+          "server": "esendit.azurecr.io",
+          "username": ""
+        }
+      ],
+      "revisionTransitionThreshold": null,
+      "runtime": null,
+      "secrets": [
+        {
+          "name": "dburl"
+        },
+        {
+          "name": "jwtsecret"
+        },
+        {
+          "name": "sb-cs"
+        },
+        {
+          "name": "storagecs"
+        },
+        {
+          "name": "storagekey"
+        }
+      ],
+      "service": null,
+      "targetLabel": ""
+    },
+    "customDomainVerificationId": "CAFCDF81450D7A32F42EE870E3E40EADE89EF6DB9751B8E08835960EB4FDFB9C",
+    "delegatedIdentities": [],
+    "environmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "eventStreamEndpoint": "https://centralindia.azurecontainerapps.dev/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/containerApps/esendit-preset-worker/eventstream",
+    "latestReadyRevisionName": "esendit-preset-worker--0000149",
+    "latestRevisionFqdn": "",
+    "latestRevisionName": "esendit-preset-worker--0000150",
+    "managedEnvironmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "outboundIpAddresses": [
+      "20.204.252.66",
+      "20.204.255.44",
+      "20.207.112.119",
+      "20.204.254.22",
+      "4.213.194.124",
+      "4.213.194.130",
+      "4.213.194.85",
+      "4.213.194.149",
+      "4.213.194.114",
+      "4.213.194.154",
+      "4.187.221.107",
+      "4.224.75.64",
+      "4.224.128.131",
+      "20.235.215.243",
+      "4.188.89.163",
+      "13.71.53.213",
+      "20.219.205.56",
+      "4.224.156.119",
+      "4.224.154.29",
+      "4.186.36.9",
+      "20.207.113.244",
+      "20.207.114.82",
+      "20.207.113.247",
+      "20.207.113.242",
+      "4.188.105.82",
+      "4.213.216.206",
+      "4.188.110.244",
+      "4.186.33.69",
+      "4.186.36.246",
+      "4.186.37.141",
+      "20.207.106.36"
+    ],
+    "patchingMode": "Automatic",
+    "provisioningState": "Succeeded",
+    "runningStatus": "Running",
+    "template": {
+      "containers": [
+        {
+          "args": [
+            "dist/main.js"
+          ],
+          "command": [
+            "node"
+          ],
+          "env": [
+            {
+              "name": "STORAGE_DRIVER"
+            },
+            {
+              "name": "AZURE_STORAGE_CONNECTION_STRING",
+              "secretRef": "storagecs"
+            },
+            {
+              "name": "MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "PRESET_WORKER_ENABLED"
+            },
+            {
+              "name": "BULK_MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "DELIVERY_WORKER_ENABLED"
+            },
+            {
+              "name": "HOT_FOLDER_WORKER_ENABLED"
+            },
+            {
+              "name": "DATABASE_URL",
+              "secretRef": "dburl"
+            },
+            {
+              "name": "JWT_SECRET",
+              "secretRef": "jwtsecret"
+            },
+            {
+              "name": "SERVICE_BUS_ENABLED"
+            },
+            {
+              "name": "SERVICE_BUS_CONNECTION_STRING",
+              "secretRef": "sb-cs"
+            },
+            {
+              "name": "APP_MODE"
+            },
+            {
+              "name": "QUEUE_PREFIX"
+            },
+            {
+              "name": "ESENDIT_QUEUE_PREFIX"
+            },
+            {
+              "name": "AZURE_STORAGE_CONTAINER"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT_KEY",
+              "secretRef": "storagekey"
+            },
+            {
+              "name": "TRANSCODE_OUTPUT_CONTAINER"
+            },
+            {
+              "name": "TRANSCODE_LOG_CONTAINER"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            }
+          ],
+          "image": "esendit.azurecr.io/esendit-backend:v140",
+          "imageType": "ContainerImage",
+          "name": "esendit-preset-worker",
+          "resources": {
+            "cpu": 1.0,
+            "ephemeralStorage": "4Gi",
+            "memory": "2Gi"
+          }
+        }
+      ],
+      "customMetricsSettings": null,
+      "initContainers": null,
+      "revisionSuffix": "",
+      "scale": {
+        "cooldownPeriod": 300,
+        "maxReplicas": 1,
+        "minReplicas": 1,
+        "pollingInterval": 30,
+        "rules": null
+      },
+      "serviceBinds": null,
+      "terminationGracePeriodSeconds": null,
+      "volumes": null
+    },
+    "workloadProfileName": "Consumption"
+  },
+  "resourceGroup": "esendit",
+  "systemData": {
+    "createdAt": "2026-02-02T19:10:37.2337251",
+    "createdBy": "esendit000@gmail.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-03-25T04:40:06.104952",
+    "lastModifiedBy": "esendit000@gmail.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.App/containerApps"
+}
+"Restart succeeded"
+== update esendit-bulk-worker -> v140 ==
+{
+  "id": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/containerapps/esendit-bulk-worker",
+  "identity": {
+    "principalId": "f132ade9-2f2e-4602-acef-d2493088b17d",
+    "tenantId": "7dda7dc2-fa0d-4242-a85d-16907f632abc",
+    "type": "SystemAssigned"
+  },
+  "location": "Central India",
+  "name": "esendit-bulk-worker",
+  "properties": {
+    "configuration": {
+      "activeRevisionsMode": "Single",
+      "dapr": null,
+      "identitySettings": [],
+      "ingress": null,
+      "maxInactiveRevisions": null,
+      "registries": [
+        {
+          "identity": "system",
+          "passwordSecretRef": "",
+          "server": "esendit.azurecr.io",
+          "username": ""
+        }
+      ],
+      "revisionTransitionThreshold": null,
+      "runtime": null,
+      "secrets": [
+        {
+          "name": "storagecs"
+        },
+        {
+          "name": "dburl"
+        },
+        {
+          "name": "jwtsecret"
+        },
+        {
+          "name": "sb-cs"
+        }
+      ],
+      "service": null,
+      "targetLabel": ""
+    },
+    "customDomainVerificationId": "CAFCDF81450D7A32F42EE870E3E40EADE89EF6DB9751B8E08835960EB4FDFB9C",
+    "delegatedIdentities": [],
+    "environmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "eventStreamEndpoint": "https://centralindia.azurecontainerapps.dev/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/containerApps/esendit-bulk-worker/eventstream",
+    "latestReadyRevisionName": "esendit-bulk-worker--0000142",
+    "latestRevisionFqdn": "",
+    "latestRevisionName": "esendit-bulk-worker--0000142",
+    "managedEnvironmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "outboundIpAddresses": [
+      "20.204.252.66",
+      "20.204.255.44",
+      "20.207.112.119",
+      "20.204.254.22",
+      "4.213.194.124",
+      "4.213.194.130",
+      "4.213.194.85",
+      "4.213.194.149",
+      "4.213.194.114",
+      "4.213.194.154",
+      "4.187.221.107",
+      "4.224.75.64",
+      "4.224.128.131",
+      "20.235.215.243",
+      "4.188.89.163",
+      "13.71.53.213",
+      "20.219.205.56",
+      "4.224.156.119",
+      "4.224.154.29",
+      "4.186.36.9",
+      "20.207.113.244",
+      "20.207.114.82",
+      "20.207.113.247",
+      "20.207.113.242",
+      "4.188.105.82",
+      "4.213.216.206",
+      "4.188.110.244",
+      "4.186.33.69",
+      "4.186.36.246",
+      "4.186.37.141",
+      "20.207.106.36"
+    ],
+    "patchingMode": "Automatic",
+    "provisioningState": "Succeeded",
+    "runningStatus": "Stopped",
+    "template": {
+      "containers": [
+        {
+          "args": [
+            "dist/main.js"
+          ],
+          "command": [
+            "node"
+          ],
+          "env": [
+            {
+              "name": "STORAGE_DRIVER"
+            },
+            {
+              "name": "AZURE_STORAGE_CONNECTION_STRING",
+              "secretRef": "storagecs"
+            },
+            {
+              "name": "MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "PRESET_WORKER_ENABLED"
+            },
+            {
+              "name": "BULK_MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "DELIVERY_WORKER_ENABLED"
+            },
+            {
+              "name": "HOT_FOLDER_WORKER_ENABLED"
+            },
+            {
+              "name": "DATABASE_URL",
+              "secretRef": "dburl"
+            },
+            {
+              "name": "JWT_SECRET",
+              "secretRef": "jwtsecret"
+            },
+            {
+              "name": "SERVICE_BUS_ENABLED"
+            },
+            {
+              "name": "SERVICE_BUS_CONNECTION_STRING",
+              "secretRef": "sb-cs"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            }
+          ],
+          "image": "esendit.azurecr.io/esendit-backend:v140",
+          "imageType": "ContainerImage",
+          "name": "esendit-bulk-worker",
+          "resources": {
+            "cpu": 1.0,
+            "ephemeralStorage": "4Gi",
+            "memory": "2Gi"
+          }
+        }
+      ],
+      "customMetricsSettings": null,
+      "initContainers": null,
+      "revisionSuffix": "",
+      "scale": {
+        "cooldownPeriod": 300,
+        "maxReplicas": 1,
+        "minReplicas": 1,
+        "pollingInterval": 30,
+        "rules": null
+      },
+      "serviceBinds": null,
+      "terminationGracePeriodSeconds": null,
+      "volumes": null
+    },
+    "workloadProfileName": "Consumption"
+  },
+  "resourceGroup": "esendit",
+  "systemData": {
+    "createdAt": "2026-02-02T19:11:24.5246628",
+    "createdBy": "esendit000@gmail.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-03-25T04:40:42.4929742",
+    "lastModifiedBy": "esendit000@gmail.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.App/containerApps"
+}
+== update esendit-delivery-worker -> v140 ==
+{
+  "id": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/containerapps/esendit-delivery-worker",
+  "identity": {
+    "principalId": "bbc37a10-0c6d-43b8-b17d-b46ccb3cdf9a",
+    "tenantId": "7dda7dc2-fa0d-4242-a85d-16907f632abc",
+    "type": "SystemAssigned"
+  },
+  "location": "Central India",
+  "name": "esendit-delivery-worker",
+  "properties": {
+    "configuration": {
+      "activeRevisionsMode": "Single",
+      "dapr": null,
+      "identitySettings": [],
+      "ingress": null,
+      "maxInactiveRevisions": null,
+      "registries": [
+        {
+          "identity": "system",
+          "passwordSecretRef": "",
+          "server": "esendit.azurecr.io",
+          "username": ""
+        }
+      ],
+      "revisionTransitionThreshold": null,
+      "runtime": null,
+      "secrets": [
+        {
+          "name": "sb-cs"
+        },
+        {
+          "name": "storagecs"
+        },
+        {
+          "name": "storagekey"
+        },
+        {
+          "name": "dburl"
+        },
+        {
+          "name": "jwtsecret"
+        }
+      ],
+      "service": null,
+      "targetLabel": ""
+    },
+    "customDomainVerificationId": "CAFCDF81450D7A32F42EE870E3E40EADE89EF6DB9751B8E08835960EB4FDFB9C",
+    "delegatedIdentities": [],
+    "environmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "eventStreamEndpoint": "https://centralindia.azurecontainerapps.dev/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/containerApps/esendit-delivery-worker/eventstream",
+    "latestReadyRevisionName": "esendit-delivery-worker--0000147",
+    "latestRevisionFqdn": "",
+    "latestRevisionName": "esendit-delivery-worker--0000148",
+    "managedEnvironmentId": "/subscriptions/c824dfe2-906a-43cd-8c48-50f825e80036/resourceGroups/esendit/providers/Microsoft.App/managedEnvironments/esendit-backend",
+    "outboundIpAddresses": [
+      "20.204.252.66",
+      "20.204.255.44",
+      "20.207.112.119",
+      "20.204.254.22",
+      "4.213.194.124",
+      "4.213.194.130",
+      "4.213.194.85",
+      "4.213.194.149",
+      "4.213.194.114",
+      "4.213.194.154",
+      "4.187.221.107",
+      "4.224.75.64",
+      "4.224.128.131",
+      "20.235.215.243",
+      "4.188.89.163",
+      "13.71.53.213",
+      "20.219.205.56",
+      "4.224.156.119",
+      "4.224.154.29",
+      "4.186.36.9",
+      "20.207.113.244",
+      "20.207.114.82",
+      "20.207.113.247",
+      "20.207.113.242",
+      "4.188.105.82",
+      "4.213.216.206",
+      "4.188.110.244",
+      "4.186.33.69",
+      "4.186.36.246",
+      "4.186.37.141",
+      "20.207.106.36"
+    ],
+    "patchingMode": "Automatic",
+    "provisioningState": "Succeeded",
+    "runningStatus": "Running",
+    "template": {
+      "containers": [
+        {
+          "args": [
+            "dist/main.js"
+          ],
+          "command": [
+            "node"
+          ],
+          "env": [
+            {
+              "name": "STORAGE_DRIVER"
+            },
+            {
+              "name": "AZURE_STORAGE_CONNECTION_STRING",
+              "secretRef": "storagecs"
+            },
+            {
+              "name": "MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "PRESET_WORKER_ENABLED"
+            },
+            {
+              "name": "BULK_MEDIA_WORKER_ENABLED"
+            },
+            {
+              "name": "DELIVERY_WORKER_ENABLED"
+            },
+            {
+              "name": "HOT_FOLDER_WORKER_ENABLED"
+            },
+            {
+              "name": "DATABASE_URL",
+              "secretRef": "dburl"
+            },
+            {
+              "name": "JWT_SECRET",
+              "secretRef": "jwtsecret"
+            },
+            {
+              "name": "SERVICE_BUS_ENABLED"
+            },
+            {
+              "name": "SERVICE_BUS_CONNECTION_STRING",
+              "secretRef": "sb-cs"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT_KEY",
+              "secretRef": "storagekey"
+            },
+            {
+              "name": "ESENDIT_QUEUE_PREFIX"
+            },
+            {
+              "name": "EMAIL_OUTBOX_ENABLED"
+            },
+            {
+              "name": "APP_MODE"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT"
+            },
+            {
+              "name": "AZURE_STORAGE_CONTAINER"
+            },
+            {
+              "name": "QUEUE_PREFIX"
+            },
+            {
+              "name": "SERVICE_BUS_MAX_CONCURRENT_CALLS"
+            },
+            {
+              "name": "SERVICE_BUS_PREFETCH"
+            },
+            {
+              "name": "AUTO_SEND_WORKER_ENABLED"
+            },
+            {
+              "name": "AUTO_SEND_BATCH"
+            },
+            {
+              "name": "DELIVERY_SERIALIZE_PER_PROFILE"
+            },
+            {
+              "name": "DELIVERY_SERIALIZE_POLL_MS"
+            }
+          ],
+          "image": "esendit.azurecr.io/esendit-backend:v140",
+          "imageType": "ContainerImage",
+          "name": "esendit-delivery-worker",
+          "probes": [],
+          "resources": {
+            "cpu": 0.5,
+            "ephemeralStorage": "2Gi",
+            "memory": "1Gi"
+          }
+        }
+      ],
+      "customMetricsSettings": null,
+      "initContainers": null,
+      "revisionSuffix": "",
+      "scale": {
+        "cooldownPeriod": 300,
+        "maxReplicas": 1,
+        "minReplicas": 1,
+        "pollingInterval": 30,
+        "rules": null
+      },
+      "serviceBinds": null,
+      "terminationGracePeriodSeconds": null,
+      "volumes": []
+    },
+    "workloadProfileName": "Consumption"
+  },
+  "resourceGroup": "esendit",
+  "systemData": {
+    "createdAt": "2026-02-02T19:12:06.9394292",
+    "createdBy": "esendit000@gmail.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-03-25T04:41:19.8950059",
+    "lastModifiedBy": "esendit000@gmail.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.App/containerApps"
+}
+"Restart succeeded"
+Done. Tag=v140
