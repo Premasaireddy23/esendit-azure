@@ -125,11 +125,12 @@ STORAGE_DRIVER=azure
 AZURE_STORAGE_ACCOUNT=esendit
 AZURE_STORAGE_CONTAINER=uploads
 
-AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=esendit;AccountKey=2O4ELzE+UqJHwdDtSG9JZL+VtoG+5VDRKthYoMOfxC0dfMFE4SWB0jXWBlzcV1+DyaqE0wzReDpb+ASty+bcSg==;EndpointSuffix=core.windows.net
-AZURE_STORAGE_ACCOUNT_KEY=2O4ELzE+UqJHwdDtSG9JZL+VtoG+5VDRKthYoMOfxC0dfMFE4SWB0jXWBlzcV1+DyaqE0wzReDpb+ASty+bcSg==
-DATABASE_URL=postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require
-JWT_SECRET=+pkVAjJtnuRGsRAImjpr7cYLxhpzBNZeVND3Vj4d7eul/uvflSBFVt3FNnCRT4xW
-SERVICE_BUS_CONNECTION_STRING=Endpoint=sb://esendit.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=WQQwMAzHzM/lEyrrr0K38vRy8RaEsGm6c+ASbB4lLLE=
+AZURE_STORAGE_CONNECTION_STRING=
+AZURE_STORAGE_ACCOUNT_KEY=
+DATABASE_URL=
+JWT_SECRET=
+SERVICE_BUS_CONNECTION_STRING=
+SharedAccessKey=
 
 DELIVERY_SERIALIZE_PER_PROFILE=true
 DELIVERY_SERIALIZE_POLL_MS=2000
