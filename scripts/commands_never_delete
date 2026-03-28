@@ -73,3 +73,66 @@ ACCOUNT_CODE='default' \
 ADMIN_ROLE_NAME='Admin' \
 RESET_ADMIN_ROLE_PERMS=false \
 npx tsx src/scripts/seed-permissions.ts
+
+
+export SUBSCRIPTION_ID="c824dfe2-906a-43cd-8c48-50f825e80036"
+export RG="esendit"
+export LOCATION="centralindia"
+
+export VM_NAME="esendit-staticvm-worker"
+export VNET_NAME="esendit-staticvm-vnet"
+export SUBNET_NAME="esendit-staticvm-subnet"
+export NSG_NAME="esendit-staticvm-nsg"
+export PIP_NAME="esendit-staticvm-pip"
+export NIC_NAME="esendit-staticvm-nic"
+
+export ADMIN_USERNAME="azureuser"
+export SSH_PUBLIC_KEY="$HOME/.ssh/id_rsa.pub"
+
+# replace with your office/VPN/admin public IP
+export ADMIN_IP=" 49.37.153.82/32"
+
+# your registry
+export ACR_NAME="esendit"
+export ACR_LOGIN_SERVER="esendit.azurecr.io"
+
+# image currently seen on ACA
+export IMAGE="esendit.azurecr.io/esendit-backend:v168"
+
+ssh ${ADMIN_USERNAME}@$(az vm show -g "$RG" -n "$VM_NAME" -d --query publicIps -o tsv)
+
+
+APP_MODE=worker
+DELIVERY_WORKER_ENABLED=true
+DELIVERY_WORKER_ROUTE=STATIC_VM
+
+MEDIA_WORKER_ENABLED=false
+BULK_MEDIA_WORKER_ENABLED=false
+PRESET_WORKER_ENABLED=false
+HOT_FOLDER_WORKER_ENABLED=false
+EMAIL_OUTBOX_ENABLED=false
+
+# keep this false on the VM unless you intentionally want auto-send logic on VM too
+AUTO_SEND_WORKER_ENABLED=false
+
+SERVICE_BUS_ENABLED=true
+SERVICE_BUS_MAX_CONCURRENT_CALLS=1
+SERVICE_BUS_PREFETCH=1
+
+ESENDIT_QUEUE_PREFIX=esendit
+QUEUE_PREFIX=esendit
+STORAGE_DRIVER=azure
+AZURE_STORAGE_ACCOUNT=esendit
+AZURE_STORAGE_CONTAINER=uploads
+
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=esendit;AccountKey=2O4ELzE+UqJHwdDtSG9JZL+VtoG+5VDRKthYoMOfxC0dfMFE4SWB0jXWBlzcV1+DyaqE0wzReDpb+ASty+bcSg==;EndpointSuffix=core.windows.net
+AZURE_STORAGE_ACCOUNT_KEY=2O4ELzE+UqJHwdDtSG9JZL+VtoG+5VDRKthYoMOfxC0dfMFE4SWB0jXWBlzcV1+DyaqE0wzReDpb+ASty+bcSg==
+DATABASE_URL=postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require
+JWT_SECRET=+pkVAjJtnuRGsRAImjpr7cYLxhpzBNZeVND3Vj4d7eul/uvflSBFVt3FNnCRT4xW
+SERVICE_BUS_CONNECTION_STRING=Endpoint=sb://esendit.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=WQQwMAzHzM/lEyrrr0K38vRy8RaEsGm6c+ASbB4lLLE=
+
+DELIVERY_SERIALIZE_PER_PROFILE=true
+DELIVERY_SERIALIZE_POLL_MS=2000
+
+
+ssh ${ADMIN_USERNAME}@$(az vm show -g "$RG" -n "$VM_NAME" -d --query publicIps -o tsv)
