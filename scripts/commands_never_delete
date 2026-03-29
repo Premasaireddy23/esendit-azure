@@ -1,12 +1,8 @@
-node /app/dist/scripts/seed-account-presets.js --file /app/downloadPresets_linux_profiles.json
-
-./run_ffmpeg_preset_debug.sh \
-  -p xdcamhd422_mxf_zee_loudnorm \
-  -i /path/to/failing.mxf \
-  -j ./downloadPresets_linux_profiles.fixed2.json \
-  -f ./backend/backend/Dockerfile \
-  -c ./backend/backend \
-  --timeout 900
+sudo docker exec -it wordpress-mysql mysql -u wp_user -pChangeThisWpDbPass123! -D esendit_net -e "
+update es_options
+set option_value='http://104.211.74.218:8088'
+where option_name in ('siteurl','home');
+"
 
 
 ./run_ffmpeg_preset_debug.sh \
@@ -42,10 +38,10 @@ this is important make remember or highlight across all the chats, when making n
 
 so we have to additive manner only 
 
-----application migration-----
+----preset migration-----
 cd ~/esendit-2.0/backend/backend
 
-#export DATABASE_URL="postgresql://esendit:Premasai3@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
+export DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
 export ACCOUNT_CODE="default"
 export PRESETS_FILE="$PWD/downloadPresets_linux_profiles.json"
 
@@ -53,7 +49,7 @@ npx tsx src/scripts/seed-account-presets.ts
 
 
 ----db migration------
-
+export DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require"
 npx prisma migrate dev --name add_aspera_filecatalyst_delivery_protocol
 npx prisma generate
 
@@ -75,6 +71,9 @@ RESET_ADMIN_ROLE_PERMS=false \
 npx tsx src/scripts/seed-permissions.ts
 
 
+
+
+----enviormnet vailrables for azure vm creation and configuration-----
 export SUBSCRIPTION_ID="c824dfe2-906a-43cd-8c48-50f825e80036"
 export RG="esendit"
 export LOCATION="centralindia"
@@ -99,9 +98,19 @@ export ACR_LOGIN_SERVER="esendit.azurecr.io"
 # image currently seen on ACA
 export IMAGE="esendit.azurecr.io/esendit-backend:v168"
 
+
+---to connect to azure vm-----------
+export SUBSCRIPTION_ID="c824dfe2-906a-43cd-8c48-50f825e80036"
+export RG="esendit"
+export LOCATION="centralindia"
+export VM_NAME="esendit-staticvm-worker"
+export ADMIN_USERNAME="azureuser"
 ssh ${ADMIN_USERNAME}@$(az vm show -g "$RG" -n "$VM_NAME" -d --query publicIps -o tsv)
 
 
+
+
+-----vm environment variables-----
 APP_MODE=worker
 DELIVERY_WORKER_ENABLED=true
 DELIVERY_WORKER_ROUTE=STATIC_VM
@@ -135,5 +144,3 @@ SharedAccessKey=
 DELIVERY_SERIALIZE_PER_PROFILE=true
 DELIVERY_SERIALIZE_POLL_MS=2000
 
-
-ssh ${ADMIN_USERNAME}@$(az vm show -g "$RG" -n "$VM_NAME" -d --query publicIps -o tsv)
