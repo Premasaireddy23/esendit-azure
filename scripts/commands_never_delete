@@ -64,7 +64,7 @@ az containerapp exec --name esendit-preset-worker --resource-group esendit
 ----seed permissions----
 cd /home/saisruthi/esendit-2.0/backend/backend
 
-DATABASE_URL='your_db_url' \
+DATABASE_URL="postgresql://esendit:Premasaireddy%403@esendit.postgres.database.azure.com:5432/esendit?sslmode=require" \
 ACCOUNT_CODE='default' \
 ADMIN_ROLE_NAME='Admin' \
 RESET_ADMIN_ROLE_PERMS=false \
