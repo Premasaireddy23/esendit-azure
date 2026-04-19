@@ -1,0 +1,3 @@
+blob_path_group,expired_job_count,expired_size_gb,oldest_output,newest_expired_output
+outputs::accounts,105,16.05,2026-02-07 21:11:48.696,2026-03-14 01:03:15.958
+accounts/{accountId}/presets/jobs/,3,0.56,2026-02-07 17:34:54.291,2026-02-07 18:51:41.511

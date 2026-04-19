@@ -1,0 +1,13 @@
+begin;
+
+update "Channel"
+set "config" = jsonb_set(
+  coalesce("config"::jsonb, '{}'::jsonb),
+  '{alignment}',
+  '"RHS"',
+  true
+)
+where "accountId" = '96158005-931a-4100-9734-1e1b2294ecc1'
+  and "config"->>'alignment' = 'LHS';
+
+commit;
