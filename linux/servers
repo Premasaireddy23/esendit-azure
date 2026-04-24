@@ -6,3 +6,9 @@ lsof
 fuser
 git clean -nd
 git clean -fd
+git reset -hard
+git revert vs git reset --hard <<commit>> && git push --force
+git clean -n 
+git clean -i
+git clean -fd
+git celan -f

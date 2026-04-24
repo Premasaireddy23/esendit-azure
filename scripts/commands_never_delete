@@ -1,6 +1,6 @@
 sudo docker exec -it wordpress-mysql mysql -u wp_user -pChangeThisWpDbPass123! -D esendit_net -e "
 update es_options
-set option_value='http://104.211.74.218:8088'
+set option_value='http://www.esendit.me:8088'
 where option_name in ('siteurl','home');
 "
 
@@ -31,6 +31,7 @@ npx prisma migrate deploy
 
 export DOCKERHUB_USER="premasaireddy" 
 #export DOCKERHUB_TOKEN="dckr_pat_z1ghQxyZocVOEzGhmyJsm5I0wF8"
+#sendgrid-api-key="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"
 
 this is my frontend and backend application code understand it. then i will ask what to change or improve . then make the changes with out breaking existing functionalities and features 
 
@@ -69,6 +70,26 @@ ACCOUNT_CODE='default' \
 ADMIN_ROLE_NAME='Admin' \
 RESET_ADMIN_ROLE_PERMS=false \
 npx tsx src/scripts/seed-permissions.ts
+
+-----seed access profiles----
+
+
+Dry-Run
+
+DATABASE_URL="your-db-url" \
+ACCOUNT_CODE=default \
+ADMIN_ROLE_NAME=Admin \
+npx tsx src/scripts/seed-client-access-profiles.ts
+
+
+actual run 
+
+DATABASE_URL="your-db-url" \
+ACCOUNT_CODE=default \
+ADMIN_ROLE_NAME=Admin \
+APPLY_CLIENT_ACCESS_PROFILES=true \
+DELETE_UNLISTED_ACCESS_PROFILES=true \
+npx tsx src/scripts/seed-client-access-profiles.ts
 
 
 
@@ -144,3 +165,8 @@ SharedAccessKey=
 DELIVERY_SERIALIZE_PER_PROFILE=true
 DELIVERY_SERIALIZE_POLL_MS=2000
 
+-----------monthly cleanup-------------
+sudo docker image prune -a --filter "until=168h" -f
+sudo docker system prune -f
+sudo docker builder prune -f
+df -h
