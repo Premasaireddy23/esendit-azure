@@ -7,6 +7,23 @@ ACR_NAME="${ACR_NAME:-Esendit}"
 REPO="${REPO:-esendit-backend}"
 APPS=(backend esendit-media-worker esendit-preset-worker esendit-bulk-worker esendit-delivery-worker)
 
+# --- per app replica config ---
+declare -A MIN_REPLICAS=(
+  [backend]=1
+  [esendit-media-worker]=1
+  [esendit-preset-worker]=1
+  [esendit-bulk-worker]=0
+  [esendit-delivery-worker]=1
+)
+
+declare -A MAX_REPLICAS=(
+  [backend]=2
+  [esendit-media-worker]=6
+  [esendit-preset-worker]=30
+  [esendit-bulk-worker]=1
+  [esendit-delivery-worker]=6
+)
+
 # --- feature flags ---
 ENABLE_FFMBC="${ENABLE_FFMBC:-1}"
 ENABLE_ASPERA_CLI="${ENABLE_ASPERA_CLI:-1}"
@@ -58,10 +75,15 @@ echo "Build complete: $ACR_SERVER/$REPO:$TAG"
 # --- optionally deploy image to all ACA apps ---
 if [[ "$DEPLOY_ACA" == "1" ]]; then
   for APP in "${APPS[@]}"; do
-    echo "== update $APP -> $TAG =="
+    MIN="${MIN_REPLICAS[$APP]:-1}"
+    MAX="${MAX_REPLICAS[$APP]:-1}"
+
+    echo "== update $APP -> $TAG | min=$MIN max=$MAX =="
+
     az containerapp update -g "$RG" -n "$APP" \
       --image "$ACR_SERVER/$REPO:$TAG" \
-      --min-replicas 1 --max-replicas 1
+      --min-replicas "$MIN" \
+      --max-replicas "$MAX"
 
     REV="$(az containerapp show -g "$RG" -n "$APP" --query properties.latestRevisionName -o tsv)"
     az containerapp revision activate -g "$RG" -n "$APP" --revision "$REV" || true

@@ -1,0 +1,186 @@
+==== backend env ====
+Name                                               Value                                                                                                SecretRef
+-------------------------------------------------  ---------------------------------------------------------------------------------------------------  -----------------
+STORAGE_DRIVER                                     azure
+AZURE_STORAGE_CONNECTION_STRING                                                                                                                         storagecs
+MEDIA_WORKER_ENABLED                               false
+PRESET_WORKER_ENABLED                              false
+BULK_MEDIA_WORKER_ENABLED                          false
+DELIVERY_WORKER_ENABLED                            false
+HOT_FOLDER_WORKER_ENABLED                          false
+DATABASE_URL                                                                                                                                            dburl
+JWT_SECRET                                                                                                                                              jwtsecret
+CORS_ORIGINS                                       https://ambitious-beach-055545c00.2.azurestaticapps.net,http://localhost:5173,http://127.0.0.1:5173
+AZURE_STORAGE_CONTAINER                            uploads
+AZURE_STORAGE_ACCOUNT_KEY                          2O4ELzE+UqJHwdDtSG9JZL+VtoG+5VDRKthYoMOfxC0dfMFE4SWB0jXWBlzcV1+DyaqE0wzReDpb+ASty+bcSg==
+SERVICE_BUS_ENABLED                                true
+SERVICE_BUS_CONNECTION_STRING                                                                                                                           sb-cs
+AZURE_STORAGE_ACCOUNT                              esendit
+QUEUE_PREFIX                                       esendit
+APP_MODE                                           api
+ESENDIT_QUEUE_PREFIX                               esendit
+QC_OUTPUT_CONTAINER                                qc-details
+ACS_EMAIL_CONNECTION_STRING                                                                                                                             acs-email-connstr
+ACS_EMAIL_FROM                                     donotreply@7d3d5c16-403d-4318-989f-95805c0200ed.azurecomm.net
+EMAIL_OUTBOX_ENABLED                               true
+EMAIL_PROVIDER                                     SENDGRID
+SENDGRID_API_KEY                                                                                                                                        sendgrid-api-key
+SENDGRID_FROM                                      noreply@esendit.me
+SENDGRID_FROM_NAME                                 eSendIT
+PARTNER_ACCOUNT_REFRESH_EXISTING_DEFAULT_PASSWORD  true
+SERVICE_BUS_TRANSPORT                              websocket
+
+==== esendit-media-worker env ====
+Name                                                 Value               SecretRef
+---------------------------------------------------  ------------------  ----------------
+STORAGE_DRIVER                                       azure
+AZURE_STORAGE_CONNECTION_STRING                                          storagecs
+MEDIA_WORKER_ENABLED                                 true
+PRESET_WORKER_ENABLED                                false
+BULK_MEDIA_WORKER_ENABLED                            false
+DELIVERY_WORKER_ENABLED                              false
+HOT_FOLDER_WORKER_ENABLED                            false
+DATABASE_URL                                                             dburl
+JWT_SECRET                                                               jwtsecret
+SERVICE_BUS_ENABLED                                  true
+SERVICE_BUS_CONNECTION_STRING                                            sb-conn
+AZURE_STORAGE_CONTAINER                              uploads
+AZURE_STORAGE_ACCOUNT                                esendit
+QUEUE_PREFIX                                         esendit
+AZURE_STORAGE_ACCOUNT_KEY                                                storagekey
+APP_MODE                                             worker
+ESENDIT_QUEUE_PREFIX                                 esendit
+EMAIL_OUTBOX_ENABLED                                 false
+QC_OUTPUT_CONTAINER                                  qc-details
+EMAIL_PROVIDER                                       SENDGRID
+SENDGRID_API_KEY                                                         sendgrid-api-key
+SENDGRID_FROM                                        noreply@esendit.me
+SENDGRID_FROM_NAME                                   eSendIT
+MEDIA_JOB_STALE_RUNNING_MINUTES                      30
+SERVICE_BUS_TRANSPORT                                websocket
+QC_QCLI_TIMEOUT_MINUTES                              20
+MEDIA_WORKER_WATCHDOG_SERVICE_BUS_WAKE               false
+MEDIA_WORKER_SERVICE_BUS_DB_FALLBACK_ENABLED         false
+MEDIA_WORKER_SERVICE_BUS_DB_FALLBACK_POLL_MS         5000
+MEDIA_WORKER_SHUTDOWN_GRACE_MS                       540000
+MEDIA_WORKER_WATCHDOG_STALE_PENDING_REFRESH_ENABLED  false
+MEDIA_WORKER_WATCHDOG_PENDING_WAKE_MAX_PER_RUN       0
+MEDIA_WORKER_WATCHDOG_BACKLOG_PENDING_THRESHOLD      25
+MEDIA_WORKER_WATCHDOG_INTERVAL_MS                    60000
+MEDIA_JOB_STALE_RUNNING_AUTO_QC_MINUTES              25
+MEDIA_JOB_STALE_RUNNING_PROXY_GEN_MINUTES            10
+SERVICE_BUS_PREFETCH                                 0
+SERVICE_BUS_MAX_CONCURRENT_CALLS                     1
+SERVICE_BUS_MAX_AUTO_LOCK_RENEW_MS                   1800000
+MEDIA_WORKER_BUSY_ABANDON_DELAY_MS                   5000
+
+==== esendit-preset-worker env ====
+Name                                           Value               SecretRef
+---------------------------------------------  ------------------  ----------------
+STORAGE_DRIVER                                 azure
+AZURE_STORAGE_CONNECTION_STRING                                    storagecs
+MEDIA_WORKER_ENABLED                           false
+PRESET_WORKER_ENABLED                          true
+BULK_MEDIA_WORKER_ENABLED                      false
+DELIVERY_WORKER_ENABLED                        false
+HOT_FOLDER_WORKER_ENABLED                      false
+DATABASE_URL                                                       dburl
+JWT_SECRET                                                         jwtsecret
+SERVICE_BUS_ENABLED                            true
+SERVICE_BUS_CONNECTION_STRING                                      sb-cs
+APP_MODE                                       worker
+QUEUE_PREFIX                                   esendit
+ESENDIT_QUEUE_PREFIX                           esendit
+AZURE_STORAGE_CONTAINER                        uploads
+AZURE_STORAGE_ACCOUNT                          esendit
+AZURE_STORAGE_ACCOUNT_KEY                                          storagekey
+TRANSCODE_OUTPUT_CONTAINER                     outputs
+TRANSCODE_LOG_CONTAINER                        outputs
+EMAIL_OUTBOX_ENABLED                           false
+EMAIL_PROVIDER                                 SENDGRID
+SENDGRID_API_KEY                                                   sendgrid-api-key
+SENDGRID_FROM                                  noreply@esendit.me
+SENDGRID_FROM_NAME                             eSendIT
+TRANSCODE_SUPPRESS_LAVF_METADATA               true
+SERVICE_BUS_TRANSPORT                          websocket
+PRESET_WORKER_SHUTDOWN_GRACE_MS                540000
+SERVICE_BUS_PREFETCH                           0
+SERVICE_BUS_MAX_CONCURRENT_CALLS               1
+SERVICE_BUS_MAX_AUTO_LOCK_RENEW_MS             1800000
+PRESET_WORKER_BUSY_ABANDON_DELAY_MS            5000
+PRESET_WORKDIR_CLEANUP_ENABLED                 true
+PRESET_WORKDIR_USE_TMP                         true
+PRESET_WORKDIR_MIN_FREE_MB                     2048
+PRESET_WORKDIR_CLEANUP_MAX_AGE_MINUTES         60
+PRESET_WORKDIR_CLEANUP_LEGACY_UPLOADS_ENABLED  true
+TRANSCODE_SUPPRESS_LAVF_METADATA_FOR_FFMBC     false
+
+==== esendit-bulk-worker env ====
+Name                                     Value               SecretRef
+---------------------------------------  ------------------  ----------------
+STORAGE_DRIVER                           azure
+AZURE_STORAGE_CONNECTION_STRING                              storagecs
+MEDIA_WORKER_ENABLED                     false
+PRESET_WORKER_ENABLED                    false
+BULK_MEDIA_WORKER_ENABLED                true
+DELIVERY_WORKER_ENABLED                  false
+HOT_FOLDER_WORKER_ENABLED                false
+DATABASE_URL                                                 dburl
+JWT_SECRET                                                   jwtsecret
+SERVICE_BUS_ENABLED                      true
+SERVICE_BUS_CONNECTION_STRING                                sb-cs
+EMAIL_OUTBOX_ENABLED                     false
+EMAIL_PROVIDER                           SENDGRID
+SENDGRID_API_KEY                                             sendgrid-api-key
+SENDGRID_FROM                            noreply@esendit.me
+SENDGRID_FROM_NAME                       eSendIT
+SERVICE_BUS_TRANSPORT                    websocket
+APP_MODE                                 worker
+ESENDIT_QUEUE_PREFIX                     esendit
+BULK_MEDIA_WORKER_SHUTDOWN_GRACE_MS      540000
+SERVICE_BUS_PREFETCH                     0
+SERVICE_BUS_MAX_CONCURRENT_CALLS         1
+SERVICE_BUS_MAX_AUTO_LOCK_RENEW_MS       1800000
+BULK_MEDIA_WORKER_BUSY_ABANDON_DELAY_MS  5000
+
+==== esendit-delivery-worker env ====
+Name                                   Value                                                                                                                                                       SecretRef
+-------------------------------------  ----------------------------------------------------------------------------------------------------------------------------------------------------------  ----------------
+STORAGE_DRIVER                         azure
+AZURE_STORAGE_CONNECTION_STRING                                                                                                                                                                    storagecs
+MEDIA_WORKER_ENABLED                   false
+PRESET_WORKER_ENABLED                  false
+BULK_MEDIA_WORKER_ENABLED              false
+DELIVERY_WORKER_ENABLED                true
+HOT_FOLDER_WORKER_ENABLED              false
+DATABASE_URL                                                                                                                                                                                       dburl
+JWT_SECRET                                                                                                                                                                                         jwtsecret
+SERVICE_BUS_ENABLED                    true
+SERVICE_BUS_CONNECTION_STRING                                                                                                                                                                      sb-cs
+EMAIL_OUTBOX_ENABLED                   false
+AZURE_STORAGE_ACCOUNT_KEY                                                                                                                                                                          storagekey
+ESENDIT_QUEUE_PREFIX                   esendit
+EMAIL_OUTBOX_ENABLED                   false
+APP_MODE                               worker
+AZURE_STORAGE_ACCOUNT                  esendit
+AZURE_STORAGE_CONTAINER                uploads
+QUEUE_PREFIX                           esendit
+SERVICE_BUS_MAX_CONCURRENT_CALLS       1
+SERVICE_BUS_PREFETCH                   0
+AUTO_SEND_WORKER_ENABLED               true
+AUTO_SEND_BATCH                        50
+DELIVERY_SERIALIZE_PER_PROFILE         true
+DELIVERY_SERIALIZE_POLL_MS             2000
+DELIVERY_WORKER_ROUTE                  ACA
+ACS_EMAIL_CONNECTION_STRING            endpoint=https://esendit-acs.india.communication.azure.com/;accesskey=Dd7vPty4MoVeG5695h1IdA3KUcWbPQiQAB6RQNUnW5uItrkIKbLsJQQJ99CBACULyCpt98tUAAAAAZCSExul
+ACS_EMAIL_FROM                         DoNotReply@7d3d5c16-403d-4318-989f-95805c0200ed.azurecomm.net
+ACS_EMAIL_SEND_TIMEOUT_MS              30000
+EMAIL_PROVIDER                         SENDGRID
+SENDGRID_API_KEY                                                                                                                                                                                   sendgrid-api-key
+SENDGRID_FROM                          noreply@esendit.me
+SENDGRID_FROM_NAME                     eSendIT
+SERVICE_BUS_TRANSPORT                  websocket
+DELIVERY_WORKER_SHUTDOWN_GRACE_MS      540000
+SERVICE_BUS_MAX_AUTO_LOCK_RENEW_MS     1800000
+DELIVERY_WORKER_BUSY_ABANDON_DELAY_MS  5000
+
